@@ -1,4 +1,4 @@
-import { resource } from './utils';
+import { removeServerFunctionsFromResourceDefinition, resource } from './utils';
 
 export const posts = [
   { id: 1, title: 'Hello, World!' },
@@ -61,3 +61,11 @@ export const resources = {
     },
   }),
 };
+
+// TODO: improve typing
+export const clientResources = Object.fromEntries(
+  Object.entries(resources).map(([k, r]) => [
+    k,
+    removeServerFunctionsFromResourceDefinition(r as any),
+  ])
+);

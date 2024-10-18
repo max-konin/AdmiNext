@@ -1,0 +1,41 @@
+{
+  "name": "storybook",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@adminext/core": "workspace:*",
+    "@chakra-ui/react": "^2.10.3",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "framer-motion": "^11.11.9",
+    "next": "15.0.0-rc.1",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
+    "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/addon-interactions": "^8.3.6",
+    "@storybook/addon-links": "^8.3.6",
+    "@storybook/addon-onboarding": "^8.3.6",
+    "@storybook/blocks": "^8.3.6",
+    "@storybook/nextjs": "^8.3.6",
+    "@storybook/react": "^8.3.6",
+    "@storybook/test": "^8.3.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
+    "eslint-plugin-storybook": "^0.9.0",
+    "postcss": "^8",
+    "storybook": "^8.3.6",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

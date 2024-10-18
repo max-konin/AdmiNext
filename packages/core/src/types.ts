@@ -70,6 +70,7 @@ export type Resource<
   title: string;
   menuLabel?: string;
   group?: string;
+  toString?: (data: TData) => string;
   pages: {
     show: SingleEntityPage<TPK, TFields, TData>;
     list: ListEntitiesPage<TPK, TFields, TData>;
