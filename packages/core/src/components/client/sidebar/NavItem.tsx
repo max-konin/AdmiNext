@@ -17,9 +17,7 @@ export const NavItem = (props: NavItemProps) => {
   const { subtle, icon, label, endElement, href } = props;
   const pathname = usePathname();
   const active = new RegExp(`^${href}.*`).test(pathname);
-  console.log('href', href);
-  console.log('pathname', pathname);
-  console.log('active', active);
+
   return (
     <HStack
       as={Link}

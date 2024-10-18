@@ -6,7 +6,7 @@ import {
   type DataProviderChildrenProps,
 } from '../server';
 import { MainLayout } from './MainLayout';
-import { ResourceListView } from './ResourceListView';
+import { ResourceListView } from './resource-views';
 
 export type AdmiNextProps = DataProviderChildrenProps & {
   routePrefix: string;

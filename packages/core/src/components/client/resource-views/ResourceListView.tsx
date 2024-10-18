@@ -7,7 +7,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { ClientResourceDefinition } from '../../utils';
+import { ClientResourceDefinition } from '../../../utils';
 
 export type ResourceListViewProps<
   TFields extends string,

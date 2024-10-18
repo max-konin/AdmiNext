@@ -2,7 +2,7 @@
 
 import { Box, Flex, Stack, useColorModeValue as mode } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
-import { SidebarMenu, SidebarMenuProps } from './SidebarMenu';
+import { SidebarMenu, SidebarMenuProps } from './sidebar';
 
 export type TeamLayoutProps = PropsWithChildren & SidebarMenuProps;
 

@@ -1,5 +1,5 @@
 import { Stack } from '@chakra-ui/react';
-import { ClientResourceDefinition } from '../../utils';
+import { ClientResourceDefinition } from '../../../utils';
 import { NavGroup } from './NavGroup';
 import { NavItem } from './NavItem';
 
