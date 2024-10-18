@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 const preview: Preview = {
   parameters: {
+    layout: 'fullscreen',
     nextjs: {
       appDirectory: true,
     },
