@@ -22,25 +22,35 @@ export function AdmiNext({
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
     >
-      {renderResourcePageOrDashboard(pageData, resourcesDefinition)}
+      {renderResourcePageOrDashboard(
+        pageData,
+        resourcesDefinition,
+        routePrefix
+      )}
     </MainLayout>
   );
 }
 
 const renderResourcePageOrDashboard = (
   pageData: CurrentPageData,
-  resourcesDef: ResourcesDefinition
+  resourcesDef: ResourcesDefinition,
+  routePrefix: string
 ) => {
   if (pageData.resource === 'dashboard') {
     return <div>Dashboard</div>;
   }
 
-  return renderResourcePage(pageData as ResourcePage, resourcesDef);
+  return renderResourcePage(
+    pageData as ResourcePage,
+    resourcesDef,
+    routePrefix
+  );
 };
 
 const renderResourcePage = (
   pageData: ResourcePage,
-  resourcesDef: ResourcesDefinition
+  resourcesDef: ResourcesDefinition,
+  routePrefix: string
 ) => {
   const resourceDef = resourcesDef[pageData.resource];
 
@@ -49,7 +59,11 @@ const renderResourcePage = (
   switch (pageData.view) {
     case CRUDPages.list:
       return (
-        <ResourceListView resourceDef={resourceDef} data={pageData.data} />
+        <ResourceListView
+          resourceDef={resourceDef}
+          data={pageData.data}
+          routePrefix={routePrefix}
+        />
       );
 
     default:

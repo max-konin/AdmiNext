@@ -24,6 +24,7 @@
     }
   },
   "scripts": {
+    "dev": "tsup --watch ./src",
     "test": "vitest run",
     "lint": "eslint",
     "build": "tsup"
