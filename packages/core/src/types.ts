@@ -1,83 +1,121 @@
-/* eslint-disable no-unused-vars */
 import { ReactNode } from 'react';
-
-type PKField = string;
-type PKValue = string | number;
-
-export type Entity<TPKField extends PKField, TPKValue extends PKValue> = {
-  [key in TPKField]: TPKValue;
-};
-
-export type ResourceRepo<
-  TPKField extends PKField,
-  TPKValue extends PKValue,
-  TGetByIdReturnType extends Entity<TPKField, TPKValue>,
-  TFindAllReturnType extends Entity<TPKField, TPKValue>,
-> = {
-  pk: TPKField;
-  getById: (id: TPKValue) => Promise<TGetByIdReturnType | null>;
-  findAll: () => Promise<TFindAllReturnType[]>;
-};
-
-export type SingleEntityPage<
-  TPK,
-  TFields extends string,
-  TData extends { [k in TFields]: unknown },
-> = {
-  loader: (id: TPK) => Promise<TData | null | undefined>;
-  fields: {
-    [k in TFields]: {
-      label: string;
-      render?: (value: TData[k]) => ReactNode;
-    };
-  };
-};
-
-export type ListEntitiesPage<
-  TPK,
-  TFields extends string,
-  TData extends { [k in TFields]: unknown },
-> = {
-  loader: (id: TPK) => Promise<TData[]>;
-  fields: {
-    [k in TFields]: {
-      label: string;
-      render?: (value: TData[k]) => ReactNode;
-    };
-  };
-};
+import z from 'zod';
 
 export const CRUDPages = {
   list: 'list',
-  show: 'show',
+  edit: 'edit',
+  new: 'new',
 } as const;
 
 export type CRUDPageName = (typeof CRUDPages)[keyof typeof CRUDPages];
 
-export type PageDefinition = {
-  fields: Record<
-    string,
-    { label: string; render?: (value: unknown) => ReactNode }
-  >;
+export type TFormPage<
+  TFormSchema extends z.ZodSchema<any>,
+  TOtherData extends Record<string, unknown> = {},
+> = {
+  schema?: TFormSchema;
+  fields: {
+    [k in z.infer<TFormSchema>]?: {
+      label: string;
+      render?: (value: z.infer<TFormSchema>[k]) => ReactNode;
+    };
+  };
+  actions: {
+    submit: (
+      formData: { data: z.infer<TFormSchema> } & TOtherData
+    ) => Promise<void>;
+  };
 };
 
 export type Resource<
   TPK,
-  TFields extends string,
-  TData extends { [k in TFields]: unknown },
+  TListFields extends string,
+  TListData extends { [k in TListFields]: unknown },
+  TEditFormSchema extends z.ZodSchema<any>,
+  TNewFormSchema extends z.ZodSchema<any>,
+  TNewRelatedData extends Record<string, unknown[]> | never,
+  TEditFromRelatedData extends Record<string, unknown[]> | never,
+  TEditFormLoaderData extends {
+    data: z.infer<TEditFormSchema> | null | undefined;
+    related?: TEditFromRelatedData;
+  },
 > = {
-  identityBy: TPK;
+  identityBy: keyof TListData;
   title: string;
   menuLabel?: string;
   group?: string;
-  toString?: (data: TData) => string;
+  toString?: (data: TListData) => string;
   pages: {
-    show: SingleEntityPage<TPK, TFields, TData>;
-    list: ListEntitiesPage<TPK, TFields, TData>;
+    new?: TFormPage<TNewFormSchema> & {
+      loader?: () => Promise<{ related: TNewRelatedData }>;
+    };
+    edit?: TFormPage<TEditFormSchema, { id: TPK }> & {
+      loader: (id: TPK) => Promise<TEditFormLoaderData>;
+    };
+    list: {
+      loader: () => Promise<{ data: TListData[] }>;
+      fields: {
+        [k in TListFields]: {
+          label: string;
+          render?: (value: TListData[k]) => ReactNode;
+        };
+      };
+      actions?: {};
+    };
   };
 };
 
+export type Resources = Record<
+  string,
+  Resource<any, any, any, any, any, any, any, any>
+>;
+
+export type PageDefinition<TPage extends CRUDPageName> = Resource<
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any
+>['pages'][TPage];
+
 export type RouteProps = {
-  params: { resource: string[] };
+  params: { resource?: string[] };
   searchParams: Record<string, unknown>;
 };
+
+export type DashboardPage = { resource: 'dashboard' };
+export type ResourcePage = {
+  resource: string;
+  loaderData: any;
+  view: CRUDPageName;
+};
+
+export type DataProviderChildrenProps = DashboardPage | ResourcePage;
+
+export const resource = <
+  TPK,
+  TListFields extends string,
+  TListData extends { [k in TListFields]: unknown },
+  TEditFormSchema extends z.ZodSchema<any>,
+  TNewFormSchema extends z.ZodSchema<any>,
+  TNewRelatedData extends Record<string, unknown[]> | never,
+  TEditFromRelatedData extends Record<string, unknown[]> | never,
+  TEditFormLoaderData extends {
+    data: z.infer<TEditFormSchema> | null | undefined;
+    related: TEditFromRelatedData;
+  },
+>(
+  resource: Resource<
+    TPK,
+    TListFields,
+    TListData,
+    TEditFormSchema,
+    TNewFormSchema,
+    TNewRelatedData,
+    TEditFromRelatedData,
+    TEditFormLoaderData
+  >
+) => resource;

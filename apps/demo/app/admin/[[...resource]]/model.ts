@@ -1,12 +1,12 @@
-import z from 'zod';
-import { resource } from './types';
+import { resource } from '@adminext/core';
+import { z } from 'zod';
 
 export const posts = [
-  { id: 1, title: 'Hello, World!' },
-  { id: 2, title: 'Hello, Universe!' },
-  { id: 3, title: 'Hello, Galaxy!' },
-  { id: 4, title: 'Hello, Multiverse!' },
-  { id: 5, title: 'Hello, Omniverse!' },
+  { id: 1, title: 'Hello, World!', text: 'Hello, World!' },
+  { id: 2, title: 'Hello, Universe!', text: 'Hello, World!' },
+  { id: 3, title: 'Hello, Galaxy!', text: 'Hello, World!' },
+  { id: 4, title: 'Hello, Multiverse!', text: 'Hello, World!' },
+  { id: 5, title: 'Hello, Omniverse!', text: 'Hello, World!' },
 ];
 
 export const users = [
@@ -15,25 +15,11 @@ export const users = [
   { id: 3, name: 'John Smith' },
 ];
 
-export const resources = {
+export const adminResources = {
   users: resource({
     title: 'Users',
     identityBy: 'id',
     pages: {
-      new: {
-        schema: z.object({
-          name: z.string(),
-        }),
-        fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
-        },
-        actions: {
-          submit: async (data) => {
-            console.log('Submit Data', data);
-          },
-        },
-      },
       list: {
         loader: async () => ({ data: users }),
         fields: {
@@ -54,8 +40,8 @@ export const resources = {
           name: { label: 'Name' },
         },
         actions: {
-          submit: async (data) => {
-            console.log('Submit Data', data);
+          submit: async ({ id, data }) => {
+            console.log('Submit Data', id, data);
           },
         },
       },
@@ -65,6 +51,7 @@ export const resources = {
     group: 'Content',
     title: 'Posts',
     identityBy: 'id',
+    toString: (data) => data.title,
     pages: {
       list: {
         loader: async () => {
@@ -77,7 +64,8 @@ export const resources = {
       },
       edit: {
         schema: z.object({
-          title: z.string(),
+          title: z.string().min(1),
+          text: z.string().min(1),
         }),
         fields: {
           id: { label: 'ID' },
@@ -90,8 +78,8 @@ export const resources = {
           };
         },
         actions: {
-          submit: async (data) => {
-            console.log('Submit Data', data);
+          submit: async ({ id, data }) => {
+            console.log('Submit Data', id, data);
           },
         },
       },

@@ -23,7 +23,7 @@ export const NavGroup = (props: NavGroupProps) => {
       >
         {label}
       </Text>
-      <Stack spacing="1">{children}</Stack>
+      <Stack gap="1">{children}</Stack>
     </Box>
   );
 };

@@ -1,16 +1,17 @@
-import { CRUDPages } from '../../types';
+import { Container } from '@chakra-ui/react';
 import {
-  CurrentPageData,
+  CRUDPages,
+  DataProviderChildrenProps,
   ResourcePage,
-  ResourcesDefinition,
-  type DataProviderChildrenProps,
-} from '../server';
-import { MainLayout } from './MainLayout';
-import { ResourceListView } from './resource-views';
+  Resources,
+} from '../../types';
+import { Provider } from '../ui';
 
-export type AdmiNextProps = DataProviderChildrenProps & {
-  routePrefix: string;
-};
+import { MainLayout } from './MainLayout';
+import { ResourceEditView, ResourceListView } from './resource-views';
+import { SidebarMenuProps } from './sidebar';
+
+export type AdmiNextProps = DataProviderChildrenProps & SidebarMenuProps;
 
 export function AdmiNext({
   resourcesDefinition,
@@ -18,22 +19,26 @@ export function AdmiNext({
   ...pageData
 }: AdmiNextProps) {
   return (
-    <MainLayout
-      resourcesDefinition={resourcesDefinition}
-      routePrefix={routePrefix}
-    >
-      {renderResourcePageOrDashboard(
-        pageData,
-        resourcesDefinition,
-        routePrefix
-      )}
-    </MainLayout>
+    <Provider>
+      <MainLayout
+        resourcesDefinition={resourcesDefinition}
+        routePrefix={routePrefix}
+      >
+        <Container>
+          {renderResourcePageOrDashboard(
+            pageData,
+            resourcesDefinition,
+            routePrefix
+          )}
+        </Container>
+      </MainLayout>
+    </Provider>
   );
 }
 
 const renderResourcePageOrDashboard = (
-  pageData: CurrentPageData,
-  resourcesDef: ResourcesDefinition,
+  pageData: DataProviderChildrenProps,
+  resourcesDef: Resources,
   routePrefix: string
 ) => {
   if (pageData.resource === 'dashboard') {
@@ -49,7 +54,7 @@ const renderResourcePageOrDashboard = (
 
 const renderResourcePage = (
   pageData: ResourcePage,
-  resourcesDef: ResourcesDefinition,
+  resourcesDef: Resources,
   routePrefix: string
 ) => {
   const resourceDef = resourcesDef[pageData.resource];
@@ -61,8 +66,17 @@ const renderResourcePage = (
       return (
         <ResourceListView
           resourceDef={resourceDef}
-          data={pageData.data}
+          loaderData={pageData.loaderData}
           routePrefix={routePrefix}
+        />
+      );
+    case CRUDPages.edit:
+      return (
+        <ResourceEditView
+          resourceDef={resourceDef}
+          loaderData={pageData.loaderData}
+          routePrefix={routePrefix}
+          resource={pageData.resource}
         />
       );
 

@@ -1,74 +1,69 @@
+import { Stack, Table, Text } from '@chakra-ui/react';
+import { Resource } from '../../../types';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
+  BreadcrumbCurrentLink,
   BreadcrumbLink,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
-import { ClientResourceDefinition } from '../../../utils';
-import { Link } from '@chakra-ui/next-js';
+  BreadcrumbRoot,
+} from '../../ui/breadcrumb';
+import Link from 'next/link';
 
 export type ResourceListViewProps<
-  TFields extends string,
-  TData extends { [k in TFields]: unknown },
+  TPK,
+  TListFields extends string,
+  TListData extends { [k in TListFields]: unknown },
 > = {
   routePrefix: string;
-  data: TData[];
-  resourceDef: ClientResourceDefinition;
+  loaderData: { data: TListData[] };
+  resourceDef: Resource<TPK, TListFields, TListData, any, any, any, any, any>;
 };
 
 export const ResourceListView = <
-  TFields extends string,
-  TData extends { [k in TFields]: unknown },
+  TPK,
+  TListFields extends string,
+  TListData extends { [k in TListFields]: unknown },
 >({
-  data,
+  loaderData: { data },
   resourceDef,
   routePrefix,
-}: ResourceListViewProps<TFields, TData>) => {
-  const fields = Object.entries(resourceDef.pages.list.fields);
-  const identityBy = resourceDef.identityBy as TFields;
+}: ResourceListViewProps<TPK, TListFields, TListData>) => {
+  const fields = Object.entries(resourceDef.pages.list.fields) as [
+    TListFields,
+    {
+      label: string;
+      render?: (value: TListData[TListFields]) => JSX.Element;
+    },
+  ][];
+  const identityBy = resourceDef.identityBy as TListFields;
   return (
-    <Stack spacing={2}>
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} href={`/${routePrefix}`}>
-            Dashboard
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>{resourceDef.title}</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
-      <TableContainer>
-        <Table>
-          <Thead>
-            <Tr>
-              {fields.map(([key, f]) => (
-                <Td key={key}>{f.label}</Td>
-              ))}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.map((d) => (
-              <Tr key={String(d[identityBy]!)}>
-                {fields.map(([key, f]) => (
-                  <Td key={key}>
-                    {f.render?.(d[key as TFields]) ?? (
-                      <Text>{String(d[key as TFields])}</Text>
-                    )}
-                  </Td>
-                ))}
-              </Tr>
+    <Stack gap={2}>
+      <BreadcrumbRoot>
+        <BreadcrumbLink asChild>
+          <Link href={`/${routePrefix}`}>Home</Link>
+        </BreadcrumbLink>
+        <BreadcrumbCurrentLink>{resourceDef.title}</BreadcrumbCurrentLink>
+      </BreadcrumbRoot>
+      <Table.Root>
+        <Table.Header>
+          <Table.Row>
+            {fields.map(([key, f]) => (
+              <Table.ColumnHeader key={key}>{f.label}</Table.ColumnHeader>
             ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {data.map((d) => (
+            <Table.Row key={String(d[identityBy]!)}>
+              {fields.map(([key, f]) => (
+                <Table.Cell key={key}>
+                  {f.render?.(d[key as TListFields]) ?? (
+                    <Text>{String(d[key as TListFields])}</Text>
+                  )}
+                </Table.Cell>
+              ))}
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
     </Stack>
   );
 };

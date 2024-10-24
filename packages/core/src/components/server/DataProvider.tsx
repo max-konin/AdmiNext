@@ -1,31 +1,16 @@
 import { ReactNode } from 'react';
-import { CRUDPageName, Resource, RouteProps } from '../../types';
 import {
-  ClientResourceDefinition,
-  removeServerFunctionsFromResourceDefinition,
-} from '../../utils';
-
-export type ResourcesDefinition = {
-  [key: string]: ClientResourceDefinition;
-};
-
-export type DataProviderChildrenProps = {
-  resourcesDefinition: ResourcesDefinition;
-} & CurrentPageData;
-
-export type DashboardPage = { resource: 'dashboard' };
-export type ResourcePage = {
-  resource: string;
-  data: any;
-  view: CRUDPageName;
-};
-
-export type CurrentPageData = DashboardPage | ResourcePage;
+  CRUDPageName,
+  CRUDPages,
+  DataProviderChildrenProps,
+  PageDefinition,
+  Resources,
+  RouteProps,
+} from '../../types';
+import { notFound } from 'next/navigation';
 
 export type DataProviderProps = {
-  resources: {
-    [key: string]: Resource<any, any, any>;
-  };
+  resources: Resources;
   routeProps: RouteProps;
   children: (props: DataProviderChildrenProps) => ReactNode;
 };
@@ -37,37 +22,60 @@ export const DataProvider = async ({
   },
   children,
 }: DataProviderProps) => {
-  const [currentResource, currentId] = resourceParams;
-  const resourcesDefinition = Object.fromEntries(
-    Object.entries(resources).map(([k, r]) => [
-      k,
-      removeServerFunctionsFromResourceDefinition(r),
-    ])
-  );
-  if (!currentResource) {
+  if (!resourceParams) {
     return (
       <>
         {children({
-          resourcesDefinition,
           resource: 'dashboard',
         })}
       </>
     );
   }
-  const resource = currentResource ?? 'dashboard';
-  const view = currentId ? 'show' : 'list';
-  const resourceDef = resources[currentResource]!;
 
-  const data = await resourceDef.pages[view].loader(currentId);
+  const [currentResource, currentId] = resourceParams;
+
+  const view = getView(currentId);
+  const loaderData = await loadRouteData(
+    currentResource!,
+    view,
+    resources,
+    currentId
+  );
 
   return (
     <>
       {children({
-        resourcesDefinition,
-        resource,
-        data: data,
+        resource: currentResource!,
+        loaderData,
         view,
       })}
     </>
   );
+};
+
+const getView = (segment?: string) => {
+  if (!segment) return CRUDPages.list;
+  return segment.length === 1 ? CRUDPages.edit : CRUDPages.new;
+};
+
+const loadRouteData = async (
+  resource: string,
+  view: CRUDPageName,
+  resources: Resources,
+  currentId?: string
+) => {
+  const pageDefinition = resources[resource]?.pages[view];
+
+  if (!pageDefinition) return notFound();
+
+  switch (view) {
+    case CRUDPages.edit:
+      return pageDefinition.loader!(currentId);
+    case CRUDPages.new:
+      return (pageDefinition as PageDefinition<'new'>)?.loader!();
+    case CRUDPages.list:
+      return (pageDefinition as PageDefinition<'list'>).loader!();
+    default:
+      throw new Error('Not implemented');
+  }
 };

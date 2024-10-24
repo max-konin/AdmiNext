@@ -1,15 +1,13 @@
 import { Stack } from '@chakra-ui/react';
-import { ClientResourceDefinition } from '../../../utils';
 import { NavGroup } from './NavGroup';
 import { NavItem } from './NavItem';
+import { Resources } from '../../../types';
 
 const DEFAULT_GROUP_NAME = 'default';
 
 export type SidebarMenuProps = {
   routePrefix: string;
-  resourcesDefinition: {
-    [key: string]: ClientResourceDefinition;
-  };
+  resourcesDefinition: Resources;
 };
 
 export const SidebarMenu = ({
@@ -21,7 +19,7 @@ export const SidebarMenu = ({
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
 
   return (
-    <Stack spacing="2">
+    <Stack gap="2">
       {groupedResources.map(([group, resources]) => (
         <NavGroup label={group == DEFAULT_GROUP_NAME ? '' : group}>
           {resources.map(({ key, menuLabel, title }) => (
@@ -37,7 +35,7 @@ export const SidebarMenu = ({
   );
 };
 
-const groupResource = (resources: Record<string, ClientResourceDefinition>) => {
+const groupResource = (resources: Resources) => {
   return Object.entries(
     Object.entries(resources).reduce(
       (acc, [key, resource]) => {
@@ -46,7 +44,7 @@ const groupResource = (resources: Record<string, ClientResourceDefinition>) => {
         acc[group].push({ key, ...resource });
         return acc;
       },
-      {} as Record<string, (ClientResourceDefinition & { key: string })[]>
+      {} as Record<string, (Resources[string] & { key: string })[]>
     )
   ).sort(([groupA], [groupB]) =>
     groupA == DEFAULT_GROUP_NAME
