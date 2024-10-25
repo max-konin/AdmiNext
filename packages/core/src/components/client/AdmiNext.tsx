@@ -8,7 +8,11 @@ import {
 import { Provider } from '../ui';
 
 import { MainLayout } from './MainLayout';
-import { ResourceEditView, ResourceListView } from './resource-views';
+import {
+  ResourceEditView,
+  ResourceListView,
+  ResourceNewView,
+} from './resource-views';
 import { SidebarMenuProps } from './sidebar';
 
 export type AdmiNextProps = DataProviderChildrenProps & SidebarMenuProps;
@@ -68,11 +72,21 @@ const renderResourcePage = (
           resourceDef={resourceDef}
           loaderData={pageData.loaderData}
           routePrefix={routePrefix}
+          resource={pageData.resource}
         />
       );
     case CRUDPages.edit:
       return (
         <ResourceEditView
+          resourceDef={resourceDef}
+          loaderData={pageData.loaderData}
+          routePrefix={routePrefix}
+          resource={pageData.resource}
+        />
+      );
+    case CRUDPages.new:
+      return (
+        <ResourceNewView
           resourceDef={resourceDef}
           loaderData={pageData.loaderData}
           routePrefix={routePrefix}

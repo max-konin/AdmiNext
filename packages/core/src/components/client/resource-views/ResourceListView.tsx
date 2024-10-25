@@ -1,4 +1,4 @@
-import { Stack, Table, Text } from '@chakra-ui/react';
+import { Box, Button, Stack, Table, Text } from '@chakra-ui/react';
 import { Resource } from '../../../types';
 import {
   BreadcrumbCurrentLink,
@@ -6,6 +6,7 @@ import {
   BreadcrumbRoot,
 } from '../../ui/breadcrumb';
 import Link from 'next/link';
+import { LuPlus } from 'react-icons/lu';
 
 export type ResourceListViewProps<
   TPK,
@@ -13,6 +14,7 @@ export type ResourceListViewProps<
   TListData extends { [k in TListFields]: unknown },
 > = {
   routePrefix: string;
+  resource: string;
   loaderData: { data: TListData[] };
   resourceDef: Resource<TPK, TListFields, TListData, any, any, any, any, any>;
 };
@@ -25,6 +27,7 @@ export const ResourceListView = <
   loaderData: { data },
   resourceDef,
   routePrefix,
+  resource,
 }: ResourceListViewProps<TPK, TListFields, TListData>) => {
   const fields = Object.entries(resourceDef.pages.list.fields) as [
     TListFields,
@@ -35,7 +38,7 @@ export const ResourceListView = <
   ][];
   const identityBy = resourceDef.identityBy as TListFields;
   return (
-    <Stack gap={2}>
+    <Stack gap={4}>
       <BreadcrumbRoot>
         <BreadcrumbLink asChild>
           <Link href={`/${routePrefix}`}>Home</Link>
@@ -64,6 +67,14 @@ export const ResourceListView = <
           ))}
         </Table.Body>
       </Table.Root>
+      <Box>
+        <Button asChild>
+          <Link href={`/${routePrefix}/${resource}/new`}>
+            <LuPlus />
+            New
+          </Link>
+        </Button>
+      </Box>
     </Stack>
   );
 };

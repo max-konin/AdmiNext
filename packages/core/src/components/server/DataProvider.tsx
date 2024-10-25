@@ -72,7 +72,7 @@ const loadRouteData = async (
     case CRUDPages.edit:
       return pageDefinition.loader!(currentId);
     case CRUDPages.new:
-      return (pageDefinition as PageDefinition<'new'>)?.loader!();
+      return (pageDefinition as PageDefinition<'new'>)?.loader?.();
     case CRUDPages.list:
       return (pageDefinition as PageDefinition<'list'>).loader!();
     default:

@@ -14,7 +14,7 @@ export type TFormPage<
   TOtherData extends Record<string, unknown> = {},
 > = {
   schema?: TFormSchema;
-  fields: {
+  fields?: {
     [k in z.infer<TFormSchema>]?: {
       label: string;
       render?: (value: z.infer<TFormSchema>[k]) => ReactNode;
@@ -105,7 +105,7 @@ export const resource = <
   TEditFromRelatedData extends Record<string, unknown[]> | never,
   TEditFormLoaderData extends {
     data: z.infer<TEditFormSchema> | null | undefined;
-    related: TEditFromRelatedData;
+    relate?: TEditFromRelatedData;
   },
 >(
   resource: Resource<
