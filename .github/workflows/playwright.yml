@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: npm install -g pnpm@9.12.2 && pnpm install
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: cd apps/demo pnpm exec playwright install --with-deps
       - name: Push DB
         run: pnpm run db:push:dev
       - name: Prisma generate
