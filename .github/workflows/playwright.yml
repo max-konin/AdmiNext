@@ -32,11 +32,14 @@ jobs:
       - name: Install dependencies
         run: npm install -g pnpm@9.12.2 && pnpm install
       - name: Install Playwright Browsers
-        run: cd apps/demo pnpm exec playwright install --with-deps
+        working-directory: ./apps/demo
+        run: pnpm exec playwright install --with-deps
       - name: Push DB
-        run: pnpm run db:push:dev
+        working-directory: ./apps/demo
+        run: pnpm run prisma:push
       - name: Prisma generate
-        run: pnpm run db:generate
+        working-directory: ./apps/demo
+        run: pnpm run prisma:generate
       - name: Run Playwright tests
         run: pnpm run test:e2e
       - uses: actions/upload-artifact@v4

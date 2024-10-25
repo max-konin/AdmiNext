@@ -8,10 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate",
-    "db:deploy": "prisma migrate deploy",
-    "db:migrate:dev": "dotenv -e .env prisma migrate dev"
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push --skip-generate",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:migrate:dev": "dotenv -e .env prisma migrate dev"
   },
   "dependencies": {
     "@adminext/core": "workspace:*",
