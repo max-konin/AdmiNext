@@ -49,15 +49,23 @@ export const ResourceListView = <
         <Table.Header>
           <Table.Row>
             {fields.map(([key, f]) => (
-              <Table.ColumnHeader key={key}>{f.label}</Table.ColumnHeader>
+              <Table.ColumnHeader key={key} data-testid="resource-table-header">
+                {f.label}
+              </Table.ColumnHeader>
             ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {data.map((d) => (
-            <Table.Row key={String(d[identityBy]!)}>
+            <Table.Row
+              key={String(d[identityBy]!)}
+              data-testid="resource-table-row"
+            >
               {fields.map(([key, f]) => (
-                <Table.Cell key={key}>
+                <Table.Cell
+                  key={key}
+                  data-testid={`resource-table-cell__${key}`}
+                >
                   {f.render?.(d[key as TListFields]) ?? (
                     <Text>{String(d[key as TListFields])}</Text>
                   )}

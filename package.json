@@ -5,6 +5,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
@@ -12,7 +14,7 @@
     "turbo": "^2.1.3",
     "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.12.2",
   "engines": {
     "node": ">=18"
   }

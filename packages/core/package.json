@@ -2,7 +2,7 @@
   "name": "@adminext/core",
   "author": "Max Konin <maxim21214@gmail.com>",
   "license": "MIT",
-  "version": "0.2.2",
+  "version": "0.0.1",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",

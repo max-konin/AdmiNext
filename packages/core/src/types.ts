@@ -50,7 +50,7 @@ export type Resource<
       loader?: () => Promise<{ related: TNewRelatedData }>;
     };
     edit?: TFormPage<TEditFormSchema, { id: TPK }> & {
-      loader: (id: TPK) => Promise<TEditFormLoaderData>;
+      loader: (id: string) => Promise<TEditFormLoaderData>;
     };
     list: {
       loader: () => Promise<{ data: TListData[] }>;

@@ -55,7 +55,7 @@ export const DataProvider = async ({
 
 const getView = (segment?: string) => {
   if (!segment) return CRUDPages.list;
-  return segment.length === 1 ? CRUDPages.edit : CRUDPages.new;
+  return segment === 'new' ? CRUDPages.new : CRUDPages.edit;
 };
 
 const loadRouteData = async (
@@ -70,7 +70,9 @@ const loadRouteData = async (
 
   switch (view) {
     case CRUDPages.edit:
-      return pageDefinition.loader!(currentId);
+      const res = await pageDefinition.loader!(currentId!);
+      if (!res.data) return notFound();
+      return res;
     case CRUDPages.new:
       return (pageDefinition as PageDefinition<'new'>)?.loader?.();
     case CRUDPages.list:

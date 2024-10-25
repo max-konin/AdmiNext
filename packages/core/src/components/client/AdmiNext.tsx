@@ -14,6 +14,7 @@ import {
   ResourceNewView,
 } from './resource-views';
 import { SidebarMenuProps } from './sidebar';
+import { DefaultDashboard } from './DefaultDashboard';
 
 export type AdmiNextProps = DataProviderChildrenProps & SidebarMenuProps;
 
@@ -46,7 +47,7 @@ const renderResourcePageOrDashboard = (
   routePrefix: string
 ) => {
   if (pageData.resource === 'dashboard') {
-    return <div>Dashboard</div>;
+    return <DefaultDashboard />;
   }
 
   return renderResourcePage(
