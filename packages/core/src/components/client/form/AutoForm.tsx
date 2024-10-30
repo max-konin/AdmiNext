@@ -11,6 +11,7 @@ import { StringField } from './StringField';
 import { NumberField } from './NumberField';
 import { ErrorMessage } from './ErrorMessage';
 import { AutoFormProps } from './types';
+import { BooleanField } from './BooleanField';
 
 const ChakraUIComponents: AutoFormUIComponents = {
   Form,
@@ -25,7 +26,7 @@ const ChakraUIComponents: AutoFormUIComponents = {
 export const ChakraAutoFormFieldComponents = {
   string: StringField,
   number: NumberField,
-  boolean: () => <>Not implemented</>,
+  boolean: BooleanField,
   date: () => <>Not implemented</>,
   select: () => <>Not implemented</>,
 } as const;
