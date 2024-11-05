@@ -10,6 +10,8 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
+import { useServerActionWithToast } from '../../server/use-server-action-with-toast';
+import { delay } from './lib';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -25,6 +27,16 @@ export const ResourceNewView = ({
 }: ResourceNewViewProps) => {
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
+
+  const { execute } = useServerActionWithToast({
+    fn: async (data) => {
+      await pageDefinition.actions.submit({ data });
+    },
+    onSuccess: async () => {
+      await delay(2000);
+      router.push(`/${routePrefix}/${resource}`);
+    },
+  });
 
   return (
     <Stack gap={4}>
@@ -43,12 +55,7 @@ export const ResourceNewView = ({
           <AutoForm
             withSubmit
             schema={new ZodProvider(pageDefinition.schema)}
-            onSubmit={async (data) => {
-              await pageDefinition.actions.submit({
-                data,
-              });
-              router.push(`/${routePrefix}/${resource}`);
-            }}
+            onSubmit={execute}
             defaultValues={{}}
           />
         </Card.Body>
