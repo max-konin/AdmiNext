@@ -9,6 +9,7 @@ import { Resource } from '../../../types';
 import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
+import { getSchema } from '../../../utils';
 
 export type ResourceEditViewProps = {
   routePrefix: string;
@@ -21,10 +22,14 @@ export const ResourceEditView = ({
   routePrefix,
   resourceDef,
   resource,
-  loaderData: { data },
+  loaderData,
 }: ResourceEditViewProps) => {
   const pageDefinition = resourceDef.pages.edit!;
-  const id = data[resourceDef.identityBy];
+  const id = loaderData.data[resourceDef.identityBy];
+
+  const resourceTitle = resourceDef.toName
+    ? resourceDef.toName(loaderData.data)
+    : `#${id}`;
 
   return (
     <Stack gap={4}>
@@ -37,19 +42,21 @@ export const ResourceEditView = ({
         </BreadcrumbLink>
         <BreadcrumbCurrentLink>{id}</BreadcrumbCurrentLink>
       </BreadcrumbRoot>
-      <Heading>Edit {resourceDef.toString?.(data) ?? `#${id}`}</Heading>
+      <Heading>Edit {resourceTitle}</Heading>
       <Card.Root>
         <Card.Body>
           <AutoForm
             withSubmit
-            schema={new ZodProvider(pageDefinition.schema)}
+            schema={
+              new ZodProvider(getSchema(pageDefinition.schema, loaderData))
+            }
             onSubmit={(data) =>
               pageDefinition.actions.submit({
                 id,
                 data,
               })
             }
-            defaultValues={data}
+            defaultValues={loaderData.data}
           />
         </Card.Body>
       </Card.Root>

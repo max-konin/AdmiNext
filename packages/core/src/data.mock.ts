@@ -1,5 +1,5 @@
 import z from 'zod';
-import { resource } from './types';
+import { resource } from './utils';
 
 export const posts = [
   { id: 1, title: 'Hello, World!' },
@@ -21,9 +21,11 @@ export const resources = {
     identityBy: 'id',
     pages: {
       new: {
-        schema: z.object({
-          name: z.string(),
-        }),
+        loader: undefined,
+        schema: () =>
+          z.object({
+            name: z.string(),
+          }),
         fields: {
           id: { label: 'ID' },
           name: { label: 'Name' },

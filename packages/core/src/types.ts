@@ -11,9 +11,17 @@ export type CRUDPageName = (typeof CRUDPages)[keyof typeof CRUDPages];
 
 export type TFormPage<
   TFormSchema extends z.ZodSchema<any>,
+  TLoaderFn extends ((...args: any[]) => Promise<any>) | undefined = undefined,
   TOtherData extends Record<string, unknown> = {},
 > = {
-  schema?: TFormSchema;
+  schema:
+    | TFormSchema
+    | ((
+        loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
+          ? Awaited<ReturnType<TLoaderFn>>
+          : never
+      ) => TFormSchema);
+  loader: TLoaderFn;
   fields?: {
     [k in z.infer<TFormSchema>]?: {
       label: string;
@@ -44,14 +52,17 @@ export type Resource<
   title: string;
   menuLabel?: string;
   group?: string;
-  toString?: (data: TListData) => string;
+  toName?: (data: TListData) => string;
   pages: {
-    new?: TFormPage<TNewFormSchema> & {
-      loader?: () => Promise<{ related: TNewRelatedData }>;
-    };
-    edit?: TFormPage<TEditFormSchema, { id: TPK }> & {
-      loader: (id: string) => Promise<TEditFormLoaderData>;
-    };
+    new?: TFormPage<
+      TNewFormSchema,
+      (() => Promise<{ related: TNewRelatedData }>) | undefined
+    >;
+    edit?: TFormPage<
+      TEditFormSchema,
+      (id: string) => Promise<TEditFormLoaderData>,
+      { id: TPK }
+    >;
     list: {
       loader: () => Promise<{ data: TListData[] }>;
       fields: {
@@ -95,27 +106,4 @@ export type ResourcePage = {
 
 export type DataProviderChildrenProps = DashboardPage | ResourcePage;
 
-export const resource = <
-  TPK,
-  TListFields extends string,
-  TListData extends { [k in TListFields]: unknown },
-  TEditFormSchema extends z.ZodSchema<any>,
-  TNewFormSchema extends z.ZodSchema<any>,
-  TNewRelatedData extends Record<string, unknown[]> | never,
-  TEditFromRelatedData extends Record<string, unknown[]> | never,
-  TEditFormLoaderData extends {
-    data: z.infer<TEditFormSchema> | null | undefined;
-    relate?: TEditFromRelatedData;
-  },
->(
-  resource: Resource<
-    TPK,
-    TListFields,
-    TListData,
-    TEditFormSchema,
-    TNewFormSchema,
-    TNewRelatedData,
-    TEditFromRelatedData,
-    TEditFormLoaderData
-  >
-) => resource;
+export type SelectOption = [string, string];
