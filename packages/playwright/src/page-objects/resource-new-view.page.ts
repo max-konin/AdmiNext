@@ -20,6 +20,18 @@ export class ResourceNewViewPage {
     await this.page.fill(`[name="${fieldName}"]`, value);
   }
 
+  async fillFormSelectField(fieldName: string, value: string) {
+    await this.page
+      .getByRole('combobox', { name: fieldName })
+      .selectOption({ label: value });
+  }
+
+  async toggleFormCheckbox(fieldName: string) {
+    await this.page
+      .locator(`label.chakra-field__label[for="${fieldName}"]`)
+      .click();
+  }
+
   async submitForm() {
     await this.page.getByRole('button', { name: 'Submit' }).click();
   }

@@ -10,6 +10,7 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
+import { getSchema } from '../../../utils';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -22,6 +23,7 @@ export const ResourceNewView = ({
   routePrefix,
   resourceDef,
   resource,
+  loaderData,
 }: ResourceNewViewProps) => {
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
@@ -42,7 +44,9 @@ export const ResourceNewView = ({
         <Card.Body>
           <AutoForm
             withSubmit
-            schema={new ZodProvider(pageDefinition.schema)}
+            schema={
+              new ZodProvider(getSchema(pageDefinition.schema, loaderData))
+            }
             onSubmit={async (data) => {
               await pageDefinition.actions.submit({
                 data,

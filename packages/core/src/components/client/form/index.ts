@@ -5,3 +5,5 @@ export * from './NumberField';
 export * from './StringField';
 export * from './SubmitButton';
 export * from './BooleanField';
+export * from './SelectField';
+export * from './BelongsToField';

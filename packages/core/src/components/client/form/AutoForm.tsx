@@ -12,6 +12,8 @@ import { NumberField } from './NumberField';
 import { ErrorMessage } from './ErrorMessage';
 import { AutoFormProps } from './types';
 import { BooleanField } from './BooleanField';
+import { SelectField } from './SelectField';
+import { BelongsToField } from './BelongsToField';
 
 const ChakraUIComponents: AutoFormUIComponents = {
   Form,
@@ -28,7 +30,8 @@ export const ChakraAutoFormFieldComponents = {
   number: NumberField,
   boolean: BooleanField,
   date: () => <>Not implemented</>,
-  select: () => <>Not implemented</>,
+  select: SelectField,
+  belongsTo: BelongsToField,
 } as const;
 export type FieldTypes = keyof typeof ChakraAutoFormFieldComponents;
 
