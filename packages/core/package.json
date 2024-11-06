@@ -57,6 +57,7 @@
     "tsup": "^8.2.4"
   },
   "dependencies": {
+    "@autoform/core": "^2.1.0",
     "@autoform/react": "^2.1.0",
     "@autoform/zod": "^2.0.0",
     "@chakra-ui/react": "3.0.0-next.32",

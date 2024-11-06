@@ -6,18 +6,32 @@ import test from '@playwright/test';
 import { prisma } from '../../app/db';
 
 test.afterEach(async () => {
+  await prisma.post.deleteMany();
   await prisma.category.deleteMany();
 });
 
 test('Visit resource new page and submit the form', async ({ page }) => {
-  const newPage = new ResourceNewViewPage(page, '/admin', 'categories');
+  const categoryName = 'Category 1';
+  await prisma.category.create({
+    data: {
+      name: categoryName,
+    },
+  });
+
+  const newPage = new ResourceNewViewPage(page, '/admin', 'posts');
 
   await newPage.visit();
-  await newPage.fillFormTextField('name', 'New Category');
+  await newPage.fillFormTextField('title', 'New post');
+  await newPage.fillFormTextField('content', 'Awesome post');
+  await newPage.fillFormSelectField('category', categoryName);
+  await newPage.toggleFormCheckbox('published');
   await newPage.submitForm();
 
-  const listPage = new ResourceListViewPage(page, '/admin', 'categories');
+  const listPage = new ResourceListViewPage(page, '/admin', 'posts');
 
   await page.waitForURL(listPage.url);
   await listPage.shouldHaveNRecords(1);
+  await listPage.shouldHaveCellWithText('title', 0, 'New post');
+  await listPage.shouldHaveCellWithText('category', 0, categoryName);
+  await listPage.shouldHaveCellWithText('published', 0, '✅');
 });
