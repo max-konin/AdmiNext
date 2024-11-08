@@ -1,5 +1,6 @@
 import {
   BreadcrumbCurrentLink,
+  Button,
   Card,
   Heading,
   Link,
@@ -29,13 +30,15 @@ export const ResourceNewView = ({
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
 
-  const { execute } = useServerActionWithToast({
+  const { execute, isLoading } = useServerActionWithToast({
     fn: async (data) => {
       await pageDefinition.actions.submit({ data });
     },
     onSuccess: async () => {
       router.push(`/${routePrefix}/${resource}`);
     },
+    successMessage: { title: 'Done!', description: 'New record added' },
+    errorMessage: { title: 'Error', description: 'Failed to add new record' },
   });
 
   return (
@@ -59,6 +62,11 @@ export const ResourceNewView = ({
             }
             onSubmit={execute}
             defaultValues={{}}
+            uiComponents={
+              isLoading
+                ? { SubmitButton: () => <Button disabled>Submit</Button> }
+                : {}
+            }
           />
         </Card.Body>
       </Card.Root>
