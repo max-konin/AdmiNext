@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { toaster } from "../ui/toaster";
 
 type MessageType = {
-  title: string,
-  description: string
+  title?: string,
+  description?: string
 }
 
 export type useServerActionWithToastArgs<TFnInput, TFnOutput> = {
@@ -18,11 +19,15 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
   fn,
   onError,
   onSuccess,
-  successMessage = { title: 'Successfully uploaded!', description: 'Looks great' },
-  errorMessage = { title: 'Upload failed', description: 'Something went wrong' },
-  loadingMessage = { title: 'Loading...', description: 'Please wait' },
+  successMessage = { title: 'Done!' },
+  errorMessage = { title: 'Error' },
+  loadingMessage = { title: 'Loading...' },
 }: useServerActionWithToastArgs<TFnInput, TFnOutput>) => {
+
+  const [isLoading, setLoading] = useState<boolean>(false);
+
   const execute = async (input: TFnInput) => {
+    setLoading(true)
     const promiseFn = new Promise<TFnOutput>(async (resolve, reject) => {
       try {
         const result = await fn(input);
@@ -31,6 +36,8 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
       } catch (error) {
         if (onError) onError(error);
         reject(error);
+      } finally {
+        setLoading(false);
       }
     });
 
@@ -40,5 +47,6 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
       error: errorMessage,
     });
   };
-  return { execute };
+
+  return { execute, isLoading };
 };
