@@ -28,18 +28,11 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
 
   const execute = async (input: TFnInput) => {
     startTransition(() => setLoading(true));
-    const promiseFn = new Promise<TFnOutput>(async (resolve, reject) => {
-      try {
-        const result = await fn(input);
-        if (onSuccess) onSuccess(result);
-        resolve(result);
-      } catch (error) {
-        if (onError) onError(error);
-        reject(error);
-      } finally {
-        startTransition(() => setLoading(false));
-      }
-    });
+
+    const promiseFn = () => fn(input)
+      .then(onSuccess)
+      .catch(onError)
+      .finally(() => startTransition(() => setLoading(false)));
 
     toaster.promise(promiseFn, {
       loading: loadingMessage,
