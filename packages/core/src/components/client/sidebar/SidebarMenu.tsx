@@ -21,7 +21,7 @@ export const SidebarMenu = ({
   return (
     <Stack gap="2">
       {groupedResources.map(([group, resources]) => (
-        <NavGroup label={group == DEFAULT_GROUP_NAME ? '' : group}>
+        <NavGroup key={group} label={group == DEFAULT_GROUP_NAME ? '' : group}>
           {resources.map(({ key, menuLabel, title }) => (
             <NavItem
               key={key}

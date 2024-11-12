@@ -1,10 +1,15 @@
-import { resource } from '@adminext/core';
+import { belongsTo, resource } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
   findAllCategories,
   findCategoryByIdForEdit,
 } from './prisma-repositories/category.repository';
+import {
+  createPost,
+  findAllPosts,
+  findRelatedData,
+} from './prisma-repositories/post.repository';
 
 export const adminResources = {
   categories: resource({
@@ -24,6 +29,7 @@ export const adminResources = {
         },
       },
       new: {
+        loader: undefined,
         schema: z.object({
           name: z.string().min(1).default(''),
         }),
@@ -41,6 +47,50 @@ export const adminResources = {
         actions: {
           submit: async ({ id, data }) => {
             console.log('Submit Data', id, data);
+          },
+        },
+      },
+    },
+  }),
+  posts: resource({
+    title: 'Posts',
+    group: 'Prisma',
+    identityBy: 'id',
+    pages: {
+      list: {
+        loader: findAllPosts,
+        fields: {
+          id: { label: 'ID' },
+          title: { label: 'Title' },
+          published: {
+            label: 'Published',
+            render: (value) => (value ? '✅' : '❌'),
+          },
+          category: { label: 'Category', render: (value) => value.name },
+          createdAt: {
+            label: 'Created At',
+            render: (value) => value.toLocaleString(),
+          },
+        },
+      },
+      new: {
+        loader: findRelatedData,
+        schema: ({ related }) =>
+          z.object({
+            title: z.string().min(1).default(''),
+            content: z.string().min(1).default(''),
+            categoryId: z
+              .string()
+              .min(1)
+              .superRefine(belongsTo(related.categories, 'name', 'id')),
+            published: z.coerce.boolean().default(false),
+          }),
+        actions: {
+          submit: async ({ data: { categoryId, ...rest } }) => {
+            await createPost({
+              ...rest,
+              category: { connect: { id: Number(categoryId) } },
+            });
           },
         },
       },
