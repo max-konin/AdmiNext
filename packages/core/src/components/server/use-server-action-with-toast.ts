@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { toaster } from "../ui/toaster";
 
 type MessageType = {
@@ -27,7 +27,7 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const execute = async (input: TFnInput) => {
-    setLoading(true)
+    startTransition(() => setLoading(true));
     const promiseFn = new Promise<TFnOutput>(async (resolve, reject) => {
       try {
         const result = await fn(input);
@@ -37,7 +37,7 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
         if (onError) onError(error);
         reject(error);
       } finally {
-        setLoading(false);
+        startTransition(() => setLoading(false));
       }
     });
 
