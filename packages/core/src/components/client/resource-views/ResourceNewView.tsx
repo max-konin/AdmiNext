@@ -30,7 +30,7 @@ export const ResourceNewView = ({
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
 
-  const { execute, isLoading } = useServerActionWithToast({
+  const [execute, isLoading] = useServerActionWithToast({
     fn: async (data) => {
       await pageDefinition.actions.submit({ data });
     },

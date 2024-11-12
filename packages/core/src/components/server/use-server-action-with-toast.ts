@@ -48,5 +48,5 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
     });
   };
 
-  return { execute, isLoading };
+  return [execute, isLoading] as const;
 };
