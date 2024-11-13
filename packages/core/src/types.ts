@@ -35,6 +35,11 @@ export type TFormPage<
   };
 };
 
+export type ListFieldDef<TFieldData> = {
+  label: string;
+  render?: (value: TFieldData) => ReactNode;
+};
+
 export type Resource<
   TPK,
   TListFields extends string,
@@ -66,10 +71,7 @@ export type Resource<
     list: {
       loader: () => Promise<{ data: TListData[] }>;
       fields: {
-        [k in TListFields]: {
-          label: string;
-          render?: (value: TListData[k]) => ReactNode;
-        };
+        [k in TListFields]?: ListFieldDef<TListData[k]>;
       };
       actions?: {};
     };
