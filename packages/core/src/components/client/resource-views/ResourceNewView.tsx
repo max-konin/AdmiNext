@@ -1,6 +1,5 @@
 import {
   BreadcrumbCurrentLink,
-  Button,
   Card,
   Heading,
   Link,
@@ -13,6 +12,7 @@ import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
 import { useServerActionWithToast } from '../../server/use-server-action-with-toast';
 import { getSchema } from '../../../utils';
+import { Button } from '../../ui/button';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -40,7 +40,6 @@ export const ResourceNewView = ({
     successMessage: { title: 'Done!', description: 'New record added' },
     errorMessage: { title: 'Error', description: 'Failed to add new record' },
   });
-
   return (
     <Stack gap={4}>
       <BreadcrumbRoot>
@@ -64,7 +63,9 @@ export const ResourceNewView = ({
             defaultValues={{}}
             uiComponents={
               isLoading
-                ? { SubmitButton: () => <Button disabled>Submit</Button> }
+                ? {
+                    SubmitButton: () => <Button loading></Button>,
+                  }
                 : {}
             }
           />
