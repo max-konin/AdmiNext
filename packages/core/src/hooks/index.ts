@@ -1,1 +1,1 @@
-export * from './use-server-action-with-toast.hook';
+export * from './use-resource-table.hook';

@@ -21,8 +21,8 @@ export class ResourceListViewPage {
     return this.page.getByTestId('resource-table-header');
   }
 
-  tableCellLocator(fieldName: string) {
-    return this.page.getByTestId(`resource-table-cell__${fieldName}`);
+  tableCellLocator(nth: number, fieldName: string) {
+    return this.page.getByTestId(`resource-table-cell__${nth}_${fieldName}`);
   }
 
   newButtonLocator() {
@@ -50,8 +50,6 @@ export class ResourceListViewPage {
   }
 
   async shouldHaveCellWithText(fieldName: string, nth: number, text: string) {
-    await expect
-      .soft(this.tableCellLocator(fieldName).nth(nth))
-      .toHaveText(text);
+    await expect.soft(this.tableCellLocator(nth, fieldName)).toHaveText(text);
   }
 }
