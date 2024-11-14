@@ -10,9 +10,8 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
-import { useServerActionWithToast } from '../../server/use-server-action-with-toast';
+import { useServerActionWithToast } from '../../../hooks';
 import { getSchema } from '../../../utils';
-import { Button } from '../../ui/button';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -61,13 +60,6 @@ export const ResourceNewView = ({
             }
             onSubmit={execute}
             defaultValues={{}}
-            uiComponents={
-              isLoading
-                ? {
-                    SubmitButton: () => <Button loading></Button>,
-                  }
-                : {}
-            }
           />
         </Card.Body>
       </Card.Root>
