@@ -10,7 +10,7 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
-import { useServerActionWithToast } from '../../server/use-server-action-with-toast';
+import { useServerActionWithToast } from '../../../hooks';
 import { getSchema } from '../../../utils';
 import { Button } from '../../ui/button';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';

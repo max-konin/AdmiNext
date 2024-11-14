@@ -1,5 +1,4 @@
-import { Provider } from '../ui';
-import { Toaster } from '../ui/toaster';
+import { Provider, Toaster } from '../ui';
 
 import { ReactNode } from 'react';
 

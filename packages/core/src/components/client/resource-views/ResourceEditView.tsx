@@ -11,7 +11,7 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { getSchema } from '../../../utils';
-import { useServerActionWithToast } from '../../server/use-server-action-with-toast';
+import { useServerActionWithToast } from '../../../hooks';
 import { useRouter } from 'next/navigation';
 
 export type ResourceEditViewProps = {
@@ -67,11 +67,6 @@ export const ResourceEditView = ({
             }
             onSubmit={execute}
             defaultValues={loaderData.data}
-            uiComponents={
-              isLoading
-                ? { SubmitButton: () => <Button disabled>Submit</Button> }
-                : {}
-            }
           />
         </Card.Body>
       </Card.Root>
