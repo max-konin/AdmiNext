@@ -23,7 +23,7 @@ describe('useServerActionWithToast', () => {
     onError: mockOnError,
     successMessage: { title: 'Success!' },
     errorMessage: { title: 'Error!' },
-    loadingMessage: { title: 'Loading...' },
+    loadingMessage: { title: 'Saving...' },
   };
 
   beforeEach(() => {
