@@ -10,10 +10,10 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
-import { useServerActionWithToast } from '../../../hooks';
 import { getSchema } from '../../../utils';
 import { Button } from '../../ui/button';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -33,7 +33,7 @@ export const ResourceNewView = ({
 
   const methods = useForm();
 
-  const [execute, isLoading] = useServerActionWithToast({
+  const [execute, isPending] = useServerActionWithToast({
     fn: async (data) => {
       await pageDefinition.actions.submit({ data });
     },
@@ -67,7 +67,7 @@ export const ResourceNewView = ({
               onSubmit={execute}
               defaultValues={{}}
               uiComponents={{
-                SubmitButton: () => <SubmitButton />,
+                SubmitButton: () => <SubmitButton isPending={isPending} />,
               }}
             />
           </FormProvider>
@@ -77,10 +77,14 @@ export const ResourceNewView = ({
   );
 };
 
-function SubmitButton() {
+function SubmitButton({ isPending }: { isPending: boolean }) {
   const {
     formState: { isSubmitting },
   } = useFormContext();
   console.log('isSub', isSubmitting);
-  return <Button type="submit">Submit</Button>;
+  return (
+    <Button type="submit" loading={isPending}>
+      Submit
+    </Button>
+  );
 }

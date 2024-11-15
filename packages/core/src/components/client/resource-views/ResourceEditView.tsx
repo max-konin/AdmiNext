@@ -11,8 +11,8 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { getSchema } from '../../../utils';
-import { useServerActionWithToast } from '../../../hooks';
 import { useRouter } from 'next/navigation';
+import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceEditViewProps = {
   routePrefix: string;

@@ -28,16 +28,13 @@ export const useServerActionWithToast = <TFnInput, TFnOutput>({
   const execute = (input: TFnInput) => {
     startTransition(async () => {
       const promise = fn(input).then(onSuccess).catch(onError);
-
       toaster.promise(promise, {
         loading: loadingMessage,
         success: successMessage,
         error: errorMessage,
       });
-
-      await promise;
-    });
-  };
+    })
+  }
 
   return [execute, isPending] as const;
 };
