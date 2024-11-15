@@ -6,13 +6,13 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { Resource } from '../../../types';
-import { AutoForm } from '../form';
+import { AutoForm, SubmitButton } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
 import { getSchema } from '../../../utils';
 import { Button } from '../../ui/button';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceNewViewProps = {
@@ -67,7 +67,9 @@ export const ResourceNewView = ({
               onSubmit={execute}
               defaultValues={{}}
               uiComponents={{
-                SubmitButton: () => <SubmitButton isPending={isPending} />,
+                SubmitButton: () => (
+                  <SubmitButton isPending={isPending}>Submit</SubmitButton>
+                ),
               }}
             />
           </FormProvider>
@@ -76,15 +78,3 @@ export const ResourceNewView = ({
     </Stack>
   );
 };
-
-function SubmitButton({ isPending }: { isPending: boolean }) {
-  const {
-    formState: { isSubmitting },
-  } = useFormContext();
-  console.log('isSub', isSubmitting);
-  return (
-    <Button type="submit" loading={isPending}>
-      Submit
-    </Button>
-  );
-}
