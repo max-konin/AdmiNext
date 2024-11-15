@@ -1,14 +1,20 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
 export class ResourceNewViewPage {
   constructor(
     private readonly page: Page,
     private readonly routePrefix: string,
     private readonly resource: string
-  ) {}
+  ) { }
 
   get url() {
     return `${this.routePrefix}/${this.resource}/new`;
+  }
+
+  // Locators
+
+  toastLocator() {
+    return this.page.getByTestId('toast');
   }
 
   // Acts
@@ -34,5 +40,11 @@ export class ResourceNewViewPage {
 
   async submitForm() {
     await this.page.getByRole('button', { name: 'Submit' }).click();
+  }
+
+  // Asserts
+
+  async shouldHaveNotificationWithMessage(message: string) {
+    await expect.soft(this.toastLocator()).toContainText(message);
   }
 }

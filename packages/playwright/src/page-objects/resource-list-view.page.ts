@@ -5,7 +5,7 @@ export class ResourceListViewPage {
     private readonly page: Page,
     private readonly routePrefix: string,
     private readonly resource: string
-  ) {}
+  ) { }
 
   get url() {
     return `${this.routePrefix}/${this.resource}`;
@@ -27,6 +27,10 @@ export class ResourceListViewPage {
 
   newButtonLocator() {
     return this.page.getByRole('link', { name: 'New' });
+  }
+
+  toastLocator() {
+    return this.page.getByTestId('toast');
   }
 
   // Acts
@@ -51,5 +55,9 @@ export class ResourceListViewPage {
 
   async shouldHaveCellWithText(fieldName: string, nth: number, text: string) {
     await expect.soft(this.tableCellLocator(nth, fieldName)).toHaveText(text);
+  }
+
+  async shouldHaveNotificationWithMessage(message: string) {
+    await expect.soft(this.toastLocator()).toContainText(message);
   }
 }
