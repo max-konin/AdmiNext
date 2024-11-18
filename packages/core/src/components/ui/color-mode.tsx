@@ -1,7 +1,7 @@
 'use client';
 
 import type { IconButtonProps } from '@chakra-ui/react';
-import { ClientOnly, IconButton, Skeleton } from '@chakra-ui/react';
+import { ClientOnly, IconButton } from '@chakra-ui/react';
 import { ThemeProvider, useTheme } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes/dist/types';
 import { forwardRef } from 'react';
@@ -32,7 +32,7 @@ export function useColorModeValue<T>(light: T, dark: T) {
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode();
-  return colorMode === 'light' ? <LuSun /> : <LuMoon />;
+  return colorMode === 'light' ? <LuSun color="white" /> : <LuMoon />;
 }
 
 interface ColorModeButtonProps extends Omit<IconButtonProps, 'aria-label'> {}
@@ -43,7 +43,7 @@ export const ColorModeButton = forwardRef<
 >(function ColorModeButton(props, ref) {
   const { toggleColorMode } = useColorMode();
   return (
-    <ClientOnly fallback={<Skeleton boxSize="8" />}>
+    <ClientOnly>
       <IconButton
         onClick={toggleColorMode}
         variant="ghost"
@@ -57,6 +57,7 @@ export const ColorModeButton = forwardRef<
             height: '5',
           },
         }}
+        background="none"
       >
         <ColorModeIcon />
       </IconButton>
