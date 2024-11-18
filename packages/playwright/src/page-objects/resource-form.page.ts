@@ -1,15 +1,17 @@
 import { type Page, expect } from '@playwright/test';
 
-export class ResourceEditViewPage {
+export class ResourceFormPage {
   constructor(
     private readonly page: Page,
     private readonly routePrefix: string,
     private readonly resource: string,
-    private readonly id: string,
+    private readonly id?: string,
   ) { }
 
   get url() {
-    return `${this.routePrefix}/${this.resource}/${this.id}`;
+    const newPageUrl = `${this.routePrefix}/${this.resource}/new`;
+    const editPageUrl = `${this.routePrefix}/${this.resource}/${this.id}`;
+    return this.id ? editPageUrl : newPageUrl;
   }
 
   // Locators
@@ -18,7 +20,7 @@ export class ResourceEditViewPage {
     return this.page.getByTestId('toast');
   }
 
-  // Act  
+  // Acts
 
   async visit() {
     await this.page.goto(this.url);
@@ -32,15 +34,30 @@ export class ResourceEditViewPage {
     await this.page.getByRole('textbox').fill(text);
   }
 
+  async fillFormTextField(fieldName: string, value: string) {
+    await this.page.fill(`[name="${fieldName}"]`, value);
+  }
+
+  async fillFormSelectField(fieldName: string, value: string) {
+    await this.page
+      .getByRole('combobox', { name: fieldName })
+      .selectOption({ label: value });
+  }
+
+  async toggleFormCheckbox(fieldName: string) {
+    await this.page
+      .locator(`label.chakra-field__label[for="${fieldName}"]`)
+      .click();
+  }
+
   async submitForm() {
     await this.page.getByRole('button', { name: 'Submit' }).click();
   }
 
-  async updateRecord(inputText: string, message: string) {
+  async updateCategory(inputText: string) {
     await this.clearInput();
     await this.fillInput(inputText);
     await this.submitForm();
-    await this.shouldHaveNotificationWithMessage(message);
   }
 
   // Asserts

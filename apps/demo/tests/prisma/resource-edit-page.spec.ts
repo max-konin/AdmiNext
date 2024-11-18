@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { ResourceEditViewPage } from '@adminext/playwright';
 import { prisma } from '../../app/db';
+import { ResourceFormPage } from '@adminext/playwright';
 
 test.afterEach(async () => {
   await prisma.category.deleteMany();
@@ -14,12 +14,15 @@ test('Visit resource edit page', async ({ page }) => {
   const category = await prisma.category.findUnique({
     where: { name: 'Category 1' },
   });
+
   const categoryId = String(category!.id);
 
-  const editPage = new ResourceEditViewPage(page, '/admin', 'categories', categoryId)
+  const editPage = new ResourceFormPage(page, '/admin', 'categories', categoryId);
 
   await editPage.visit();
 
-  await editPage.updateRecord('Category 2', 'Failed to update record');
-  await editPage.updateRecord('Category New', 'Done');
+  await editPage.updateCategory('Category 2');
+  await editPage.shouldHaveNotificationWithMessage('Failed to update record');
+  await editPage.updateCategory('Category New');
+  await editPage.shouldHaveNotificationWithMessage('Done');
 })

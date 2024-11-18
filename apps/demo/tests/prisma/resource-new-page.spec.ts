@@ -1,6 +1,6 @@
 import {
+  ResourceFormPage,
   ResourceListViewPage,
-  ResourceNewViewPage,
 } from '@adminext/playwright';
 import test from '@playwright/test';
 import { prisma } from '../../app/db';
@@ -18,7 +18,7 @@ test('Visit resource new page and submit the form', async ({ page }) => {
     },
   });
 
-  const newPage = new ResourceNewViewPage(page, '/admin', 'posts');
+  const newPage = new ResourceFormPage(page, '/admin', 'posts');
 
   await newPage.visit();
   await newPage.fillFormTextField('title', 'New post');
