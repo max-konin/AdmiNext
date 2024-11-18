@@ -4,11 +4,8 @@ import { Button } from '../../ui';
 
 export const SubmitButton: React.FC<{
   children: React.ReactNode;
-  isPending: boolean;
-}> = ({ children, isPending }) => (
+}> = ({ children }) => (
   <Box mt={2}>
-    <Button type="submit" loading={isPending}>
-      {children}
-    </Button>
+    <Button type="submit">{children}</Button>
   </Box>
 );

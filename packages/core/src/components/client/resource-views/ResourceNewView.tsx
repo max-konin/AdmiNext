@@ -33,7 +33,7 @@ export const ResourceNewView = ({
 
   const methods = useForm();
 
-  const [execute, isPending] = useServerActionWithToast({
+  const [execute] = useServerActionWithToast({
     fn: async (data) => {
       await pageDefinition.actions.submit({ data });
     },
@@ -66,11 +66,6 @@ export const ResourceNewView = ({
               }
               onSubmit={execute}
               defaultValues={{}}
-              uiComponents={{
-                SubmitButton: () => (
-                  <SubmitButton isPending={isPending}>Submit</SubmitButton>
-                ),
-              }}
             />
           </FormProvider>
         </Card.Body>

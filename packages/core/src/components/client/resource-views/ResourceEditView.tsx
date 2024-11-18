@@ -35,7 +35,7 @@ export const ResourceEditView = ({
     ? resourceDef.toName(loaderData.data)
     : `#${id}`;
 
-  const [execute, isLoading] = useServerActionWithToast({
+  const [execute] = useServerActionWithToast({
     fn: async (data) => {
       await pageDefinition.actions.submit({ data, id });
     },

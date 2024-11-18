@@ -19,7 +19,7 @@ const ChakraUIComponents: AutoFormUIComponents = {
   Form,
   FieldWrapper,
   ErrorMessage,
-  SubmitButton: (props) => <SubmitButton {...props} isPending={false} />,
+  SubmitButton,
   ObjectWrapper: () => <>Not implemented</>,
   ArrayWrapper: () => <>Not implemented</>,
   ArrayElementWrapper: () => <>Not implemented</>,
