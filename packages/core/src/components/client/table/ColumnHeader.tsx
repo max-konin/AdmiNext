@@ -16,7 +16,7 @@ export const ColumnHeader = <TListData,>({
           onClick={header.column.getToggleSortingHandler()}
           cursor={header.column.getCanSort() ? 'pointer' : 'default'}
           unselectable="on"
-          data-testId="resource-table-header"
+          data-testid="resource-table-header"
         >
           <HStack gap={1}>
             {flexRender(header.column.columnDef.header, header.getContext())}
