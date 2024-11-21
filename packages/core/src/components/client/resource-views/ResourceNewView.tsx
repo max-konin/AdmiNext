@@ -6,11 +6,14 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { Resource } from '../../../types';
-import { AutoForm } from '../form';
+import { AutoForm, SubmitButton } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
 import { getSchema } from '../../../utils';
+import { Button } from '../../ui/button';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceNewViewProps = {
   routePrefix: string;
@@ -28,6 +31,19 @@ export const ResourceNewView = ({
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
 
+  const methods = useForm();
+
+  const [execute] = useServerActionWithToast({
+    fn: async (data) => {
+      await pageDefinition.actions.submit({ data });
+    },
+    onSuccess: async () => {
+      router.push(`/${routePrefix}/${resource}`);
+    },
+    successMessage: { title: 'Done!', description: 'New record added' },
+    errorMessage: { title: 'Error', description: 'Failed to add new record' },
+  });
+
   return (
     <Stack gap={4}>
       <BreadcrumbRoot>
@@ -42,19 +58,16 @@ export const ResourceNewView = ({
       <Heading>New Record</Heading>
       <Card.Root>
         <Card.Body>
-          <AutoForm
-            withSubmit
-            schema={
-              new ZodProvider(getSchema(pageDefinition.schema, loaderData))
-            }
-            onSubmit={async (data) => {
-              await pageDefinition.actions.submit({
-                data,
-              });
-              router.push(`/${routePrefix}/${resource}`);
-            }}
-            defaultValues={{}}
-          />
+          <FormProvider {...methods}>
+            <AutoForm
+              withSubmit
+              schema={
+                new ZodProvider(getSchema(pageDefinition.schema, loaderData))
+              }
+              onSubmit={execute}
+              defaultValues={{}}
+            />
+          </FormProvider>
         </Card.Body>
       </Card.Root>
     </Stack>

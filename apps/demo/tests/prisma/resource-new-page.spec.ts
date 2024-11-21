@@ -26,6 +26,7 @@ test('Visit resource new page and submit the form', async ({ page }) => {
   await newPage.fillFormSelectField('category', categoryName);
   await newPage.toggleFormCheckbox('published');
   await newPage.submitForm();
+  await newPage.shouldHaveNotificationWithMessage('Done!');
 
   const listPage = new ResourceListViewPage(page, '/admin', 'posts');
 
@@ -34,4 +35,5 @@ test('Visit resource new page and submit the form', async ({ page }) => {
   await listPage.shouldHaveCellWithText('title', 0, 'New post');
   await listPage.shouldHaveCellWithText('category', 0, categoryName);
   await listPage.shouldHaveCellWithText('published', 0, '✅');
+  await listPage.shouldHaveNotificationWithMessage('Done!');
 });
