@@ -15,7 +15,7 @@ datasource db {
 
 model Category {
   id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
+  name      String   @unique @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
 
   posts Post[]

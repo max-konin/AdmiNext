@@ -1,17 +1,19 @@
-import { Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { ResourceFormPage } from './resource-form.page';
 
-export class ResourceNewViewPage {
+export class ResourceNewViewPage extends ResourceFormPage {
   constructor(
-    private readonly page: Page,
-    private readonly routePrefix: string,
-    private readonly resource: string
-  ) {}
+    page: Page,
+    routePrefix: string,
+    resource: string,
+  ) {
+    super(page, routePrefix, resource);
+  }
 
   get url() {
     return `${this.routePrefix}/${this.resource}/new`;
   }
 
-  // Acts
   async visit() {
     await this.page.goto(this.url);
   }
@@ -30,9 +32,5 @@ export class ResourceNewViewPage {
     await this.page
       .locator(`label.chakra-field__label[for="${fieldName}"]`)
       .click();
-  }
-
-  async submitForm() {
-    await this.page.getByRole('button', { name: 'Submit' }).click();
   }
 }

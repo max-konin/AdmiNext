@@ -5,6 +5,7 @@ import {
   deleteCategory,
   findAllCategories,
   findCategoryByIdForEdit,
+  updateCategory,
 } from './prisma-repositories/category.repository';
 import {
   createPost,
@@ -12,6 +13,7 @@ import {
   findAllPosts,
   findRelatedData,
 } from './prisma-repositories/post.repository';
+import { Prisma } from '@prisma/client';
 
 export const adminResources = {
   categories: resource({
@@ -52,8 +54,10 @@ export const adminResources = {
         }),
         loader: findCategoryByIdForEdit,
         actions: {
-          submit: async ({ id, data }) => {
-            console.log('Submit Data', id, data);
+          submit: async ({ id, data }: {
+            id: string, data: Prisma.CategoryCreateInput;
+          }) => {
+            await updateCategory(data, id);
           },
         },
       },

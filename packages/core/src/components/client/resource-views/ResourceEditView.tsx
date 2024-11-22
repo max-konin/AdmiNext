@@ -1,5 +1,6 @@
 import {
   BreadcrumbCurrentLink,
+  Button,
   Card,
   Heading,
   Link,
@@ -10,6 +11,8 @@ import { AutoForm } from '../form';
 import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { getSchema } from '../../../utils';
+import { useRouter } from 'next/navigation';
+import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceEditViewProps = {
   routePrefix: string;
@@ -26,10 +29,22 @@ export const ResourceEditView = ({
 }: ResourceEditViewProps) => {
   const pageDefinition = resourceDef.pages.edit!;
   const id = loaderData.data[resourceDef.identityBy];
+  const router = useRouter();
 
   const resourceTitle = resourceDef.toName
     ? resourceDef.toName(loaderData.data)
     : `#${id}`;
+
+  const [execute] = useServerActionWithToast({
+    fn: async (data) => {
+      await pageDefinition.actions.submit({ data, id });
+    },
+    onSuccess: async () => {
+      router.push(`/${routePrefix}/${resource}`);
+    },
+    successMessage: { title: 'Done!', description: 'Record updated' },
+    errorMessage: { title: 'Error', description: 'Failed to update record' },
+  });
 
   return (
     <Stack gap={4}>
@@ -50,12 +65,7 @@ export const ResourceEditView = ({
             schema={
               new ZodProvider(getSchema(pageDefinition.schema, loaderData))
             }
-            onSubmit={(data) =>
-              pageDefinition.actions.submit({
-                id,
-                data,
-              })
-            }
+            onSubmit={execute}
             defaultValues={loaderData.data}
           />
         </Card.Body>
