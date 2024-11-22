@@ -33,7 +33,7 @@ export const useResourceTable = <
   resourceDef: {
     identityBy,
     pages: {
-      list: { fields },
+      list: { fields, actions },
     },
   },
   data,
@@ -59,6 +59,7 @@ export const useResourceTable = <
                   resource={resource}
                   routePrefix={routePrefix}
                   resourceId={info.getValue()}
+                  deleteItem={actions!.delete}
                 />
               );
             },
