@@ -27,5 +27,8 @@ export const findPostByIdForEdit = async (id: string) => {
 export const createPost = (data: Prisma.PostCreateInput) =>
   prisma.post.create({ data });
 
+export const deletePost = (id: string) =>
+  prisma.post.delete({ where: { id: Number(id) } })
+
 const wrapData = <T>(dataPromise: Promise<T>) =>
   dataPromise.then((data) => ({ data }));
