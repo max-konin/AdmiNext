@@ -2,6 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import { NavGroup } from './NavGroup';
 import { NavItem } from './NavItem';
 import { Resources } from '../../../types';
+import { ColorModeButton } from '../../ui';
 
 const DEFAULT_GROUP_NAME = 'default';
 
@@ -29,6 +30,11 @@ export const SidebarMenu = ({
               href={buildHref(key)}
             />
           ))}
+          <ColorModeButton
+            aria-label="theme switcher"
+            position="absolute"
+            bottom={2}
+          />
         </NavGroup>
       ))}
     </Stack>
