@@ -1,11 +1,10 @@
 'use client';
 
-import type { IconButtonProps } from '@chakra-ui/react';
-import { ClientOnly, IconButton, Skeleton } from '@chakra-ui/react';
+import { ClientOnly, Skeleton } from '@chakra-ui/react';
 import { ThemeProvider, useTheme } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes/dist/types';
-import { forwardRef } from 'react';
 import { LuMoon, LuSun } from 'react-icons/lu';
+import { NavItem } from '../client/sidebar/NavItem';
 
 export function ColorModeProvider(props: ThemeProviderProps) {
   return (
@@ -32,26 +31,12 @@ export function useColorModeValue<T>(light: T, dark: T) {
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode();
-  return colorMode === 'light' ? (
-    <>
-      <LuSun />
-      Light Mode
-    </>
-  ) : (
-    <>
-      <LuMoon />
-      Dark Mode
-    </>
-  );
+  return colorMode === 'light' ? <LuSun /> : <LuMoon />;
 }
 
-interface ColorModeButtonProps extends Omit<IconButtonProps, 'aria-label'> {}
+export const ColorModeNavItem = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
 
-export const ColorModeButton = forwardRef<
-  HTMLButtonElement,
-  ColorModeButtonProps
->(function ColorModeButton(props, ref) {
-  const { toggleColorMode } = useColorMode();
   return (
     <ClientOnly
       fallback={
@@ -64,25 +49,11 @@ export const ColorModeButton = forwardRef<
         />
       }
     >
-      <IconButton
+      <NavItem
         onClick={toggleColorMode}
-        variant="ghost"
-        aria-label="Toggle color mode"
-        size="sm"
-        ref={ref}
-        {...props}
-        css={{
-          _icon: {
-            width: '5',
-            height: '5',
-          },
-        }}
-        background="none"
-        justifyContent="left"
-        color="white"
-      >
-        <ColorModeIcon />
-      </IconButton>
+        label={colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
+        icon={<ColorModeIcon />}
+      />
     </ClientOnly>
   );
-});
+};

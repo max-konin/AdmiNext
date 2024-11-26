@@ -11,17 +11,16 @@ interface NavItemProps {
   subtle?: boolean;
   icon?: ReactElement;
   endElement?: ReactElement;
+  onClick?: () => void;
 }
 
 export const NavItem = (props: NavItemProps) => {
-  const { subtle, icon, label, endElement, href } = props;
+  const { subtle, icon, label, endElement, href, onClick } = props;
   const pathname = usePathname();
   const active = new RegExp(`^${href}.*`).test(pathname);
 
-  return (
+  const content = (
     <HStack
-      as={Link}
-      href={href}
       w="full"
       px="3"
       py="2"
@@ -32,6 +31,7 @@ export const NavItem = (props: NavItemProps) => {
       bg={active ? 'gray.700' : undefined}
       _hover={{ bg: 'gray.700' }}
       _active={{ bg: 'gray.600' }}
+      onClick={onClick}
     >
       <Box fontSize="lg" color={active ? 'currentcolor' : 'gray.400'}>
         {icon}
@@ -45,5 +45,15 @@ export const NavItem = (props: NavItemProps) => {
       </Box>
       {endElement && <Box>{endElement}</Box>}
     </HStack>
+  );
+
+  return href ? (
+    <Link href={href} passHref>
+      {content}
+    </Link>
+  ) : (
+    <Box position="absolute" bottom={2} w="full">
+      {content}
+    </Box>
   );
 };

@@ -2,7 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import { NavGroup } from './NavGroup';
 import { NavItem } from './NavItem';
 import { Resources } from '../../../types';
-import { ColorModeButton } from '../../ui';
+import { ColorModeNavItem } from '../../ui';
 
 const DEFAULT_GROUP_NAME = 'default';
 
@@ -16,11 +16,10 @@ export const SidebarMenu = ({
   routePrefix,
 }: SidebarMenuProps) => {
   const groupedResources = groupResource(resourcesDefinition);
-
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
 
   return (
-    <Stack gap="2">
+    <Stack gap="2" position="relative" height="100%">
       {groupedResources.map(([group, resources]) => (
         <NavGroup key={group} label={group == DEFAULT_GROUP_NAME ? '' : group}>
           {resources.map(({ key, menuLabel, title }) => (
@@ -30,11 +29,7 @@ export const SidebarMenu = ({
               href={buildHref(key)}
             />
           ))}
-          <ColorModeButton
-            aria-label="theme switcher"
-            position="absolute"
-            bottom={2}
-          />
+          <ColorModeNavItem />
         </NavGroup>
       ))}
     </Stack>
