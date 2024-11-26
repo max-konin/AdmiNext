@@ -6,7 +6,6 @@ import {
   ResourcePage,
   Resources,
 } from '../../types';
-import { Provider } from '../ui';
 
 import { MainLayout } from './MainLayout';
 import {
@@ -25,22 +24,20 @@ export function AdmiNext({
   ...pageData
 }: AdmiNextProps) {
   return (
-    <Provider>
-      <AdmiNextContextProvider
-        resourcesDefinition={resourcesDefinition}
-        routePrefix={routePrefix}
-      >
-        <MainLayout>
-          <Container>
-            {renderResourcePageOrDashboard(
-              pageData,
-              resourcesDefinition,
-              routePrefix
-            )}
-          </Container>
-        </MainLayout>
-      </AdmiNextContextProvider>
-    </Provider>
+    <AdmiNextContextProvider
+      resourcesDefinition={resourcesDefinition}
+      routePrefix={routePrefix}
+    >
+      <MainLayout>
+        <Container>
+          {renderResourcePageOrDashboard(
+            pageData,
+            resourcesDefinition,
+            routePrefix
+          )}
+        </Container>
+      </MainLayout>
+    </AdmiNextContextProvider>
   );
 }
 
