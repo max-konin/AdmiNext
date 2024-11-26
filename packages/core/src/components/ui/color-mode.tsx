@@ -1,12 +1,16 @@
 'use client';
 
+import type { IconButtonProps } from '@chakra-ui/react';
 import { ClientOnly, Skeleton } from '@chakra-ui/react';
 import { ThemeProvider, useTheme } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes/dist/types';
+import * as React from 'react';
 import { LuMoon, LuSun } from 'react-icons/lu';
-import { NavItem } from '../client/sidebar/NavItem';
+import { Button } from './button';
 
-export function ColorModeProvider(props: ThemeProviderProps) {
+export type ColorModeProviderProps = ThemeProviderProps;
+
+export function ColorModeProvider(props: ColorModeProviderProps) {
   return (
     <ThemeProvider attribute="class" disableTransitionOnChange {...props} />
   );
@@ -34,26 +38,33 @@ export function ColorModeIcon() {
   return colorMode === 'light' ? <LuSun /> : <LuMoon />;
 }
 
-export const ColorModeNavItem = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+type ColorModeButtonProps = Omit<IconButtonProps, 'aria-label'>;
+
+export const ColorModeButton = React.forwardRef<
+  HTMLButtonElement,
+  ColorModeButtonProps
+>(function ColorModeButton(props, ref) {
+  const { toggleColorMode, colorMode } = useColorMode();
 
   return (
-    <ClientOnly
-      fallback={
-        <Skeleton
-          position="absolute"
-          bottom={2}
-          boxSize="8"
-          backgroundColor="gray.700"
-          width="200px"
-        />
-      }
-    >
-      <NavItem
+    <ClientOnly fallback={<Skeleton boxSize="8" />}>
+      <Button
         onClick={toggleColorMode}
-        label={colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
-        icon={<ColorModeIcon />}
-      />
+        variant="ghost"
+        aria-label="Toggle color mode"
+        ref={ref}
+        {...props}
+        css={{
+          _icon: {
+            width: '5',
+            height: '5',
+          },
+          justifyContent: 'start',
+        }}
+      >
+        <ColorModeIcon />
+        {colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
+      </Button>
     </ClientOnly>
   );
-};
+});
