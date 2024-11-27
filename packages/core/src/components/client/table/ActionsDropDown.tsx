@@ -8,7 +8,7 @@ export type ActionsDropDownProps = {
   resource: string;
   routePrefix: string;
   resourceId: string;
-  deleteItem: (id: string) => Promise<void>;
+  deleteItem?: (id: string) => Promise<void>;
 };
 
 const DefaultActions = {
@@ -30,9 +30,11 @@ export const ActionsDropDown = ({
         router.push(`/${routePrefix}/${resource}/${resourceId}/edit`);
         return;
       case DefaultActions.DELETE:
-        await deleteItem(resourceId);
-        router.refresh();
-        return;
+        if (deleteItem) {
+          await deleteItem(resourceId);
+          router.refresh();
+          return;
+        }
       default:
         throw new Error(`Unknown action: ${value}`);
     }

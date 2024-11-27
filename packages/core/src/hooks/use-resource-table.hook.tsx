@@ -59,7 +59,7 @@ export const useResourceTable = <
                   resource={resource}
                   routePrefix={routePrefix}
                   resourceId={info.getValue()}
-                  deleteItem={actions!.delete}
+                  deleteItem={actions?.delete}
                 />
               );
             },
