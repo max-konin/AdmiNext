@@ -1,5 +1,6 @@
 import { Container } from '@chakra-ui/react';
 import {
+  AdmiNextContextType,
   CRUDPages,
   DataProviderChildrenProps,
   ResourcePage,
@@ -12,10 +13,10 @@ import {
   ResourceListView,
   ResourceNewView,
 } from './resource-views';
-import { SidebarMenuProps } from './sidebar';
 import { DefaultDashboard } from './DefaultDashboard';
+import { AdmiNextContextProvider } from '../../contexts';
 
-export type AdmiNextProps = DataProviderChildrenProps & SidebarMenuProps;
+export type AdmiNextProps = DataProviderChildrenProps & AdmiNextContextType;
 
 export function AdmiNext({
   resourcesDefinition,
@@ -23,18 +24,20 @@ export function AdmiNext({
   ...pageData
 }: AdmiNextProps) {
   return (
-    <MainLayout
+    <AdmiNextContextProvider
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
     >
-      <Container>
-        {renderResourcePageOrDashboard(
-          pageData,
-          resourcesDefinition,
-          routePrefix
-        )}
-      </Container>
-    </MainLayout>
+      <MainLayout>
+        <Container>
+          {renderResourcePageOrDashboard(
+            pageData,
+            resourcesDefinition,
+            routePrefix
+          )}
+        </Container>
+      </MainLayout>
+    </AdmiNextContextProvider>
   );
 }
 

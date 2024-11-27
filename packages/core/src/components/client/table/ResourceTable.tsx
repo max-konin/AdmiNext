@@ -34,12 +34,12 @@ export const ResourceTable = <
       <Table.Body>
         <For each={table.getRowModel().rows}>
           {(row) => (
-            <Table.Row key={row.id} data-testId="resource-table-row">
+            <Table.Row key={row.id} data-testid="resource-table-row">
               <For each={row.getVisibleCells()}>
                 {(cell) => (
                   <Table.Cell
                     key={cell.id}
-                    data-testId={`resource-table-cell__${cell.id}`}
+                    data-testid={`resource-table-cell__${cell.id}`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
