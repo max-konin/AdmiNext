@@ -63,10 +63,12 @@ export const ActionsDropDown = ({
           <LuPenSquare />
           <Box flex={1}>Edit</Box>
         </MenuItem>
-        <MenuItem value={DefaultActions.DELETE} cursor="pointer">
-          <RiDeleteBin6Line />
-          <Box flex={1}>Delete</Box>
-        </MenuItem>
+        {deleteItem && (
+          <MenuItem value={DefaultActions.DELETE} cursor="pointer">
+            <RiDeleteBin6Line />
+            <Box flex={1}>Delete</Box>
+          </MenuItem>
+        )}
       </MenuContent>
     </MenuRoot>
   );
