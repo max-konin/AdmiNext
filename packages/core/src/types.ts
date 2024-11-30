@@ -111,3 +111,8 @@ export type ResourcePage = {
 export type DataProviderChildrenProps = DashboardPage | ResourcePage;
 
 export type SelectOption = [string, string];
+
+export type AdmiNextContextType = {
+  routePrefix: string;
+  resourcesDefinition: Resources;
+};

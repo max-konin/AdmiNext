@@ -1,34 +1,24 @@
 'use client';
 
-import { Box, Flex, Stack } from '@chakra-ui/react';
+import { Box, Container, Stack } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
-import { SidebarMenu, SidebarMenuProps } from './sidebar';
+import { Navbar, Sidebar } from './sidebar';
 
-export type MainLayoutProps = PropsWithChildren & SidebarMenuProps;
+export type MainLayoutProps = PropsWithChildren;
 
-export const MainLayout = ({
-  children,
-  ...sidebarMenuProps
-}: MainLayoutProps) => {
+export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <Box
-      height="100vh"
-      overflow="hidden"
-      position="relative"
-      suppressHydrationWarning
-    >
-      <Flex h="full" id="app-container">
-        <Box w="64" bg="gray.900" color="white" fontSize="sm">
-          <Flex h="full" direction="column" px="4" py="4">
-            <Stack gap="8" flex="1" overflow="auto" pt="8">
-              <SidebarMenu {...sidebarMenuProps} />
-            </Stack>
-          </Flex>
-        </Box>
-        <Box bg="white" flex="1" p="6" overflow="scroll">
+    <>
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        data-testid="layout-vendor"
+      >
+        <Navbar hideFrom="md" />
+        <Sidebar hideBelow="md" />
+        <Container flex="1" p={{ base: '4', md: '6' }}>
           {children}
-        </Box>
-      </Flex>
-    </Box>
+        </Container>
+      </Stack>
+    </>
   );
 };
