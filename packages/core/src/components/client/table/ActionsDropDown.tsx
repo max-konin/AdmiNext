@@ -64,7 +64,11 @@ export const ActionsDropDown = ({
           <Box flex={1}>Edit</Box>
         </MenuItem>
         {deleteItem && (
-          <MenuItem value={DefaultActions.DELETE} cursor="pointer">
+          <MenuItem
+            value={DefaultActions.DELETE}
+            cursor="pointer"
+            data-testid="delete-item"
+          >
             <RiDeleteBin6Line />
             <Box flex={1}>Delete</Box>
           </MenuItem>
