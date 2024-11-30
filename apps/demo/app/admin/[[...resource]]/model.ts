@@ -23,7 +23,7 @@ export const adminResources = {
         loader: findAllCategories,
         fields: {
           id: { label: 'ID' },
-          name: { label: 'Name' },
+          name: { label: 'Name', filterable: true },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),

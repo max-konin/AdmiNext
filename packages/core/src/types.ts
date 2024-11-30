@@ -15,12 +15,12 @@ export type TFormPage<
   TOtherData extends Record<string, unknown> = {},
 > = {
   schema:
-    | TFormSchema
-    | ((
-        loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
-          ? Awaited<ReturnType<TLoaderFn>>
-          : never
-      ) => TFormSchema);
+  | TFormSchema
+  | ((
+    loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
+      ? Awaited<ReturnType<TLoaderFn>>
+      : never
+  ) => TFormSchema);
   loader: TLoaderFn;
   fields?: {
     [k in z.infer<TFormSchema>]?: {
@@ -38,6 +38,7 @@ export type TFormPage<
 export type ListFieldDef<TFieldData> = {
   label: string;
   render?: (value: TFieldData) => ReactNode;
+  filterable?: boolean
 };
 
 export type Resource<

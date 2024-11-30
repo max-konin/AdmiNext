@@ -51,14 +51,14 @@ export const useResourceTable = <
         }))
         .concat([
           {
-            accessorKey: identityBy as TListFields,
+            accessorKey: 'actions' as unknown as TListFields,
             header: '',
             cell: (info: CellContext<TListData, any>) => {
               return (
                 <ActionsDropDown
                   resource={resource}
                   routePrefix={routePrefix}
-                  resourceId={info.getValue()}
+                  resourceId={info.row.getValue(identityBy as string)}
                 />
               );
             },
