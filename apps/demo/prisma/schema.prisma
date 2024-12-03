@@ -29,6 +29,6 @@ model Post {
   published   Boolean   @default(false)
   publishedAt DateTime?
 
-  category   Category @relation(fields: [categoryId], references: [id], onUpdate: Restrict, onDelete: Restrict)
+  category   Category @relation(fields: [categoryId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   categoryId Int
 }

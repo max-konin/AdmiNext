@@ -2,12 +2,14 @@ import { belongsTo, resource } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
+  deleteCategory,
   findAllCategories,
   findCategoryByIdForEdit,
   updateCategory,
 } from './prisma-repositories/category.repository';
 import {
   createPost,
+  deletePost,
   findAllPosts,
   findRelatedData,
 } from './prisma-repositories/post.repository';
@@ -29,6 +31,11 @@ export const adminResources = {
             render: (value) => value.toLocaleString(),
           },
         },
+        actions: {
+          delete: async (id: string) => {
+            await deleteCategory(id);
+          }
+        }
       },
       new: {
         loader: undefined,
@@ -76,6 +83,11 @@ export const adminResources = {
             render: (value) => value.toLocaleString(),
           },
         },
+        actions: {
+          delete: async (id: string) => {
+            await deletePost(id);
+          }
+        }
       },
       new: {
         loader: findRelatedData,
