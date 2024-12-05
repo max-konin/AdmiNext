@@ -1,4 +1,3 @@
-import { ClientOnly } from '@chakra-ui/react';
 import { Column } from '@tanstack/react-table';
 import { useState, useEffect } from 'react';
 
@@ -10,15 +9,13 @@ export function Filter<TListData>({ column }: filterProps<TListData>) {
   const columnFilterValue = column.getFilterValue();
 
   return (
-    <ClientOnly>
-      <DebouncedInput
-        onChange={(value) => column.setFilterValue(value)}
-        placeholder={`Search...`}
-        type="text"
-        value={(columnFilterValue ?? '') as string}
-        style={{ width: '80px' }}
-      />
-    </ClientOnly>
+    <DebouncedInput
+      onChange={(value) => column.setFilterValue(value)}
+      placeholder={`Search...`}
+      type="text"
+      value={(columnFilterValue ?? '') as string}
+      style={{ paddingLeft: '5px' }}
+    />
   );
 }
 

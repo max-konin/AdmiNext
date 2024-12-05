@@ -1,7 +1,15 @@
-import { Box, HStack, Table } from '@chakra-ui/react';
+import {
+  Box,
+  HStack,
+  MenuContent,
+  MenuRoot,
+  MenuTrigger,
+  Table,
+} from '@chakra-ui/react';
 import { flexRender, Header } from '@tanstack/react-table';
 import { LuArrowBigDown, LuArrowBigUp } from 'react-icons/lu';
 import { Filter } from './Filter';
+import { MdOutlineFilterList } from 'react-icons/md';
 
 type ColumnHeaderProps<TListData> = {
   header: Header<TListData, unknown>;
@@ -15,7 +23,7 @@ export const ColumnHeader = <TListData,>({
   return (
     <Table.ColumnHeader colSpan={header.colSpan}>
       {header.isPlaceholder ? null : (
-        <Box height="40px">
+        <Box display="flex">
           <Box
             onClick={header.column.getToggleSortingHandler()}
             cursor={header.column.getCanSort() ? 'pointer' : 'default'}
@@ -30,9 +38,20 @@ export const ColumnHeader = <TListData,>({
               }[header.column.getIsSorted() as string] ?? null}
             </HStack>
           </Box>
-          <Box width="10px">
+          <Box>
             {header.column.getCanFilter() && filterable ? (
-              <Filter column={header.column}></Filter>
+              <Box position="relative">
+                <MenuRoot>
+                  <MenuTrigger cursor="pointer" padding="5px">
+                    <MdOutlineFilterList />
+                  </MenuTrigger>
+                  <MenuContent position="absolute">
+                    <Box onClick={(e) => e.stopPropagation()}>
+                      <Filter column={header.column} />
+                    </Box>
+                  </MenuContent>
+                </MenuRoot>
+              </Box>
             ) : null}
           </Box>
         </Box>

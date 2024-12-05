@@ -65,12 +65,12 @@ export const adminResources = {
         loader: findAllPosts,
         fields: {
           id: { label: 'ID' },
-          title: { label: 'Title' },
+          title: { label: 'Title', filterable: true },
           published: {
             label: 'Published',
             render: (value) => (value ? '✅' : '❌'),
           },
-          category: { label: 'Category', render: (value) => value.name },
+          category: { label: 'Category', render: (value) => value.name, filterable: true },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),
