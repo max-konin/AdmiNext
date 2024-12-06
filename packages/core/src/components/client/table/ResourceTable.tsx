@@ -28,11 +28,7 @@ export const ResourceTable = <
                   <ColumnHeader
                     key={header.id}
                     header={header}
-                    filterable={
-                      props.resourceDef.pages.list.fields[
-                        header.id as TListFields
-                      ]?.filterable
-                    }
+                    filter={(header.column.columnDef.meta as any)?.filterType}
                   />
                 )}
               </For>

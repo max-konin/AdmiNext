@@ -11,6 +11,12 @@ import {
 } from '@tanstack/react-table';
 import { ListFieldDef, Resource } from '../types';
 import { ActionsDropDown } from '../components/client/table/ActionsDropDown';
+import {
+  filterFunctionMap,
+  numberFilter,
+  objectFilter,
+  textFilter,
+} from '../utils/filters';
 
 export type UseResourceTableArgs<
   TPK,
@@ -41,13 +47,15 @@ export const useResourceTable = <
   const columns = useMemo<ColumnDef<TListData, any>[]>(
     () =>
       (Object.entries(fields) as [TListFields, ListFieldDef<TListFields>][])
-        .map(([key, { label, render }]) => ({
+        .map(([key, { label, render, filterType }]) => ({
           accessorKey: key,
           header: label,
           cell: (info: CellContext<TListData, any>) => {
             const value = info.getValue();
             return render ? render(value) : value;
           },
+          meta: { filterType },
+          filterFn: filterType ? filterFunctionMap[filterType] : undefined,
         }))
         .concat([
           {
@@ -62,6 +70,8 @@ export const useResourceTable = <
                 />
               );
             },
+            meta: { filterType: undefined },
+            filterFn: undefined,
           },
         ]),
     [fields]
@@ -70,7 +80,11 @@ export const useResourceTable = <
   const table = useReactTable({
     data,
     columns,
-    filterFns: {},
+    filterFns: {
+      number: numberFilter,
+      object: objectFilter,
+      text: textFilter,
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(), //client side filtering
     getSortedRowModel: getSortedRowModel(),

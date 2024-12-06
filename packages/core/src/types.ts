@@ -38,7 +38,7 @@ export type TFormPage<
 export type ListFieldDef<TFieldData> = {
   label: string;
   render?: (value: TFieldData) => ReactNode;
-  filterable?: boolean
+  filterType?: 'number' | 'object' | 'text'
 };
 
 export type Resource<

@@ -13,12 +13,12 @@ import { MdOutlineFilterList } from 'react-icons/md';
 
 type ColumnHeaderProps<TListData> = {
   header: Header<TListData, unknown>;
-  filterable?: boolean;
+  filter?: boolean;
 };
 
 export const ColumnHeader = <TListData,>({
   header,
-  filterable,
+  filter,
 }: ColumnHeaderProps<TListData>) => {
   return (
     <Table.ColumnHeader colSpan={header.colSpan}>
@@ -39,7 +39,7 @@ export const ColumnHeader = <TListData,>({
             </HStack>
           </Box>
           <Box>
-            {header.column.getCanFilter() && filterable ? (
+            {header.column.getCanFilter() && filter ? (
               <Box position="relative">
                 <MenuRoot>
                   <MenuTrigger cursor="pointer" padding="5px">
