@@ -11,8 +11,6 @@ import { BreadcrumbLink, BreadcrumbRoot } from '../../ui';
 import { ZodProvider } from '@autoform/zod';
 import { useRouter } from 'next/navigation';
 import { getSchema } from '../../../utils';
-import { Button } from '../../ui/button';
-import { FormProvider, useForm } from 'react-hook-form';
 import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
 
 export type ResourceNewViewProps = {
@@ -30,8 +28,6 @@ export const ResourceNewView = ({
 }: ResourceNewViewProps) => {
   const pageDefinition = resourceDef.pages.new!;
   const router = useRouter();
-
-  const methods = useForm();
 
   const [execute] = useServerActionWithToast({
     fn: async (data) => {
@@ -58,16 +54,14 @@ export const ResourceNewView = ({
       <Heading>New Record</Heading>
       <Card.Root>
         <Card.Body>
-          <FormProvider {...methods}>
-            <AutoForm
-              withSubmit
-              schema={
-                new ZodProvider(getSchema(pageDefinition.schema, loaderData))
-              }
-              onSubmit={execute}
-              defaultValues={{}}
-            />
-          </FormProvider>
+          <AutoForm
+            withSubmit
+            schema={
+              new ZodProvider(getSchema(pageDefinition.schema, loaderData))
+            }
+            onSubmit={execute}
+            defaultValues={{}}
+          />
         </Card.Body>
       </Card.Root>
     </Stack>

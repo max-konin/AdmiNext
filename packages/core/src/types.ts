@@ -76,7 +76,9 @@ export type Resource<
       fields: {
         [k in TListFields]?: ListFieldDef<TListData[k]>;
       };
-      actions?: {};
+      actions?: {
+        delete?: (id: string) => Promise<void>;
+      };
     };
   };
 };

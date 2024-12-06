@@ -2,6 +2,10 @@ import { test } from '@playwright/test';
 import { ResourceListViewPage } from '@adminext/playwright';
 import { prisma } from '../../app/db';
 
+test.beforeEach(async () => {
+  await prisma.category.deleteMany();
+});
+
 test.afterEach(async () => {
   await prisma.category.deleteMany();
 });
@@ -29,6 +33,10 @@ test('Visit resource list page', async ({ page }) => {
     0,
     firstCategory.createdAt.toLocaleString()
   );
+  await listPage.clickFirstMenuButton();
+  await listPage.deleteFirstItem();
+  await listPage.shouldHaveNotificationWithMessage('Record deleted')
+  await listPage.shouldHaveNRecords(1);
 });
 
 test('Click on "New" button', async ({ page }) => {

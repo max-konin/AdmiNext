@@ -34,7 +34,7 @@ export const useResourceTable = <
   resourceDef: {
     identityBy,
     pages: {
-      list: { fields },
+      list: { fields, actions },
     },
   },
   data,
@@ -56,7 +56,7 @@ export const useResourceTable = <
         }))
         .concat([
           {
-            accessorKey: 'actions' as unknown as TListFields,
+            accessorKey: 'actions' as TListFields,
             header: '',
             cell: (info: CellContext<TListData, any>) => {
               return (
@@ -64,6 +64,7 @@ export const useResourceTable = <
                   resource={resource}
                   routePrefix={routePrefix}
                   resourceId={info.row.getValue(identityBy as string)}
+                  deleteItem={actions?.delete}
                 />
               );
             },
