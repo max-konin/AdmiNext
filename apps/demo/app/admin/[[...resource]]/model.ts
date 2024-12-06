@@ -22,8 +22,8 @@ export const adminResources = {
       list: {
         loader: findAllCategories,
         fields: {
-          id: { label: 'ID', filterType: 'number' },
-          name: { label: 'Name', filterType: 'text' },
+          id: { label: 'ID', filter: { type: 'number' } },
+          name: { label: 'Name', filter: { type: 'text' } },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),
@@ -64,13 +64,13 @@ export const adminResources = {
       list: {
         loader: findAllPosts,
         fields: {
-          id: { label: 'ID', filterType: 'number' },
-          title: { label: 'Title', filterType: 'text' },
+          id: { label: 'ID', filter: { type: 'number' } },
+          title: { label: 'Title', filter: { type: 'text' } },
           published: {
             label: 'Published',
             render: (value) => (value ? '✅' : '❌'),
           },
-          category: { label: 'Category', render: (value) => value.name, filterType: 'object' },
+          category: { label: 'Category', render: (value) => value.name, filter: { type: 'object', fieldName: 'name' } },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),

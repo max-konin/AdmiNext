@@ -28,7 +28,7 @@ export const ResourceTable = <
                   <ColumnHeader
                     key={header.id}
                     header={header}
-                    filter={(header.column.columnDef.meta as any)?.filterType}
+                    filter={(header.column.columnDef.meta as any)?.filter}
                   />
                 )}
               </For>

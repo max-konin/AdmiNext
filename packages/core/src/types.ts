@@ -35,10 +35,12 @@ export type TFormPage<
   };
 };
 
+export type FilterType = 'number' | 'text' | 'object'
+
 export type ListFieldDef<TFieldData> = {
   label: string;
   render?: (value: TFieldData) => ReactNode;
-  filterType?: 'number' | 'object' | 'text'
+  filter?: { type: FilterType, fieldName?: string }
 };
 
 export type Resource<
