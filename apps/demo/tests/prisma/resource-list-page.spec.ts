@@ -33,7 +33,7 @@ test('Visit resource list page', async ({ page }) => {
     0,
     firstCategory.createdAt.toLocaleString()
   );
-  await listPage.clickFirstMenuButton();
+  await listPage.clickOnActionsMenuFirstButton();
   await listPage.deleteFirstItem();
   await listPage.shouldHaveNotificationWithMessage('Record deleted')
   await listPage.shouldHaveNRecords(1);

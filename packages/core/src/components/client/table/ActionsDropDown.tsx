@@ -54,7 +54,7 @@ export const ActionsDropDown = ({
   return (
     <MenuRoot onSelect={(details) => handleMenuItemSelect(details.value)}>
       <MenuTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" data-testid="actions-menu">
           <LuMoreVertical />
         </Button>
       </MenuTrigger>

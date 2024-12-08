@@ -33,8 +33,8 @@ export class ResourceListViewPage {
     return this.page.getByTestId('toast');
   }
 
-  firstMenuButton() {
-    return this.page.getByRole('row').getByRole('button').first();
+  firstActionsMenuButton() {
+    return this.page.getByTestId('actions-menu').first();
   }
 
   deleteFirstItemLocator() {
@@ -51,8 +51,8 @@ export class ResourceListViewPage {
     return this.newButtonLocator().click();
   }
 
-  async clickFirstMenuButton() {
-    return this.firstMenuButton().click();
+  async clickOnActionsMenuFirstButton() {
+    return this.firstActionsMenuButton().click();
   }
 
   async deleteFirstItem() {
