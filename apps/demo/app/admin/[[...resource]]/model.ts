@@ -1,4 +1,4 @@
-import { belongsTo, resource } from '@adminext/core';
+import { belongsTo, file, resource } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
@@ -14,6 +14,7 @@ import {
   findRelatedData,
 } from './prisma-repositories/post.repository';
 import { Prisma } from '@prisma/client';
+
 
 export const adminResources = {
   categories: resource({
@@ -100,6 +101,10 @@ export const adminResources = {
               .min(1)
               .superRefine(belongsTo(related.categories, 'name', 'id')),
             published: z.coerce.boolean().default(false),
+            file: z
+              .any()
+              .refine((file) => file?.size <= 5000, `Max image size is 5MB.`)
+              .superRefine(file())
           }),
         actions: {
           submit: async ({ data: { categoryId, ...rest } }) => {

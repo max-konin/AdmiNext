@@ -28,6 +28,6 @@ export function buildZodFieldConfig<
 }
 
 export const fieldConfig = buildZodFieldConfig<
-  'belongsTo',
+  'belongsTo' | 'file',
   { options: SelectOption[] }
 >();

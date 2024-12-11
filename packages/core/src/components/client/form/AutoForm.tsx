@@ -14,6 +14,7 @@ import { AutoFormProps } from './types';
 import { BooleanField } from './BooleanField';
 import { SelectField } from './SelectField';
 import { BelongsToField } from './BelongsToField';
+import { FileUploadField } from './FileUploadField';
 
 const ChakraUIComponents: AutoFormUIComponents = {
   Form,
@@ -32,6 +33,7 @@ export const ChakraAutoFormFieldComponents = {
   date: () => <>Not implemented</>,
   select: SelectField,
   belongsTo: BelongsToField,
+  file: FileUploadField,
 } as const;
 export type FieldTypes = keyof typeof ChakraAutoFormFieldComponents;
 
