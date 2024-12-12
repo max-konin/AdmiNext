@@ -1,3 +1,4 @@
+import { Input } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
 type DebouncedInputProps = {
@@ -27,8 +28,9 @@ export const DebouncedInput = ({
   }, [value]);
 
   return (
-    <input
+    <Input
       {...props}
+      size={typeof props.size === 'number' ? undefined : props.size}
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />

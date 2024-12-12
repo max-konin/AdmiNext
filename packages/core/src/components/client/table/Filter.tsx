@@ -14,7 +14,6 @@ export function Filter<TListData>({ column }: filterProps<TListData>) {
       placeholder={`Search...`}
       type="text"
       value={(columnFilterValue ?? '') as string}
-      style={{ paddingLeft: '5px' }}
     />
   );
 }
