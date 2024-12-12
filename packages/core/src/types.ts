@@ -35,7 +35,12 @@ export type TFormPage<
   };
 };
 
-export type FilterType = 'number' | 'text' | 'object'
+export enum FilterType {
+  NUMBER = 'number',
+  TEXT = 'text',
+  OBJECT = 'object'
+}
+
 
 export type ListFieldDef<TFieldData> = {
   label: string;
