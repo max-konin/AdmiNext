@@ -31,6 +31,7 @@ export const ResourceNewView = ({
 
   const [execute] = useServerActionWithToast({
     fn: async (data) => {
+      console.log('new data', data);
       await pageDefinition.actions.submit({ data });
     },
     onSuccess: async () => {

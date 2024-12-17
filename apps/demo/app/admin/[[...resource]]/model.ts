@@ -14,6 +14,7 @@ import {
   findRelatedData,
 } from './prisma-repositories/post.repository';
 import { Prisma } from '@prisma/client';
+import { uploadFile } from './prisma-repositories/upload-file';
 
 
 export const adminResources = {
@@ -103,14 +104,18 @@ export const adminResources = {
             published: z.coerce.boolean().default(false),
             file: z
               .any()
-              .refine((file) => file?.size <= 5000, `Max image size is 5MB.`)
+              .optional()
               .superRefine(file())
           }),
         actions: {
-          submit: async ({ data: { categoryId, ...rest } }) => {
+          submit: async (data) => {
+            console.log('data', data)
+            if (data.data.file) {
+              await uploadFile(data.data.file);
+            }
             await createPost({
-              ...rest,
-              category: { connect: { id: Number(categoryId) } },
+              ...data.data,
+              category: { connect: { id: Number(data.data.categoryId) } },
             });
           },
         },
