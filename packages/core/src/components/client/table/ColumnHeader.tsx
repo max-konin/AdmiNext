@@ -29,7 +29,9 @@ export const ColumnHeader = <TListData,>({
               <Box position="relative">
                 <MenuRoot>
                   <MenuTrigger cursor="pointer" paddingRight="2px">
-                    <MdOutlineFilterList />
+                    <MdOutlineFilterList
+                      color={header.column.getIsFiltered() ? 'red' : 'black'}
+                    />
                   </MenuTrigger>
                   <MenuContent position="absolute">
                     <Box onClick={(e) => e.stopPropagation()}>
