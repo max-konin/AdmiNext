@@ -1,5 +1,6 @@
-import { Input } from '@chakra-ui/react';
+import { Input, HStack, Group, InputAddon } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
+import { IoClose } from 'react-icons/io5';
 
 type DebouncedInputProps = {
   value: string | number;
@@ -27,12 +28,32 @@ export const DebouncedInput = ({
     return () => clearTimeout(timeout);
   }, [value]);
 
+  const clearInput = () => {
+    setValue('');
+    onChange('');
+  };
+
   return (
-    <Input
-      {...props}
-      size={typeof props.size === 'number' ? undefined : props.size}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-    />
+    <HStack gap="10" width="full">
+      <Group flex="1">
+        <InputAddon
+          onClick={clearInput}
+          style={{
+            cursor: 'pointer',
+            padding: '0',
+          }}
+        >
+          <IoClose />
+        </InputAddon>
+        <Input
+          {...props}
+          size={typeof props.size === 'number' ? undefined : props.size}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          width="unset"
+          height="auto"
+        />
+      </Group>
+    </HStack>
   );
 };
