@@ -24,6 +24,22 @@ export const ColumnHeader = <TListData,>({
     <Table.ColumnHeader colSpan={header.colSpan}>
       {header.isPlaceholder ? null : (
         <Box display="flex">
+          <Box>
+            {header.column.getCanFilter() && filter ? (
+              <Box position="relative">
+                <MenuRoot>
+                  <MenuTrigger cursor="pointer" paddingRight="2px">
+                    <MdOutlineFilterList />
+                  </MenuTrigger>
+                  <MenuContent position="absolute">
+                    <Box onClick={(e) => e.stopPropagation()}>
+                      <Filter column={header.column} />
+                    </Box>
+                  </MenuContent>
+                </MenuRoot>
+              </Box>
+            ) : null}
+          </Box>
           <Box
             onClick={header.column.getToggleSortingHandler()}
             cursor={header.column.getCanSort() ? 'pointer' : 'default'}
@@ -37,22 +53,6 @@ export const ColumnHeader = <TListData,>({
                 desc: <LuArrowBigDown />,
               }[header.column.getIsSorted() as string] ?? null}
             </HStack>
-          </Box>
-          <Box>
-            {header.column.getCanFilter() && filter ? (
-              <Box position="relative">
-                <MenuRoot>
-                  <MenuTrigger cursor="pointer" padding="5px">
-                    <MdOutlineFilterList />
-                  </MenuTrigger>
-                  <MenuContent position="absolute">
-                    <Box onClick={(e) => e.stopPropagation()}>
-                      <Filter column={header.column} />
-                    </Box>
-                  </MenuContent>
-                </MenuRoot>
-              </Box>
-            ) : null}
           </Box>
         </Box>
       )}
