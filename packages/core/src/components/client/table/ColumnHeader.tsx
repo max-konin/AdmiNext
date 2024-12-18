@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   HStack,
   MenuContent,
@@ -29,9 +30,13 @@ export const ColumnHeader = <TListData,>({
               <Box position="relative">
                 <MenuRoot>
                   <MenuTrigger cursor="pointer" paddingRight="2px">
-                    <MdOutlineFilterList
-                      color={header.column.getIsFiltered() ? 'red' : 'black'}
-                    />
+                    {header.column.getIsFiltered() ? (
+                      <Badge colorPalette="accent">
+                        <MdOutlineFilterList />
+                      </Badge>
+                    ) : (
+                      <MdOutlineFilterList />
+                    )}
                   </MenuTrigger>
                   <MenuContent position="absolute">
                     <Box onClick={(e) => e.stopPropagation()}>
