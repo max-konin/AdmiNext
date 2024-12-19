@@ -102,24 +102,31 @@ export const adminResources = {
               .min(1)
               .superRefine(belongsTo(related.categories, 'name', 'id')),
             published: z.coerce.boolean().default(false),
-            file: z
+            files: z
               .any()
               .optional()
               .superRefine(file())
           }),
         actions: {
-          submit: async (data) => {
-            console.log('data', data)
-            if (data.data.file) {
-              await uploadFile(data.data.file);
+          submit: async ({ data: { categoryId, files, ...rest } }) => {
+            if (files && files.length > 0) {
+              const uploadPromises = Array.from(files).map(async (fileData) => {
+                const file = new File([fileData], fileData.name, {
+                  type: fileData.type,
+                  lastModified: fileData.lastModified,
+                });
+                await uploadFile(file);
+              });
+              await Promise.all(uploadPromises);
             }
             await createPost({
-              ...data.data,
-              category: { connect: { id: Number(data.data.categoryId) } },
+              ...rest,
+              category: { connect: { id: Number(categoryId) } },
             });
           },
         },
       },
     },
-  }),
-};
+  },
+  )
+}
