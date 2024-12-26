@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { ListFieldDef, Resource } from '../types';
 import { ActionsDropDown } from '../components/client/table/ActionsDropDown';
+import { filterByType } from '../utils/filters';
 
 export type UseResourceTableArgs<
   TPK,
@@ -41,13 +42,17 @@ export const useResourceTable = <
   const columns = useMemo<ColumnDef<TListData, any>[]>(
     () =>
       (Object.entries(fields) as [TListFields, ListFieldDef<TListFields>][])
-        .map(([key, { label, render }]) => ({
+        .map(([key, { label, render, filter }]) => ({
           accessorKey: key,
           header: label,
           cell: (info: CellContext<TListData, any>) => {
             const value = info.getValue();
             return render ? render(value) : value;
           },
+          meta: { filter },
+          filterFn: filter
+            ? filterByType(filter.type, filter.fieldName)
+            : undefined,
         }))
         .concat([
           {
@@ -63,6 +68,8 @@ export const useResourceTable = <
                 />
               );
             },
+            meta: { filter: undefined },
+            filterFn: undefined,
           },
         ]),
     [fields]

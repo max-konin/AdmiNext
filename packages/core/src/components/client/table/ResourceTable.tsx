@@ -17,15 +17,20 @@ export const ResourceTable = <
   props: ResourceTableProps<TPK, TListFields, TListData>
 ) => {
   const { table } = useResourceTable(props);
-
   return (
     <Table.Root>
       <Table.Header>
-        <For each={table.getHeaderGroups()}>
+        <For each={table.getCenterHeaderGroups()}>
           {(headerGroup) => (
             <Table.Row key={headerGroup.id}>
               <For each={headerGroup.headers}>
-                {(header) => <ColumnHeader key={header.id} header={header} />}
+                {(header) => (
+                  <ColumnHeader
+                    key={header.id}
+                    header={header}
+                    filter={(header.column.columnDef.meta as any)?.filter}
+                  />
+                )}
               </For>
             </Table.Row>
           )}
