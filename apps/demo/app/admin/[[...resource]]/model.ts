@@ -110,7 +110,7 @@ export const adminResources = {
         actions: {
           submit: async ({ data: { categoryId, files, ...rest } }) => {
             if (files && files.length > 0) {
-              const uploadPromises = Array.from(files).map(async (fileData) => {
+              const uploadPromises = Array.from(files).map(async (fileData: any) => {
                 const file = new File([fileData], fileData.name, {
                   type: fileData.type,
                   lastModified: fileData.lastModified,
