@@ -9,12 +9,14 @@ import { AutoFormFieldProps } from '@autoform/react';
 export const FileUploadField: React.FC<AutoFormFieldProps> = ({
   inputProps,
 }) => {
+  const { key, ...rest } = inputProps;
   return (
     <FileUploadRoot
       maxW="xl"
       alignItems="stretch"
       maxFiles={10}
-      {...inputProps}
+      key={key}
+      {...rest}
     >
       <FileUploadDropzone
         label="Drag and drop here to upload"
