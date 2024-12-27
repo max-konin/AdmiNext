@@ -13,12 +13,13 @@ export const BelongsToField: React.FC<AutoFormFieldProps> = ({
     (field.fieldConfig?.customData?.options as SelectOption[]) || [];
 
   const bgColor = useColorModeValue('white', 'gray.950');
+  const { value } = inputProps;
 
   return (
     <ClientOnly>
       <NativeSelectRoot>
         <NativeSelectField {...inputProps} backgroundColor={bgColor}>
-          <option value="" disabled selected>
+          <option value={value} disabled>
             Select...
           </option>
           {options.map(([value, label]) => (
