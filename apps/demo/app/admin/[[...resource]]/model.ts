@@ -1,4 +1,4 @@
-import { belongsTo, file, resource } from '@adminext/core';
+import { belongsTo, FilterType, file, resource } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
@@ -26,8 +26,8 @@ export const adminResources = {
       list: {
         loader: findAllCategories,
         fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
+          id: { label: 'ID', filter: { type: FilterType.NUMBER } },
+          name: { label: 'Name', filter: { type: FilterType.TEXT } },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),
@@ -73,13 +73,13 @@ export const adminResources = {
       list: {
         loader: findAllPosts,
         fields: {
-          id: { label: 'ID' },
-          title: { label: 'Title' },
+          id: { label: 'ID', filter: { type: FilterType.NUMBER } },
+          title: { label: 'Title', filter: { type: FilterType.TEXT } },
           published: {
             label: 'Published',
             render: (value) => (value ? '✅' : '❌'),
           },
-          category: { label: 'Category', render: (value) => value.name },
+          category: { label: 'Category', render: (value) => value.name, filter: { type: FilterType.OBJECT, fieldName: 'name' } },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),

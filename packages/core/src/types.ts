@@ -35,9 +35,17 @@ export type TFormPage<
   };
 };
 
+export enum FilterType {
+  NUMBER = 'number',
+  TEXT = 'text',
+  OBJECT = 'object'
+}
+
+
 export type ListFieldDef<TFieldData> = {
   label: string;
   render?: (value: TFieldData) => ReactNode;
+  filter?: { type: FilterType, fieldName?: string }
 };
 
 export type Resource<
