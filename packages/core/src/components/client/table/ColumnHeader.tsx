@@ -1,6 +1,7 @@
 import {
   Badge,
   Box,
+  Flex,
   HStack,
   MenuContent,
   MenuRoot,
@@ -24,7 +25,7 @@ export const ColumnHeader = <TListData,>({
   return (
     <Table.ColumnHeader colSpan={header.colSpan}>
       {header.isPlaceholder ? null : (
-        <Box display="flex">
+        <Flex gap="2">
           <Box>
             {header.column.getCanFilter() && filter ? (
               <Box position="relative">
@@ -39,7 +40,11 @@ export const ColumnHeader = <TListData,>({
                     )}
                   </MenuTrigger>
                   <MenuContent position="absolute">
-                    <Box onClick={(e) => e.stopPropagation()}>
+                    <Box
+                      onClick={(e) => e.stopPropagation()}
+                      p="2"
+                      minW="200px"
+                    >
                       <Filter column={header.column} />
                     </Box>
                   </MenuContent>
@@ -61,7 +66,7 @@ export const ColumnHeader = <TListData,>({
               }[header.column.getIsSorted() as string] ?? null}
             </HStack>
           </Box>
-        </Box>
+        </Flex>
       )}
     </Table.ColumnHeader>
   );

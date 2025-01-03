@@ -1,12 +1,8 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { ResourceListViewPage } from '@adminext/playwright';
 import { prisma } from '../../app/db';
 
 test.beforeEach(async () => {
-  await prisma.category.deleteMany();
-});
-
-test.afterEach(async () => {
   await prisma.category.deleteMany();
 });
 
@@ -35,7 +31,7 @@ test('Visit resource list page', async ({ page }) => {
   );
   await listPage.clickOnActionsMenuFirstButton();
   await listPage.deleteFirstItem();
-  await listPage.shouldHaveNotificationWithMessage('Record deleted')
+  await listPage.shouldHaveNotificationWithMessage('Record deleted');
   await listPage.shouldHaveNRecords(1);
 });
 
@@ -45,5 +41,24 @@ test('Click on "New" button', async ({ page }) => {
   await listPage.visit();
   await listPage.clickOnNewButton();
 
-  await page.waitForURL('/admin/categories/new');
+  await expect(page).toHaveURL('/admin/categories/new');
+});
+
+test('Pagination', async ({ page }) => {
+  await prisma.category.createMany({
+    data: Array.from({ length: 15 }, (_, i) => ({ name: `Category ${i}` })),
+  });
+  const listPage = new ResourceListViewPage(page, '/admin', 'categories');
+
+  listPage.visit();
+
+  await listPage.shouldHaveNRecords(10);
+
+  await page.waitForTimeout(500);
+
+  await listPage.goToNextPage();
+  await listPage.shouldHaveNRecords(5);
+
+  await listPage.setPageSize(20);
+  await listPage.shouldHaveNRecords(15);
 });
