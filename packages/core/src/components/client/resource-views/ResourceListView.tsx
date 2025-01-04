@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from '@chakra-ui/react';
+import { Box, Button, HStack, Stack } from '@chakra-ui/react';
 import { Resource } from '../../../types';
 import {
   BreadcrumbCurrentLink,
@@ -32,26 +32,29 @@ export const ResourceListView = <
 }: ResourceListViewProps<TPK, TListFields, TListData>) => {
   return (
     <Stack gap={4}>
-      <BreadcrumbRoot>
-        <BreadcrumbLink asChild>
-          <Link href={`/${routePrefix}`}>Home</Link>
-        </BreadcrumbLink>
-        <BreadcrumbCurrentLink>{resourceDef.title}</BreadcrumbCurrentLink>
-      </BreadcrumbRoot>
+      <HStack justifyContent="space-between">
+        <BreadcrumbRoot>
+          <BreadcrumbLink asChild>
+            <Link href={`/${routePrefix}`}>Home</Link>
+          </BreadcrumbLink>
+          <BreadcrumbCurrentLink>{resourceDef.title}</BreadcrumbCurrentLink>
+        </BreadcrumbRoot>
+        <Box>
+          <Button asChild>
+            <Link href={`/${routePrefix}/${resource}/new`}>
+              <LuPlus />
+              New
+            </Link>
+          </Button>
+        </Box>
+      </HStack>
+
       <ResourceTable
         resourceDef={resourceDef}
         data={data}
         routePrefix={routePrefix}
         resource={resource}
       />
-      <Box>
-        <Button asChild>
-          <Link href={`/${routePrefix}/${resource}/new`}>
-            <LuPlus />
-            New
-          </Link>
-        </Button>
-      </Box>
     </Stack>
   );
 };
