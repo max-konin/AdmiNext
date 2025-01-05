@@ -33,7 +33,7 @@ export const ChakraAutoFormFieldComponents = {
   date: () => <>Not implemented</>,
   select: SelectField,
   belongsTo: BelongsToField,
-  file: FileUploadField,
+  files: FileUploadField,
 } as const;
 export type FieldTypes = keyof typeof ChakraAutoFormFieldComponents;
 

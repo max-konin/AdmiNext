@@ -1,4 +1,4 @@
-import { fieldConfig } from './field-config';
+import { buildZodFieldConfig } from './field-config';
 
 type OptionValueGetter<
   TFields extends string,
@@ -13,7 +13,7 @@ export const belongsTo = <
   label: OptionValueGetter<TFields, TOption>,
   value: OptionValueGetter<TFields, TOption>
 ) =>
-  fieldConfig({
+  buildZodFieldConfig({
     fieldType: 'belongsTo',
     customData: {
       options: options.map((option) => [

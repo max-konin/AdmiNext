@@ -1,4 +1,10 @@
-import { belongsTo, FilterType, file, resource } from '@adminext/core';
+import {
+  belongsTo,
+  FilterType,
+  resource,
+  files,
+  transformFiles,
+} from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
@@ -15,7 +21,6 @@ import {
 } from './prisma-repositories/post.repository';
 import { Prisma } from '@prisma/client';
 import { uploadFile } from './prisma-repositories/upload-file';
-
 
 export const adminResources = {
   categories: resource({
@@ -36,8 +41,8 @@ export const adminResources = {
         actions: {
           delete: async (id: string) => {
             await deleteCategory(id);
-          }
-        }
+          },
+        },
       },
       new: {
         loader: undefined,
@@ -56,8 +61,12 @@ export const adminResources = {
         }),
         loader: findCategoryByIdForEdit,
         actions: {
-          submit: async ({ id, data }: {
-            id: string, data: Prisma.CategoryCreateInput;
+          submit: async ({
+            id,
+            data,
+          }: {
+            id: string;
+            data: Prisma.CategoryCreateInput;
           }) => {
             await updateCategory(data, id);
           },
@@ -79,7 +88,11 @@ export const adminResources = {
             label: 'Published',
             render: (value) => (value ? '✅' : '❌'),
           },
-          category: { label: 'Category', render: (value) => value.name, filter: { type: FilterType.OBJECT, fieldName: 'name' } },
+          category: {
+            label: 'Category',
+            render: (value) => value.name,
+            filter: { type: FilterType.OBJECT, fieldName: 'name' },
+          },
           createdAt: {
             label: 'Created At',
             render: (value) => value.toLocaleString(),
@@ -88,8 +101,8 @@ export const adminResources = {
         actions: {
           delete: async (id: string) => {
             await deletePost(id);
-          }
-        }
+          },
+        },
       },
       new: {
         loader: findRelatedData,
@@ -105,18 +118,15 @@ export const adminResources = {
             files: z
               .any()
               .optional()
-              .superRefine(file())
+              .transform(transformFiles)
+              .superRefine(files()),
           }),
         actions: {
           submit: async ({ data: { categoryId, files, ...rest } }) => {
             if (files && files.length > 0) {
-              const uploadPromises = Array.from(files).map(async (fileData: any) => {
-                const file = new File([fileData], fileData.name, {
-                  type: fileData.type,
-                  lastModified: fileData.lastModified,
-                });
-                await uploadFile(file);
-              });
+              const uploadPromises = files.map(
+                async (file) => await uploadFile(file)
+              );
               await Promise.all(uploadPromises);
             }
             await createPost({
@@ -127,6 +137,5 @@ export const adminResources = {
         },
       },
     },
-  },
-  )
-}
+  }),
+};

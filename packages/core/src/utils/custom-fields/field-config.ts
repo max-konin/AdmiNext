@@ -10,24 +10,18 @@ import { type FieldWrapperProps } from '@autoform/react';
 export function buildZodFieldConfig<
   FieldTypes = string,
   CustomData = Record<string, any>,
->(): (
+>(
   config: FieldConfig<
     ReactNode,
     FieldTypes,
     React.ComponentType<FieldWrapperProps>,
     CustomData
   >
-) => SuperRefineFunction {
-  return (config) =>
-    zodBaseFieldConfig<
-      ReactNode,
-      FieldTypes,
-      React.ComponentType<FieldWrapperProps>,
-      CustomData
-    >(config);
+): SuperRefineFunction {
+  return zodBaseFieldConfig<
+    ReactNode,
+    FieldTypes,
+    React.ComponentType<FieldWrapperProps>,
+    CustomData
+  >(config);
 }
-
-export const fieldConfig = buildZodFieldConfig<
-  'belongsTo' | 'file',
-  { options: SelectOption[] }
->();
