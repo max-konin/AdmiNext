@@ -1,4 +1,4 @@
-import { belongsTo, FilterType, resource } from '@adminext/core';
+import { belongsTo, resource } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
@@ -23,19 +23,21 @@ export const adminResources = {
     pages: {
       list: {
         loader: findAllCategories,
-        fields: {
-          id: { label: 'ID', filter: { type: FilterType.NUMBER } },
-          name: { label: 'Name', filter: { type: FilterType.TEXT } },
-          createdAt: {
-            label: 'Created At',
-            render: (value) => value.toLocaleString(),
+        columns: [
+          { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
+          { accessorKey: 'name', header: 'Name', filterFn: 'includesString' },
+          {
+            accessorKey: 'createdAt',
+            enableColumnFilter: false,
+            header: 'Created At',
+            cell: ({ row }) => row.original.createdAt.toLocaleString(),
           },
-        },
+        ],
         actions: {
           delete: async (id: string) => {
             await deleteCategory(id);
-          }
-        }
+          },
+        },
       },
       new: {
         loader: undefined,
@@ -54,8 +56,12 @@ export const adminResources = {
         }),
         loader: findCategoryByIdForEdit,
         actions: {
-          submit: async ({ id, data }: {
-            id: string, data: Prisma.CategoryCreateInput;
+          submit: async ({
+            id,
+            data,
+          }: {
+            id: string;
+            data: Prisma.CategoryCreateInput;
           }) => {
             await updateCategory(data, id);
           },
@@ -70,24 +76,41 @@ export const adminResources = {
     pages: {
       list: {
         loader: findAllPosts,
-        fields: {
-          id: { label: 'ID', filter: { type: FilterType.NUMBER } },
-          title: { label: 'Title', filter: { type: FilterType.TEXT } },
-          published: {
-            label: 'Published',
-            render: (value) => (value ? '✅' : '❌'),
+        columns: [
+          {
+            accessorKey: 'id',
+            header: 'ID',
+            enableColumnFilter: false,
           },
-          category: { label: 'Category', render: (value) => value.name, filter: { type: FilterType.OBJECT, fieldName: 'name' } },
-          createdAt: {
-            label: 'Created At',
-            render: (value) => value.toLocaleString(),
+          {
+            accessorKey: 'title',
+            header: 'Title',
+            filterFn: 'includesString',
           },
-        },
+          {
+            accessorKey: 'published',
+            header: 'Published',
+            cell: ({ row }) => (row.original.published ? '✅' : '❌'),
+            enableColumnFilter: false,
+          },
+          {
+            accessorKey: 'category',
+            header: 'Category',
+            filterFn: 'includesString',
+            accessorFn: (row) => row.category.name,
+          },
+          {
+            header: 'Created At',
+            accessorKey: 'createdAt',
+            enableColumnFilter: false,
+            cell: ({ row }) => row.original.createdAt.toLocaleString(),
+          },
+        ],
         actions: {
           delete: async (id: string) => {
             await deletePost(id);
-          }
-        }
+          },
+        },
       },
       new: {
         loader: findRelatedData,

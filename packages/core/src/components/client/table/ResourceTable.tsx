@@ -36,13 +36,7 @@ export const ResourceTable = <
             {(headerGroup) => (
               <Table.Row key={headerGroup.id}>
                 <For each={headerGroup.headers}>
-                  {(header) => (
-                    <ColumnHeader
-                      key={header.id}
-                      header={header}
-                      filter={(header.column.columnDef.meta as any)?.filter}
-                    />
-                  )}
+                  {(header) => <ColumnHeader key={header.id} header={header} />}
                 </For>
               </Table.Row>
             )}

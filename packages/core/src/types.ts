@@ -1,3 +1,4 @@
+import { TableOptionsResolved } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 import z from 'zod';
 
@@ -35,18 +36,6 @@ export type TFormPage<
   };
 };
 
-export enum FilterType {
-  NUMBER = 'number',
-  TEXT = 'text',
-  OBJECT = 'object',
-}
-
-export type ListFieldDef<TFieldData> = {
-  label: string;
-  render?: (value: TFieldData) => ReactNode;
-  filter?: { type: FilterType; fieldName?: string };
-};
-
 export type Resource<
   TPK,
   TListFields extends string,
@@ -77,9 +66,7 @@ export type Resource<
     >;
     list: {
       loader: () => Promise<{ data: TListData[] }>;
-      fields: {
-        [k in TListFields]?: ListFieldDef<TListData[k]>;
-      };
+      columns: TableOptionsResolved<TListData>['columns'];
       actions?: {
         delete?: (id: string) => Promise<void>;
       };
