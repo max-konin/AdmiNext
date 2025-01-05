@@ -39,11 +39,12 @@ export const useResourceTable = <
   },
   data,
 }: UseResourceTableArgs<TPK, TListFields, TListData>) => {
-  const withActionsColumn = [
+  const withActionsColumns = [
     ...columns,
     {
-      accessorKey: 'actions' as TListFields,
+      accessorKey: 'id' as TListFields,
       header: '',
+      enableColumnFilter: false,
       cell: (info: CellContext<TListData, any>) => {
         return (
           <Flex justifyContent="flex-end">
@@ -63,7 +64,7 @@ export const useResourceTable = <
 
   const table = useReactTable({
     data,
-    columns,
+    columns: withActionsColumns,
     filterFns: {},
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(), //client side filtering
