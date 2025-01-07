@@ -28,7 +28,7 @@ export const Sidebar = (props: SidebarProps) => {
       borderRightWidth="1px"
       justifyContent="space-between"
       maxW="xs"
-      h="100vh"
+      minH="100vh"
       {...props}
     >
       <Stack gap="6">
