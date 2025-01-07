@@ -5,7 +5,7 @@ import {
 import test from '@playwright/test';
 import { prisma } from '../../app/db';
 
-test.afterEach(async () => {
+test.beforeEach(async () => {
   await prisma.post.deleteMany();
   await prisma.category.deleteMany();
 });
@@ -36,4 +36,9 @@ test('Visit resource new page and submit the form', async ({ page }) => {
   await listPage.shouldHaveCellWithText('category', 0, categoryName);
   await listPage.shouldHaveCellWithText('published', 0, '✅');
   await listPage.shouldHaveNotificationWithMessage('Done!');
+});
+
+test.afterEach(async () => {
+  await prisma.post.deleteMany();
+  await prisma.category.deleteMany();
 });
