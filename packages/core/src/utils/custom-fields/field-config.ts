@@ -1,5 +1,4 @@
 import { FieldConfig } from '@autoform/core';
-import { SelectOption } from '../../types';
 import {
   SuperRefineFunction,
   fieldConfig as zodBaseFieldConfig,
