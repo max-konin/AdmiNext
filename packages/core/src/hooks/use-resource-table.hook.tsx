@@ -12,6 +12,7 @@ import {
 import { ListFieldDef, Resource } from '../types';
 import { ActionsDropDown } from '../components/client/table/ActionsDropDown';
 import { filterByType } from '../utils/filters';
+import { Flex } from '@chakra-ui/react';
 
 export type UseResourceTableArgs<
   TPK,
@@ -60,12 +61,14 @@ export const useResourceTable = <
             header: '',
             cell: (info: CellContext<TListData, any>) => {
               return (
-                <ActionsDropDown
-                  resource={resource}
-                  routePrefix={routePrefix}
-                  resourceId={info.row.getValue(identityBy as string)}
-                  deleteItem={actions?.delete}
-                />
+                <Flex justifyContent="flex-end">
+                  <ActionsDropDown
+                    resource={resource}
+                    routePrefix={routePrefix}
+                    resourceId={info.row.getValue(identityBy as string)}
+                    deleteItem={actions?.delete}
+                  />
+                </Flex>
               );
             },
             meta: { filter: undefined },
@@ -88,5 +91,15 @@ export const useResourceTable = <
     debugColumns: false,
   });
 
-  return { table };
+  return {
+    table,
+
+    pagination: {
+      ...table.getState().pagination,
+      count: table.getFilteredRowModel().rows.length,
+
+      changePage: table.setPageIndex,
+      changePageSize: table.setPageSize,
+    },
+  };
 };

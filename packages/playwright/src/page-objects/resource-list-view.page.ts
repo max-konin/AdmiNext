@@ -5,7 +5,7 @@ export class ResourceListViewPage {
     private readonly page: Page,
     private readonly routePrefix: string,
     private readonly resource: string
-  ) { }
+  ) {}
 
   get url() {
     return `${this.routePrefix}/${this.resource}`;
@@ -57,6 +57,15 @@ export class ResourceListViewPage {
 
   async deleteFirstItem() {
     return this.deleteFirstItemLocator().click();
+  }
+
+  async goToNextPage() {
+    return this.page.getByTestId('next-page').click();
+  }
+
+  async setPageSize(size: number) {
+    await this.page.getByTestId('pagination-page-size-select').click();
+    await this.page.getByRole('option', { name: size.toString() }).click();
   }
 
   // Asserts
