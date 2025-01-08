@@ -5,7 +5,7 @@ import {
 import test from '@playwright/test';
 import { prisma } from '../../app/db';
 
-test.afterEach(async () => {
+test.beforeEach(async () => {
   await prisma.post.deleteMany();
   await prisma.category.deleteMany();
 });
