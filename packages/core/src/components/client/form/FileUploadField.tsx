@@ -5,23 +5,24 @@ import {
   FileUploadRoot,
 } from '../../ui/file-upload';
 import { AutoFormFieldProps } from '@autoform/react';
+import { FilesProperties } from '../../../types';
 
 export const FileUploadField: React.FC<AutoFormFieldProps> = ({
   inputProps,
+  field,
 }) => {
   const { key, ...rest } = inputProps;
+  const { maxFiles, label, description } = field.fieldConfig
+    ?.customData as FilesProperties;
   return (
     <FileUploadRoot
       maxW="xl"
       alignItems="stretch"
-      maxFiles={10}
+      maxFiles={maxFiles}
       key={key}
       {...rest}
     >
-      <FileUploadDropzone
-        label="Drag and drop here to upload"
-        description=".png, .jpg up to 5MB"
-      />
+      <FileUploadDropzone label={label} description={description} />
       <FileUploadList />
     </FileUploadRoot>
   );
