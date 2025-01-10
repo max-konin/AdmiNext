@@ -3,6 +3,7 @@ import { ResourceListViewPage } from '@adminext/playwright';
 import { prisma } from '../../app/db';
 
 test.beforeEach(async () => {
+  await prisma.post.deleteMany();
   await prisma.category.deleteMany();
 });
 

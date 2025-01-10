@@ -9,9 +9,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ListFieldDef, Resource } from '../types';
+import { Resource } from '../types';
 import { ActionsDropDown } from '../components/client/table/ActionsDropDown';
-import { filterByType } from '../utils/filters';
 import { Flex } from '@chakra-ui/react';
 
 export type UseResourceTableArgs<
@@ -35,52 +34,37 @@ export const useResourceTable = <
   resourceDef: {
     identityBy,
     pages: {
-      list: { fields, actions },
+      list: { columns, actions },
     },
   },
   data,
 }: UseResourceTableArgs<TPK, TListFields, TListData>) => {
-  const columns = useMemo<ColumnDef<TListData, any>[]>(
-    () =>
-      (Object.entries(fields) as [TListFields, ListFieldDef<TListFields>][])
-        .map(([key, { label, render, filter }]) => ({
-          accessorKey: key,
-          header: label,
-          cell: (info: CellContext<TListData, any>) => {
-            const value = info.getValue();
-            return render ? render(value) : value;
-          },
-          meta: { filter },
-          filterFn: filter
-            ? filterByType(filter.type, filter.fieldName)
-            : undefined,
-        }))
-        .concat([
-          {
-            accessorKey: 'actions' as TListFields,
-            header: '',
-            cell: (info: CellContext<TListData, any>) => {
-              return (
-                <Flex justifyContent="flex-end">
-                  <ActionsDropDown
-                    resource={resource}
-                    routePrefix={routePrefix}
-                    resourceId={info.row.getValue(identityBy as string)}
-                    deleteItem={actions?.delete}
-                  />
-                </Flex>
-              );
-            },
-            meta: { filter: undefined },
-            filterFn: undefined,
-          },
-        ]),
-    [fields]
-  );
+  const withActionsColumns = [
+    ...columns,
+    {
+      accessorKey: 'id' as TListFields,
+      header: '',
+      enableColumnFilter: false,
+      cell: (info: CellContext<TListData, any>) => {
+        return (
+          <Flex justifyContent="flex-end">
+            <ActionsDropDown
+              resource={resource}
+              routePrefix={routePrefix}
+              resourceId={info.row.getValue(identityBy as string)}
+              deleteItem={actions?.delete}
+            />
+          </Flex>
+        );
+      },
+      meta: { filter: undefined },
+      filterFn: undefined,
+    },
+  ];
 
   const table = useReactTable({
     data,
-    columns,
+    columns: withActionsColumns,
     filterFns: {},
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(), //client side filtering

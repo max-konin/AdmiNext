@@ -38,10 +38,10 @@ export const resources = {
       },
       list: {
         loader: async () => ({ data: users }),
-        fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
-        },
+        columns: [
+          { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
+          { accessorKey: 'name', header: 'Name', filterFn: 'includesString' },
+        ],
       },
       edit: {
         schema: z.object({
@@ -72,10 +72,10 @@ export const resources = {
         loader: async () => {
           return { data: posts };
         },
-        fields: {
-          id: { label: 'ID' },
-          title: { label: 'Title' },
-        },
+        columns: [
+          { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
+          { accessorKey: 'title', header: 'Title', filterFn: 'includesString' },
+        ],
       },
       edit: {
         schema: z.object({

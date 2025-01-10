@@ -31,10 +31,10 @@ describe('useResourceTable', () => {
     pages: {
       list: {
         loader: async () => ({ data }),
-        fields: {
-          name: { label: 'Name', render: (value) => value },
-          age: { label: 'Age', render: (value) => value },
-        },
+        columns: [
+          { accessorKey: 'name', header: 'Name' },
+          { accessorKey: 'age', header: 'Age' },
+        ],
       },
     },
   };
@@ -57,7 +57,7 @@ describe('useResourceTable', () => {
     expect(columns).toHaveLength(3); // name, age, and actions column
     expect(columns[0]?.id).toBe('name');
     expect(columns[1]?.id).toBe('age');
-    expect(columns[2]?.id).toBe('actions');
+    expect(columns[2]?.id).toBe('id');
   });
 
   it('should render the correct cell values', () => {

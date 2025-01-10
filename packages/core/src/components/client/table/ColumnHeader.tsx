@@ -15,19 +15,17 @@ import { MdOutlineFilterList } from 'react-icons/md';
 
 type ColumnHeaderProps<TListData> = {
   header: Header<TListData, unknown>;
-  filter?: boolean;
 };
 
 export const ColumnHeader = <TListData,>({
   header,
-  filter,
 }: ColumnHeaderProps<TListData>) => {
   return (
     <Table.ColumnHeader colSpan={header.colSpan}>
       {header.isPlaceholder ? null : (
         <Flex gap="2">
           <Box>
-            {header.column.getCanFilter() && filter ? (
+            {header.column.getCanFilter() && (
               <Box position="relative">
                 <MenuRoot>
                   <MenuTrigger cursor="pointer" paddingRight="2px">
@@ -50,7 +48,7 @@ export const ColumnHeader = <TListData,>({
                   </MenuContent>
                 </MenuRoot>
               </Box>
-            ) : null}
+            )}
           </Box>
           <Box
             onClick={header.column.getToggleSortingHandler()}
