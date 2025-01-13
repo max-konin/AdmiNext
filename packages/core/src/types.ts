@@ -110,3 +110,9 @@ export type AdmiNextContextType = {
   routePrefix: string;
   resourcesDefinition: Resources;
 };
+
+export type SidebarSlots = {
+  slots?: {
+    user?: () => ReactNode;
+  };
+};

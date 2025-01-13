@@ -6,16 +6,16 @@ import {
   StackSeparator,
   Text,
 } from '@chakra-ui/react';
-import { Resources } from '../../../types';
+import { Resources, SidebarSlots } from '../../../types';
 import { SidebarLink } from './SidebarLink';
 import { useAdmiNextContext } from '../../../hooks';
 import { ColorModeButton } from '../../ui';
 
 const DEFAULT_GROUP_NAME = 'default';
 
-export type SidebarProps = StackProps;
+export type SidebarProps = StackProps & SidebarSlots;
 
-export const Sidebar = (props: SidebarProps) => {
+export const Sidebar = ({ slots, ...props }: SidebarProps) => {
   const { routePrefix, resourcesDefinition } = useAdmiNextContext();
   const groupedResources = groupResource(resourcesDefinition);
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
@@ -56,6 +56,7 @@ export const Sidebar = (props: SidebarProps) => {
         </Stack>
       </Stack>
       <Stack gap="4" separator={<StackSeparator />}>
+        {slots?.user?.()}
         <ColorModeButton />
       </Stack>
     </Stack>

@@ -18,6 +18,9 @@ const meta = {
   args: {
     resourcesDefinition: resources,
     routePrefix: 'admin',
+    slots: {
+      user: () => 'Current user',
+    },
   },
   decorators: [withProvider],
 } satisfies Meta<typeof AdmiNext>;
