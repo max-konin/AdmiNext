@@ -1,12 +1,13 @@
+import { FilesInput } from '../../types';
 import { buildZodFieldConfig } from './field-config';
 
-export const files = () =>
+export const files = (input: FilesInput) =>
   buildZodFieldConfig({
     fieldType: 'files',
     customData: {
-      maxFiles: 10,
-      label: 'Drag and drop here to upload',
-      description: '.png, .jpg up to 5MB',
+      maxFiles: input.maxFiles,
+      label: input.label,
+      description: input.description,
     }
   });
 

@@ -5,7 +5,7 @@ import {
   FileUploadRoot,
 } from '../../ui/file-upload';
 import { AutoFormFieldProps } from '@autoform/react';
-import { FilesProperties } from '../../../types';
+import { FilesInput } from '../../../types';
 
 export const FileUploadField: React.FC<AutoFormFieldProps> = ({
   inputProps,
@@ -13,7 +13,7 @@ export const FileUploadField: React.FC<AutoFormFieldProps> = ({
 }) => {
   const { key, ...rest } = inputProps;
   const { maxFiles, label, description } = field.fieldConfig
-    ?.customData as FilesProperties;
+    ?.customData as FilesInput;
   return (
     <FileUploadRoot
       maxW="xl"

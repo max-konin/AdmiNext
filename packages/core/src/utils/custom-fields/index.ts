@@ -1,2 +1,2 @@
 export * from './belongs-to';
-export * from './file';
+export * from './files';

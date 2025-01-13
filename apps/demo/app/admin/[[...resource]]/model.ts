@@ -134,7 +134,7 @@ export const adminResources = {
               .any()
               .optional()
               .transform(transformFiles)
-              .superRefine(files()),
+              .superRefine(files({ maxFiles: 10, label: 'Drag and drop here to upload', description: '.png, .jpg up to 5MB' })),
           }),
         actions: {
           submit: async ({ data: { categoryId, files, ...rest } }) => {

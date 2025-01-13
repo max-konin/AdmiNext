@@ -111,7 +111,7 @@ export type AdmiNextContextType = {
   resourcesDefinition: Resources;
 };
 
-export type FilesProperties = {
+export type FilesInput = {
   maxFiles: number,
   label: string,
   description: string,
