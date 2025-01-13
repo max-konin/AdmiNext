@@ -4,11 +4,7 @@ import { buildZodFieldConfig } from './field-config';
 export const files = (input: FilesInput) =>
   buildZodFieldConfig({
     fieldType: 'files',
-    customData: {
-      maxFiles: input.maxFiles,
-      label: input.label,
-      description: input.description,
-    }
+    customData: input
   });
 
 export const transformFiles = (fileList?: FileList | null) => {
