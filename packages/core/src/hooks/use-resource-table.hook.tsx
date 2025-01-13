@@ -1,8 +1,5 @@
-import { useMemo } from 'react';
-
 import {
   CellContext,
-  ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -42,7 +39,7 @@ export const useResourceTable = <
   const withActionsColumns = [
     ...columns,
     {
-      accessorKey: 'id' as TListFields,
+      accessorKey: 'actions' as TListFields,
       header: '',
       enableColumnFilter: false,
       cell: (info: CellContext<TListData, any>) => {
