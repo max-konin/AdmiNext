@@ -3,9 +3,10 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from '../../../db';
 
-export const findAllPosts = () =>
+export const findAllPosts = async () =>
   wrapData(prisma.post.findMany({ include: { category: true } }));
-export const findPostById = (id: string) =>
+
+export const findPostById = async (id: string) =>
   prisma.post.findUniqueOrThrow({ where: { id: Number(id) } });
 
 export const findRelatedData = async () => {
@@ -24,11 +25,11 @@ export const findPostByIdForEdit = async (id: string) => {
   };
 };
 
-export const createPost = (data: Prisma.PostCreateInput) =>
+export const createPost = async (data: Prisma.PostCreateInput) =>
   prisma.post.create({ data });
 
-export const deletePost = (id: string) =>
-  prisma.post.delete({ where: { id: Number(id) } })
+export const deletePost = async (id: string) =>
+  prisma.post.delete({ where: { id: Number(id) } });
 
 const wrapData = <T>(dataPromise: Promise<T>) =>
   dataPromise.then((data) => ({ data }));

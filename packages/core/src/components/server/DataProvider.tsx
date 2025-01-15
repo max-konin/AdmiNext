@@ -17,11 +17,10 @@ export type DataProviderProps = {
 
 export const DataProvider = async ({
   resources,
-  routeProps: {
-    params: { resource: resourceParams },
-  },
+  routeProps: { params },
   children,
 }: DataProviderProps) => {
+  const { resource: resourceParams } = await params;
   if (!resourceParams) {
     return (
       <>

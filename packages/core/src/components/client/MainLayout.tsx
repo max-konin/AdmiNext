@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Stack } from '@chakra-ui/react';
+import { Container, Stack } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 import { Navbar, Sidebar } from './sidebar';
 
