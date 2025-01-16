@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { prisma } from '../../app/db';
 import { ResourceEditViewPage } from '@adminext/playwright';
 
-test.afterEach(async () => {
+test.beforeEach(async () => {
   await prisma.category.deleteMany();
 });
 
@@ -17,7 +17,12 @@ test('Visit resource edit page', async ({ page }) => {
 
   const categoryId = String(category!.id);
 
-  const editPage = new ResourceEditViewPage(page, '/admin', 'categories', categoryId);
+  const editPage = new ResourceEditViewPage(
+    page,
+    '/admin',
+    'categories',
+    categoryId
+  );
 
   await editPage.visit();
 
@@ -29,4 +34,4 @@ test('Visit resource edit page', async ({ page }) => {
   await editPage.fillInput('Category New');
   await editPage.submitForm();
   await editPage.shouldHaveNotificationWithMessage('Done');
-})
+});

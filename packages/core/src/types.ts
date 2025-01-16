@@ -91,8 +91,8 @@ export type PageDefinition<TPage extends CRUDPageName> = Resource<
 >['pages'][TPage];
 
 export type RouteProps = {
-  params: { resource?: string[] };
-  searchParams: Record<string, unknown>;
+  params: Promise<{ resource?: string[] }>;
+  searchParams: Promise<Record<string, unknown>>;
 };
 
 export type DashboardPage = { resource: 'dashboard' };
