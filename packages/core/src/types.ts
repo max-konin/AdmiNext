@@ -16,12 +16,12 @@ export type TFormPage<
   TOtherData extends Record<string, unknown> = {},
 > = {
   schema:
-  | TFormSchema
-  | ((
-    loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
-      ? Awaited<ReturnType<TLoaderFn>>
-      : never
-  ) => TFormSchema);
+    | TFormSchema
+    | ((
+        loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
+          ? Awaited<ReturnType<TLoaderFn>>
+          : never
+      ) => TFormSchema);
   loader: TLoaderFn;
   fields?: {
     [k in z.infer<TFormSchema>]?: {
@@ -91,8 +91,8 @@ export type PageDefinition<TPage extends CRUDPageName> = Resource<
 >['pages'][TPage];
 
 export type RouteProps = {
-  params: { resource?: string[] };
-  searchParams: Record<string, unknown>;
+  params: Promise<{ resource?: string[] }>;
+  searchParams: Promise<Record<string, unknown>>;
 };
 
 export type DashboardPage = { resource: 'dashboard' };
@@ -112,7 +112,13 @@ export type AdmiNextContextType = {
 };
 
 export type FilesInput = {
-  maxFiles: number,
-  label: string,
-  description: string,
-}
+  maxFiles: number;
+  label: string;
+  description: string;
+};
+
+export type SidebarSlots = {
+  slots?: {
+    user?: () => ReactNode;
+  };
+};

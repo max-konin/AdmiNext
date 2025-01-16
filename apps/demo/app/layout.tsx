@@ -1,3 +1,4 @@
+import { AdmiNextProvider } from '@adminext/core/client';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <AdmiNextProvider>{children}</AdmiNextProvider>
+      </body>
     </html>
   );
 }

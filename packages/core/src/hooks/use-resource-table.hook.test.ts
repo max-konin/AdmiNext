@@ -57,7 +57,7 @@ describe('useResourceTable', () => {
     expect(columns).toHaveLength(3); // name, age, and actions column
     expect(columns[0]?.id).toBe('name');
     expect(columns[1]?.id).toBe('age');
-    expect(columns[2]?.id).toBe('actions');
+    expect(columns[2]?.id).toBe('__actions');
   });
 
   it('should render the correct cell values', () => {

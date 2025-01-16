@@ -5,6 +5,7 @@ import {
   DataProviderChildrenProps,
   ResourcePage,
   Resources,
+  SidebarSlots,
 } from '../../types';
 
 import { MainLayout } from './MainLayout';
@@ -16,11 +17,14 @@ import {
 import { DefaultDashboard } from './DefaultDashboard';
 import { AdmiNextContextProvider } from '../../contexts';
 
-export type AdmiNextProps = DataProviderChildrenProps & AdmiNextContextType;
+export type AdmiNextProps = DataProviderChildrenProps &
+  AdmiNextContextType &
+  SidebarSlots;
 
 export function AdmiNext({
   resourcesDefinition,
   routePrefix,
+  slots,
   ...pageData
 }: AdmiNextProps) {
   return (
@@ -28,7 +32,7 @@ export function AdmiNext({
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
     >
-      <MainLayout>
+      <MainLayout slots={slots}>
         <Container>
           {renderResourcePageOrDashboard(
             pageData,

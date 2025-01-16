@@ -39,7 +39,7 @@ export const useResourceTable = <
   const withActionsColumns = [
     ...columns,
     {
-      accessorKey: 'actions' as TListFields,
+      accessorKey: '__actions' as TListFields,
       header: '',
       enableColumnFilter: false,
       cell: (info: CellContext<TListData, any>) => {

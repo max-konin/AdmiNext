@@ -13,10 +13,11 @@ import {
   DrawerContent,
   DrawerRoot,
   DrawerTrigger,
-} from '../..//ui';
+} from '../../ui';
 import { Sidebar } from './Sidebar';
+import { SidebarSlots } from '../../../types';
 
-export const Navbar = (props: ContainerProps) => {
+export const Navbar = ({ slots, ...props }: ContainerProps & SidebarSlots) => {
   return (
     <Container
       py="2.5"
@@ -38,7 +39,7 @@ export const Navbar = (props: ContainerProps) => {
           <DrawerBackdrop />
           <DrawerContent>
             <DrawerCloseTrigger colorPalette="gray" />
-            <Sidebar />
+            <Sidebar slots={slots} />
           </DrawerContent>
         </DrawerRoot>
       </HStack>
