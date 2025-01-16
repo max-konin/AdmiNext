@@ -40,8 +40,6 @@ jobs:
       - name: Prisma generate
         working-directory: ./apps/demo
         run: pnpm run prisma:generate
-      - name: Build packages
-        run: pnpm run build
       - name: Run Playwright tests
         run: pnpm run test:e2e
       - uses: actions/upload-artifact@v4
