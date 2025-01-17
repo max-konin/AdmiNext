@@ -1,10 +1,4 @@
-import {
-  belongsTo,
-
-  resource,
-  files,
-  transformFiles,
-} from '@adminext/core';
+import { belongsTo, FileData, resource, files } from '@adminext/core';
 import { z } from 'zod';
 import {
   createCategory,
@@ -131,17 +125,24 @@ export const adminResources = {
               .superRefine(belongsTo(related.categories, 'name', 'id')),
             published: z.coerce.boolean().default(false),
             files: z
-              .any()
+              .array(z.custom<FileData>())
               .optional()
-              .transform(transformFiles)
-              .superRefine(files({ maxFiles: 10, label: 'Drag and drop here to upload', description: '.png, .jpg up to 5MB' })),
+              .superRefine(
+                files({
+                  maxFiles: 10,
+                  label: 'Drag and drop here to upload',
+                  description: '.png, .jpg up to 5MB',
+                  accept: ['image/png', 'image/jpeg'],
+                })
+              ),
           }),
         actions: {
           submit: async ({ data: { categoryId, files, ...rest } }) => {
             if (files && files.length > 0) {
-              const uploadPromises = files.map(
-                async (file) => await uploadFile(file)
-              );
+              const uploadPromises = files.map(async (fileData) => {
+                const blob = await fetch(fileData.url).then((r) => r.blob());
+                await uploadFile(blob, fileData.name);
+              });
               await Promise.all(uploadPromises);
             }
             await createPost({

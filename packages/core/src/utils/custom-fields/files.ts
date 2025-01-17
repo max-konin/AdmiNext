@@ -1,19 +1,24 @@
-import { FilesInput } from '../../types';
+import { FileUploadRootProps } from '../../components/ui/file-upload';
+import { FilesFieldConfig } from '../../types';
 import { buildZodFieldConfig } from './field-config';
 
-export const files = (input: FilesInput) =>
+export const files = (input: FilesFieldConfig) =>
   buildZodFieldConfig({
     fieldType: 'files',
-    customData: input
+    customData: input,
   });
 
-export const transformFiles = (fileList?: FileList | null) => {
-  if (!fileList) return [];
-  return Array.from(fileList).map(
-    (fileData: any) =>
-      new File([fileData], fileData.name, {
-        type: fileData.type,
-        lastModified: fileData.lastModified,
-      })
-  );
+export const convertFileToSerializableObject = (file: File) => {
+  const url = URL.createObjectURL(file);
+
+  return {
+    name: file.name,
+    type: file.type,
+    lastModified: file.lastModified,
+    url,
+  };
 };
+
+export type FileData = Awaited<
+  ReturnType<typeof convertFileToSerializableObject>
+>;

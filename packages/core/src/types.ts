@@ -1,6 +1,8 @@
 import { TableOptionsResolved } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 import z from 'zod';
+import { convertFileToSerializableObject } from './utils';
+import { FileUploadRootProps } from './components/ui/file-upload';
 
 export const CRUDPages = {
   list: 'list',
@@ -111,11 +113,11 @@ export type AdmiNextContextType = {
   resourcesDefinition: Resources;
 };
 
-export type FilesInput = {
+export type FilesFieldConfig = {
   maxFiles: number;
   label: string;
   description: string;
-};
+} & Pick<FileUploadRootProps, 'accept'>;
 
 export type SidebarSlots = {
   slots?: {
