@@ -127,6 +127,7 @@ export const adminResources = {
             files: z
               .array(z.custom<FileData>())
               .optional()
+              .default([])
               .superRefine(
                 files({
                   maxFiles: 10,
