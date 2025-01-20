@@ -3,7 +3,7 @@ import { belongsTo } from './belongs-to';
 import * as fieldConfigModule from './field-config';
 
 describe('belongsTo', () => {
-  const fieldConfigSpy = vi.spyOn(fieldConfigModule, 'fieldConfig');
+  const fieldConfigSpy = vi.spyOn(fieldConfigModule, 'buildZodFieldConfig');
 
   beforeEach(() => {
     fieldConfigSpy.mockClear();

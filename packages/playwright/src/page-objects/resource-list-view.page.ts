@@ -5,7 +5,7 @@ export class ResourceListViewPage {
     private readonly page: Page,
     private readonly routePrefix: string,
     private readonly resource: string
-  ) {}
+  ) { }
 
   get url() {
     return `${this.routePrefix}/${this.resource}`;
@@ -52,11 +52,12 @@ export class ResourceListViewPage {
   }
 
   async clickOnActionsMenuFirstButton() {
-    return this.firstActionsMenuButton().click();
+    await this.firstActionsMenuButton().waitFor({ state: 'visible' });
+    await this.firstActionsMenuButton().click();
   }
 
   async deleteFirstItem() {
-    return this.deleteFirstItemLocator().click();
+    await this.deleteFirstItemLocator().click();
   }
 
   async goToNextPage() {

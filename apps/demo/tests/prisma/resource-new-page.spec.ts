@@ -37,3 +37,8 @@ test('Visit resource new page and submit the form', async ({ page }) => {
   await listPage.shouldHaveCellWithText('published', 0, '✅');
   await listPage.shouldHaveNotificationWithMessage('Done!');
 });
+
+test.afterEach(async () => {
+  await prisma.post.deleteMany();
+  await prisma.category.deleteMany();
+});

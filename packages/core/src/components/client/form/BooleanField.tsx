@@ -4,4 +4,11 @@ import { Checkbox } from '../../ui';
 export const BooleanField: React.FC<AutoFormFieldProps> = ({
   inputProps,
   label,
-}) => <Checkbox inputProps={inputProps}>{label}</Checkbox>;
+}) => {
+  const { key, ...rest } = inputProps;
+  return (
+    <Checkbox key={key} inputProps={rest}>
+      {label}
+    </Checkbox>
+  );
+};
