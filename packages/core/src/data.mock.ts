@@ -2,11 +2,11 @@ import z from 'zod';
 import { resource } from './utils';
 
 export const posts = [
-  { id: 1, title: 'Hello, World!' },
-  { id: 2, title: 'Hello, Universe!' },
-  { id: 3, title: 'Hello, Galaxy!' },
-  { id: 4, title: 'Hello, Multiverse!' },
-  { id: 5, title: 'Hello, Omniverse!' },
+  { id: 1, title: 'Hello, World!', tags: [] },
+  { id: 2, title: 'Hello, Universe!', tags: [] },
+  { id: 3, title: 'Hello, Galaxy!', tags: [] },
+  { id: 4, title: 'Hello, Multiverse!', tags: [] },
+  { id: 5, title: 'Hello, Omniverse!', tags: [] },
 ];
 
 export const users = [
@@ -26,10 +26,6 @@ export const resources = {
           z.object({
             name: z.string(),
           }),
-        fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
-        },
         actions: {
           submit: async (data) => {
             console.log('Submit Data', data);
@@ -51,10 +47,6 @@ export const resources = {
           data: users.find((user) => user.id === Number(id)),
           related: { tags: [1, 2, 3] },
         }),
-        fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
-        },
         actions: {
           submit: async (data) => {
             console.log('Submit Data', data);
@@ -80,14 +72,21 @@ export const resources = {
       edit: {
         schema: z.object({
           title: z.string(),
+          tags: z.array(z.string()),
+          meta: z.object({
+            title: z.string(),
+            description: z.string(),
+          }),
         }),
-        fields: {
-          id: { label: 'ID' },
-          title: { label: 'Title' },
-        },
         loader: async (id) => {
           return {
-            data: posts.find((post) => post.id === Number(id)),
+            data: {
+              ...posts.find((post) => post.id === Number(id))!,
+              meta: {
+                title: 'Hello, World!',
+                description: 'This is a post.',
+              },
+            },
             related: {},
           };
         },

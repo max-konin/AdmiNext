@@ -119,6 +119,11 @@ export const adminResources = {
           z.object({
             title: z.string().min(1).default(''),
             content: z.string().min(1).default(''),
+            meta: z
+              .object({
+                description: z.string().nullish(),
+              })
+              .default({ description: '' }),
             categoryId: z
               .string()
               .min(1)
@@ -138,7 +143,14 @@ export const adminResources = {
               ),
           }),
         actions: {
-          submit: async ({ data: { categoryId, files, ...rest } }) => {
+          submit: async ({
+            data: {
+              categoryId,
+              files,
+              meta: { description },
+              ...rest
+            },
+          }) => {
             if (files && files.length > 0) {
               const uploadPromises = files.map(async (fileData) => {
                 const blob = await fetch(fileData.url).then((r) => r.blob());
@@ -148,6 +160,7 @@ export const adminResources = {
             }
             await createPost({
               ...rest,
+              metaDescription: description,
               category: { connect: { id: Number(categoryId) } },
             });
           },

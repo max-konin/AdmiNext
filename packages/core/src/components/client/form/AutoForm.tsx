@@ -15,22 +15,26 @@ import { BooleanField } from './BooleanField';
 import { SelectField } from './SelectField';
 import { BelongsToField } from './BelongsToField';
 import { FileUploadField } from './FileUploadField';
+import { ArrayWrapper } from './ArrayWrapper';
+import { ArrayElementWrapper } from './ArrayElementWrapper';
+import { DateField } from './DateField';
+import { ObjectWrapper } from './ObjectWrapper';
 
 const ChakraUIComponents: AutoFormUIComponents = {
   Form,
   FieldWrapper,
   ErrorMessage,
   SubmitButton,
-  ObjectWrapper: () => <>Not implemented</>,
-  ArrayWrapper: () => <>Not implemented</>,
-  ArrayElementWrapper: () => <>Not implemented</>,
+  ObjectWrapper,
+  ArrayWrapper,
+  ArrayElementWrapper,
 };
 
 export const ChakraAutoFormFieldComponents = {
   string: StringField,
   number: NumberField,
   boolean: BooleanField,
-  date: () => <>Not implemented</>,
+  date: DateField,
   select: SelectField,
   belongsTo: BelongsToField,
   files: FileUploadField,

@@ -26,7 +26,7 @@ export const findPostByIdForEdit = async (id: string) => {
 };
 
 export const createPost = async (data: Prisma.PostCreateInput) =>
-  prisma.post.create({ data });
+  prisma.post.create({ data: { ...data } });
 
 export const deletePost = async (id: string) =>
   prisma.post.delete({ where: { id: Number(id) } });

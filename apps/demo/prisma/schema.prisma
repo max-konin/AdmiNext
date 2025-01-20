@@ -22,12 +22,14 @@ model Category {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(255)
-  createdAt   DateTime  @default(now()) @db.Timestamp(6)
-  content     String?
-  published   Boolean   @default(false)
-  publishedAt DateTime?
+  id              Int       @id @default(autoincrement())
+  title           String    @db.VarChar(255)
+  createdAt       DateTime  @default(now()) @db.Timestamp(6)
+  content         String?
+  published       Boolean   @default(false)
+  publishedAt     DateTime?
+  tags            String[]  @default([])
+  metaDescription String?
 
   category   Category @relation(fields: [categoryId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   categoryId Int
