@@ -38,12 +38,18 @@ importers:
       next:
         specifier: ^15.0.0
         version: 15.1.4(@babel/core@7.25.2)(@playwright/test@1.48.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next-themes:
+        specifier: ^0.4.4
+        version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-icons:
+        specifier: ^5.3.0
+        version: 5.3.0(react@19.0.0)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
