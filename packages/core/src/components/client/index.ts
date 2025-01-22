@@ -1,2 +1,2 @@
 export * from './AdmiNext';
-export * from './AdmiNextProvider';
+export { Provider } from '../ui/provider';

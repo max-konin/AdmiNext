@@ -16,6 +16,7 @@ import {
 } from './resource-views';
 import { DefaultDashboard } from './DefaultDashboard';
 import { AdmiNextContextProvider } from '../../contexts';
+import { Toaster } from '../ui';
 
 export type AdmiNextProps = DataProviderChildrenProps &
   AdmiNextContextType &
@@ -40,6 +41,7 @@ export function AdmiNext({
             routePrefix
           )}
         </Container>
+        <Toaster />
       </MainLayout>
     </AdmiNextContextProvider>
   );
