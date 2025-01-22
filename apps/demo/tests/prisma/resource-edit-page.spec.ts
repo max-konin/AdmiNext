@@ -1,9 +1,10 @@
 import { test } from '@playwright/test';
 import { prisma } from '../../app/db';
 import { ResourceEditViewPage } from '@adminext/playwright';
+import { resetDB } from './test-helpers';
 
 test.beforeEach(async () => {
-  await prisma.category.deleteMany();
+  await resetDB();
 });
 
 test('Visit resource edit page', async ({ page }) => {

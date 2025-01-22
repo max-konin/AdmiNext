@@ -1,5 +1,6 @@
-import { AdmiNextProvider } from '@adminext/core/client';
 import type { Metadata } from 'next';
+import { Provider } from '../components/ui/provider';
+import { Toaster } from '@adminext/core/client';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,7 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <AdmiNextProvider>{children}</AdmiNextProvider>
+        <Provider>
+          <Toaster />
+          {children}
+        </Provider>
       </body>
     </html>
   );

@@ -4,12 +4,11 @@ import {
 } from '@adminext/playwright';
 import test from '@playwright/test';
 import { prisma } from '../../app/db';
+import { resetDB } from './test-helpers';
 
 test.beforeEach(async () => {
-  await prisma.post.deleteMany();
-  await prisma.category.deleteMany();
+  await resetDB();
 });
-
 test('Visit resource new page and submit the form', async ({ page }) => {
   const categoryName = 'Category 1';
   await prisma.category.create({
