@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Provider } from '../components/ui/provider';
-import { Toaster } from '../components/ui/toaster';
+import { Toaster } from '@adminext/core/client';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

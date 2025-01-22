@@ -1,2 +1,2 @@
 export * from './AdmiNext';
-export { Provider } from '../ui/provider';
+export { Toaster, Provider } from '../ui';
