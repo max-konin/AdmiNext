@@ -17,7 +17,7 @@ const DEFAULT_GROUP_NAME = 'default';
 
 export type SidebarProps = StackProps & SidebarSlots;
 
-export const Sidebar = ({ slots, ...props }: SidebarProps) => {
+export const Sidebar = ({ slots, customPages, ...props }: SidebarProps) => {
   const { routePrefix, resourcesDefinition } = useAdmiNextContext();
   const groupedResources = groupResource(resourcesDefinition);
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
@@ -39,6 +39,27 @@ export const Sidebar = ({ slots, ...props }: SidebarProps) => {
           Dashboard
         </SidebarLink>
         <Separator />
+        {customPages && (
+          <Stack gap="2">
+            <Text fontWeight="medium" textStyle="sm">
+              Pages
+            </Text>
+            <Stack gap="1">
+              <For each={customPages}>
+                {(page, index) => (
+                  <Bleed key={index} inline="4">
+                    <SidebarLink
+                      key={index}
+                      href={`/admin/${page.menuLabeL.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      {page.menuLabeL}
+                    </SidebarLink>
+                  </Bleed>
+                )}
+              </For>
+            </Stack>
+          </Stack>
+        )}
         <Stack gap="6">
           <For each={groupedResources}>
             {([group, resources], index) => (

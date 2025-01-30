@@ -26,6 +26,7 @@ export function AdmiNext({
   routePrefix,
   slots,
   dashboard,
+  customPages,
   ...pageData
 }: AdmiNextProps) {
   return (
@@ -33,7 +34,7 @@ export function AdmiNext({
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
     >
-      <MainLayout slots={slots} dashboard={dashboard}>
+      <MainLayout slots={slots} dashboard={dashboard} customPages={customPages}>
         <Container>
           {renderResourcePageOrDashboard(
             pageData,

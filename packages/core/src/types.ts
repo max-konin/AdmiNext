@@ -121,8 +121,13 @@ export type FilesFieldConfig = {
 
 export type SidebarSlots = {
   dashboard?: ReactNode;
+  customPages?: CustomPage[];
   slots?: {
     user?: () => ReactNode;
   };
 };
 
+export type CustomPage = {
+  menuLabeL: string;
+  render: () => ReactNode;
+}

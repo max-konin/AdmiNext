@@ -5,6 +5,7 @@ import { AdmiNext } from '@adminext/core/client';
 import { adminResources } from './model';
 import { Box, HStack, Text } from '@chakra-ui/react';
 import { Dashboard } from './dashboard';
+import { CustomPage } from './custom-page-1';
 
 export const UserProfile = () => {
   return (
@@ -30,9 +31,21 @@ export const AdminPanel = (props: DataProviderChildrenProps) => {
       resourcesDefinition={adminResources}
       routePrefix="admin"
       dashboard={<Dashboard />}
+      customPages={customPages}
       slots={{
         user: () => <UserProfile />,
       }}
     />
   );
 };
+
+const customPages = [
+  {
+    menuLabeL: 'Custom Page 1',
+    render: () => <CustomPage />,
+  },
+  {
+    menuLabeL: 'Custom Page 2',
+    render: () => <CustomPage />,
+  },
+];
