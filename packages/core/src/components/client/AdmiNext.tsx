@@ -14,8 +14,8 @@ import {
   ResourceListView,
   ResourceNewView,
 } from './resource-views';
-import { DefaultDashboard } from './DefaultDashboard';
 import { AdmiNextContextProvider } from '../../contexts';
+import { ReactNode } from 'react';
 
 export type AdmiNextProps = DataProviderChildrenProps &
   AdmiNextContextType &
@@ -25,6 +25,7 @@ export function AdmiNext({
   resourcesDefinition,
   routePrefix,
   slots,
+  dashboard,
   ...pageData
 }: AdmiNextProps) {
   return (
@@ -32,12 +33,13 @@ export function AdmiNext({
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
     >
-      <MainLayout slots={slots}>
+      <MainLayout slots={slots} dashboard={dashboard}>
         <Container>
           {renderResourcePageOrDashboard(
             pageData,
             resourcesDefinition,
-            routePrefix
+            routePrefix,
+            dashboard
           )}
         </Container>
       </MainLayout>
@@ -48,10 +50,11 @@ export function AdmiNext({
 const renderResourcePageOrDashboard = (
   pageData: DataProviderChildrenProps,
   resourcesDef: Resources,
-  routePrefix: string
+  routePrefix: string,
+  dashboard: ReactNode
 ) => {
   if (pageData.resource === 'dashboard') {
-    return <DefaultDashboard />;
+    return dashboard;
   }
 
   return renderResourcePage(
@@ -98,7 +101,6 @@ const renderResourcePage = (
           resource={pageData.resource}
         />
       );
-
     default:
       throw new Error('Not implemented');
   }

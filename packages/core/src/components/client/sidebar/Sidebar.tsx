@@ -1,6 +1,7 @@
 import {
   Bleed,
   For,
+  Separator,
   Stack,
   StackProps,
   StackSeparator,
@@ -10,6 +11,7 @@ import { Resources, SidebarSlots } from '../../../types';
 import { SidebarLink } from './SidebarLink';
 import { useAdmiNextContext } from '../../../hooks';
 import { ColorModeButton } from '../../ui';
+import { MdDashboard } from 'react-icons/md';
 
 const DEFAULT_GROUP_NAME = 'default';
 
@@ -32,6 +34,11 @@ export const Sidebar = ({ slots, ...props }: SidebarProps) => {
       {...props}
     >
       <Stack gap="6">
+        <SidebarLink href="/admin">
+          <MdDashboard />
+          Dashboard
+        </SidebarLink>
+        <Separator />
         <Stack gap="6">
           <For each={groupedResources}>
             {([group, resources], index) => (

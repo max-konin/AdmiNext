@@ -18,12 +18,12 @@ export type TFormPage<
   TOtherData extends Record<string, unknown> = {},
 > = {
   schema:
-    | TFormSchema
-    | ((
-        loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
-          ? Awaited<ReturnType<TLoaderFn>>
-          : never
-      ) => TFormSchema);
+  | TFormSchema
+  | ((
+    loaderData: TLoaderFn extends (...args: any[]) => Promise<any>
+      ? Awaited<ReturnType<TLoaderFn>>
+      : never
+  ) => TFormSchema);
   loader: TLoaderFn;
   fields?: {
     [k in z.infer<TFormSchema>]?: {
@@ -120,7 +120,9 @@ export type FilesFieldConfig = {
 } & Pick<FileUploadRootProps, 'accept'>;
 
 export type SidebarSlots = {
+  dashboard?: ReactNode;
   slots?: {
     user?: () => ReactNode;
   };
 };
+

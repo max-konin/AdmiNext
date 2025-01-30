@@ -4,6 +4,7 @@ import { DataProviderChildrenProps } from '@adminext/core';
 import { AdmiNext } from '@adminext/core/client';
 import { adminResources } from './model';
 import { Box, HStack, Text } from '@chakra-ui/react';
+import { Dashboard } from './dashboard';
 
 export const UserProfile = () => {
   return (
@@ -28,6 +29,7 @@ export const AdminPanel = (props: DataProviderChildrenProps) => {
       {...props}
       resourcesDefinition={adminResources}
       routePrefix="admin"
+      dashboard={<Dashboard />}
       slots={{
         user: () => <UserProfile />,
       }}
