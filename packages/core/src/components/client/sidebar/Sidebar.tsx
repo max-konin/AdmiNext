@@ -19,14 +19,13 @@ export type SidebarProps = StackProps & SidebarSlots;
 
 export const Sidebar = ({
   slots,
-  customPages,
+  customPages = [],
   dashboard,
   ...props
 }: SidebarProps) => {
   const { routePrefix, resourcesDefinition } = useAdmiNextContext();
   const groupedResources = groupResource(resourcesDefinition);
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
-
   return (
     <Stack
       flex="1"
@@ -48,7 +47,7 @@ export const Sidebar = ({
             <Separator />
           </>
         )}
-        {customPages && (
+        {customPages && customPages.length > 0 && (
           <Stack gap="2">
             <Text fontWeight="medium" textStyle="sm">
               Pages
