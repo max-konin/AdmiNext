@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import {
   CRUDPageName,
   CRUDPages,
+  CustomPage,
   DataProviderChildrenProps,
   PageDefinition,
   Resources,
@@ -11,16 +12,39 @@ import { notFound } from 'next/navigation';
 
 export type DataProviderProps = {
   resources: Resources;
+  customPages?: CustomPage[];
   routeProps: RouteProps;
   children: (props: DataProviderChildrenProps) => ReactNode;
 };
 
 export const DataProvider = async ({
   resources,
+  customPages,
   routeProps: { params },
   children,
 }: DataProviderProps) => {
   const { resource: resourceParams } = await params;
+
+  if (
+    customPages &&
+    customPages.some((el) => el.route === resourceParams?.[0])
+  ) {
+    const customPage = customPages.find(
+      (el) => el.route === resourceParams?.[0]
+    );
+    if (customPage) {
+      return (
+        <>
+          {children({
+            resource: 'customPage',
+            title: customPage.title,
+            route: customPage.route,
+          })}
+        </>
+      );
+    }
+  }
+
   if (!resourceParams) {
     return (
       <>
@@ -70,7 +94,9 @@ const loadRouteData = async (
   switch (view) {
     case CRUDPages.edit:
       const res = await pageDefinition.loader!(currentId!);
-      if (!res.data) return notFound();
+      if (!res.data) {
+        return notFound();
+      }
       return res;
     case CRUDPages.new:
       return (pageDefinition as PageDefinition<'new'>)?.loader?.();

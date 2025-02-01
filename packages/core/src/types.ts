@@ -1,7 +1,6 @@
 import { TableOptionsResolved } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 import z from 'zod';
-import { convertFileToSerializableObject } from './utils';
 import { FileUploadRootProps } from './components/ui/file-upload';
 
 export const CRUDPages = {
@@ -98,13 +97,14 @@ export type RouteProps = {
 };
 
 export type DashboardPage = { resource: 'dashboard' };
+
 export type ResourcePage = {
   resource: string;
   loaderData: any;
   view: CRUDPageName;
 };
 
-export type DataProviderChildrenProps = DashboardPage | ResourcePage;
+export type DataProviderChildrenProps = DashboardPage | ResourcePage | CustomPage;
 
 export type SelectOption = [string, string];
 
@@ -128,6 +128,10 @@ export type SidebarSlots = {
 };
 
 export type CustomPage = {
-  menuLabeL: string;
-  render: () => ReactNode;
+  resource?: string,
+  title: string;
+  route: string,
+  render?: () => ReactNode;
 }
+
+export type Page = ResourcePage | CustomPage;

@@ -5,7 +5,7 @@ import { AdmiNext } from '@adminext/core/client';
 import { adminResources } from './model';
 import { Box, HStack, Text } from '@chakra-ui/react';
 import { Dashboard } from './dashboard';
-import { CustomPage } from './custom-page-1';
+import { customPages } from './customPages';
 
 export const UserProfile = () => {
   return (
@@ -38,14 +38,3 @@ export const AdminPanel = (props: DataProviderChildrenProps) => {
     />
   );
 };
-
-const customPages = [
-  {
-    menuLabeL: 'Custom Page 1',
-    render: () => <CustomPage />,
-  },
-  {
-    menuLabeL: 'Custom Page 2',
-    render: () => <CustomPage />,
-  },
-];

@@ -2,6 +2,7 @@ import { Container } from '@chakra-ui/react';
 import {
   AdmiNextContextType,
   CRUDPages,
+  CustomPage,
   DataProviderChildrenProps,
   ResourcePage,
   Resources,
@@ -26,7 +27,7 @@ export function AdmiNext({
   routePrefix,
   slots,
   dashboard,
-  customPages,
+  customPages = [],
   ...pageData
 }: AdmiNextProps) {
   return (
@@ -36,11 +37,12 @@ export function AdmiNext({
     >
       <MainLayout slots={slots} dashboard={dashboard} customPages={customPages}>
         <Container>
-          {renderResourcePageOrDashboard(
+          {renderPage(
             pageData,
             resourcesDefinition,
             routePrefix,
-            dashboard
+            dashboard,
+            customPages
           )}
         </Container>
       </MainLayout>
@@ -48,14 +50,22 @@ export function AdmiNext({
   );
 }
 
-const renderResourcePageOrDashboard = (
+const renderPage = (
   pageData: DataProviderChildrenProps,
   resourcesDef: Resources,
   routePrefix: string,
-  dashboard: ReactNode
+  dashboard: ReactNode,
+  customPages: CustomPage[]
 ) => {
-  if (pageData.resource === 'dashboard') {
+  if ((pageData as ResourcePage).resource === 'dashboard') {
     return dashboard;
+  }
+
+  if ((pageData as ResourcePage).resource === 'customPage') {
+    const page = customPages.filter(
+      (el) => el.title === (pageData as CustomPage).title
+    );
+    return page[0]?.render?.();
   }
 
   return renderResourcePage(
