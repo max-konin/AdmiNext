@@ -60,9 +60,9 @@ const renderPage = (
   dashboard?: ReactNode
 ) => {
   if ((pageData as ResourcePage).resource === 'dashboard') {
-    return dashboard;
+    if (dashboard) return dashboard;
+    return <DefaultDashboard />;
   }
-
   if ((pageData as ResourcePage).resource === 'custom-page') {
     const page = customPages.filter(
       (el) => el.route === (pageData as CustomPage).route

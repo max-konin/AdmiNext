@@ -38,15 +38,11 @@ export const Sidebar = ({
       {...props}
     >
       <Stack gap="6">
-        {dashboard && (
-          <>
-            <SidebarLink href={`/${routePrefix}`}>
-              <MdDashboard />
-              Dashboard
-            </SidebarLink>
-            <Separator />
-          </>
-        )}
+        <SidebarLink href={`/${routePrefix}`}>
+          <MdDashboard />
+          Dashboard
+        </SidebarLink>
+        <Separator />
         {customPages && customPages.length > 0 && (
           <Stack gap="2">
             <Text fontWeight="medium" textStyle="sm">
