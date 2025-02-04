@@ -25,23 +25,20 @@ export const DataProvider = async ({
 }: DataProviderProps) => {
   const { resource: resourceParams } = await params;
 
-  if (
-    customPages &&
-    customPages.some((el) => el.route === resourceParams?.[0])
-  ) {
-    const customPage = customPages.find(
-      (el) => el.route === resourceParams?.[0]
+  const customPage =
+    customPages && resourceParams
+      ? findCustomPage(customPages, resourceParams)
+      : null;
+
+  if (customPage) {
+    return (
+      <>
+        {children({
+          resource: 'custom-page',
+          route: customPage.route,
+        })}
+      </>
     );
-    if (customPage) {
-      return (
-        <>
-          {children({
-            resource: 'custom-page',
-            route: customPage.route,
-          })}
-        </>
-      );
-    }
   }
 
   if (!resourceParams) {
@@ -73,6 +70,14 @@ export const DataProvider = async ({
       })}
     </>
   );
+};
+
+const findCustomPage = (
+  customPages: CustomPageDefinition[],
+  resourceParams: string[]
+) => {
+  const path = resourceParams.join('/');
+  return customPages?.find(({ route }) => route === path);
 };
 
 const getView = (segment?: string) => {
