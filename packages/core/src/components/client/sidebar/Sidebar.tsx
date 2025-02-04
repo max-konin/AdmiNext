@@ -34,11 +34,12 @@ export const Sidebar = ({ slots, ...props }: SidebarProps) => {
       {...props}
     >
       <Stack gap="6">
-        <SidebarLink href={`/${routePrefix}`}>
-          <MdDashboard />
-          Dashboard
-        </SidebarLink>
-        <Separator />
+        <Bleed inline="4">
+          <SidebarLink key="dashboard" href={`/${routePrefix}`}>
+            <MdDashboard />
+            Dashboard
+          </SidebarLink>
+        </Bleed>
         {customPages && customPages.length > 0 && (
           <Stack gap="2">
             <Text fontWeight="medium" textStyle="sm">
