@@ -3,6 +3,7 @@ import {
   AdmiNextContextType,
   CRUDPages,
   CustomPage,
+  CustomPageDefinition,
   DataProviderChildrenProps,
   ResourcePage,
   Resources,
@@ -17,6 +18,7 @@ import {
 } from './resource-views';
 import { AdmiNextContextProvider } from '../../contexts';
 import { ReactNode } from 'react';
+import { DefaultDashboard } from './DefaultDashboard';
 
 export type AdmiNextProps = DataProviderChildrenProps &
   AdmiNextContextType &
@@ -41,8 +43,8 @@ export function AdmiNext({
             pageData,
             resourcesDefinition,
             routePrefix,
-            dashboard,
-            customPages
+            customPages,
+            dashboard
           )}
         </Container>
       </MainLayout>
@@ -54,16 +56,16 @@ const renderPage = (
   pageData: DataProviderChildrenProps,
   resourcesDef: Resources,
   routePrefix: string,
-  dashboard: ReactNode,
-  customPages: CustomPage[]
+  customPages: CustomPageDefinition[],
+  dashboard?: ReactNode
 ) => {
   if ((pageData as ResourcePage).resource === 'dashboard') {
     return dashboard;
   }
 
-  if ((pageData as ResourcePage).resource === 'customPage') {
+  if ((pageData as ResourcePage).resource === 'custom-page') {
     const page = customPages.filter(
-      (el) => el.title === (pageData as CustomPage).title
+      (el) => el.route === (pageData as CustomPage).route
     );
     return page[0]?.render?.();
   }

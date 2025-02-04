@@ -121,17 +121,19 @@ export type FilesFieldConfig = {
 
 export type SidebarSlots = {
   dashboard?: ReactNode;
-  customPages?: CustomPage[];
+  customPages?: CustomPageDefinition[];
   slots?: {
     user?: () => ReactNode;
   };
 };
 
-export type CustomPage = {
-  resource?: string,
+export type CustomPageDefinition = {
   title: string;
-  route: string,
-  render?: () => ReactNode;
+  route: string;
+  render: () => ReactNode;
 }
 
-export type Page = ResourcePage | CustomPage;
+export type CustomPage = {
+  resource: 'custom-page',
+  route: string;
+}

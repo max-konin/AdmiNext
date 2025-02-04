@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import {
   CRUDPageName,
   CRUDPages,
-  CustomPage,
+  CustomPageDefinition,
   DataProviderChildrenProps,
   PageDefinition,
   Resources,
@@ -12,7 +12,7 @@ import { notFound } from 'next/navigation';
 
 export type DataProviderProps = {
   resources: Resources;
-  customPages?: CustomPage[];
+  customPages?: CustomPageDefinition[];
   routeProps: RouteProps;
   children: (props: DataProviderChildrenProps) => ReactNode;
 };
@@ -36,8 +36,7 @@ export const DataProvider = async ({
       return (
         <>
           {children({
-            resource: 'customPage',
-            title: customPage.title,
+            resource: 'custom-page',
             route: customPage.route,
           })}
         </>
