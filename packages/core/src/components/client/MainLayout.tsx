@@ -7,12 +7,7 @@ import { SidebarSlots } from '../../types';
 
 export type MainLayoutProps = PropsWithChildren & SidebarSlots;
 
-export const MainLayout = ({
-  children,
-  slots,
-  customPages,
-  dashboard,
-}: MainLayoutProps) => {
+export const MainLayout = ({ children, slots }: MainLayoutProps) => {
   return (
     <>
       <Stack
@@ -20,12 +15,7 @@ export const MainLayout = ({
         data-testid="layout-vendor"
       >
         <Navbar hideFrom="md" slots={slots} />
-        <Sidebar
-          hideBelow="md"
-          slots={slots}
-          dashboard={dashboard}
-          customPages={customPages}
-        />
+        <Sidebar hideBelow="md" slots={slots} />
         <Container flex="1" p={{ base: '4', md: '6' }}>
           {children}
         </Container>

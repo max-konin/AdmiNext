@@ -22,7 +22,7 @@ import { DefaultDashboard } from './DefaultDashboard';
 
 export type AdmiNextProps = DataProviderChildrenProps &
   AdmiNextContextType &
-  SidebarSlots;
+  SidebarSlots & { dashboard?: ReactNode };
 
 export function AdmiNext({
   resourcesDefinition,
@@ -36,8 +36,9 @@ export function AdmiNext({
     <AdmiNextContextProvider
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
+      customPages={customPages}
     >
-      <MainLayout slots={slots} dashboard={dashboard} customPages={customPages}>
+      <MainLayout slots={slots}>
         <Container>
           {renderPage(
             pageData,

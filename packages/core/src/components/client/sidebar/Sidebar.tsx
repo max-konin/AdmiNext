@@ -17,13 +17,9 @@ const DEFAULT_GROUP_NAME = 'default';
 
 export type SidebarProps = StackProps & SidebarSlots;
 
-export const Sidebar = ({
-  slots,
-  customPages = [],
-  dashboard,
-  ...props
-}: SidebarProps) => {
-  const { routePrefix, resourcesDefinition } = useAdmiNextContext();
+export const Sidebar = ({ slots, ...props }: SidebarProps) => {
+  const { routePrefix, resourcesDefinition, customPages } =
+    useAdmiNextContext();
   const groupedResources = groupResource(resourcesDefinition);
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
   return (

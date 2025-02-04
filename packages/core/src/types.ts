@@ -111,6 +111,7 @@ export type SelectOption = [string, string];
 export type AdmiNextContextType = {
   routePrefix: string;
   resourcesDefinition: Resources;
+  customPages?: CustomPageDefinition[];
 };
 
 export type FilesFieldConfig = {
@@ -120,8 +121,6 @@ export type FilesFieldConfig = {
 } & Pick<FileUploadRootProps, 'accept'>;
 
 export type SidebarSlots = {
-  dashboard?: ReactNode;
-  customPages?: CustomPageDefinition[];
   slots?: {
     user?: () => ReactNode;
   };
