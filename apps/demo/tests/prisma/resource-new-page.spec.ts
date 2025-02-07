@@ -3,7 +3,7 @@ import {
   ResourceNewViewPage,
 } from '@adminext/playwright';
 import test from '@playwright/test';
-import { prisma } from '../../app/db';
+import { prisma } from '../../app/db-prisma';
 import { resetDB } from './test-helpers';
 
 test.beforeEach(async () => {

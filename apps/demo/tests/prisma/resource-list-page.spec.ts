@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { ResourceListViewPage } from '@adminext/playwright';
-import { prisma } from '../../app/db';
+import { prisma } from '../../app/db-prisma';
 import { resetDB } from './test-helpers';
 
 test.beforeEach(async () => {

@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { prisma } from '../../app/db';
+import { prisma } from '../../app/db-prisma';
 import { ResourceEditViewPage } from '@adminext/playwright';
 import { resetDB } from './test-helpers';
 

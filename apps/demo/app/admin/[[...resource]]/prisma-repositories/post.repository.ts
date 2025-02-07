@@ -1,7 +1,7 @@
 'use server';
 
 import { Prisma } from '@prisma/client';
-import { prisma } from '../../../db';
+import { prisma } from '../../../db-prisma';
 
 export const findAllPosts = async () =>
   wrapData(prisma.post.findMany({ include: { category: true } }));
