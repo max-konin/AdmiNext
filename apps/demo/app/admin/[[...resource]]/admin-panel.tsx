@@ -2,8 +2,8 @@
 
 import { DataProviderChildrenProps } from '@adminext/core';
 import { AdmiNext } from '@adminext/core/client';
-import { adminResources } from './model';
 import { Box, HStack, Text } from '@chakra-ui/react';
+import { adminResources } from './drizzle-repositories/model';
 
 export const UserProfile = () => {
   return (
