@@ -1,5 +1,6 @@
 import { resource } from '@adminext/core';
-import { deleteUser, findAllUsers } from './user.repository';
+import { createUser, deleteUser, findAllUsers } from './user.repository';
+import { z } from 'zod';
 
 export const adminResources = {
   users: resource({
@@ -12,10 +13,25 @@ export const adminResources = {
         columns: [
           { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
           { accessorKey: 'name', header: 'Name', filterFn: 'includesString' },
+          { accessorKey: 'age', header: 'Age', filterFn: 'includesString' },
+          { accessorKey: 'email', header: 'Email', filterFn: 'includesString' },
         ],
         actions: {
           delete: async (id: string) => {
             await deleteUser(id);
+          },
+        },
+      },
+      new: {
+        loader: undefined,
+        schema: z.object({
+          name: z.string().min(1).default(''),
+          age: z.string().min(1).default(''),
+          email: z.string().min(1).default('')
+        }),
+        actions: {
+          submit: async ({ data }) => {
+            await createUser(data);
           },
         },
       },
