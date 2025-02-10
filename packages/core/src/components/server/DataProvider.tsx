@@ -25,10 +25,7 @@ export const DataProvider = async ({
 }: DataProviderProps) => {
   const { resource: resourceParams } = await params;
 
-  const customPage =
-    customPages && resourceParams
-      ? findCustomPage(customPages, resourceParams)
-      : null;
+  const customPage = findCustomPage(customPages, resourceParams);
 
   if (customPage) {
     return (
@@ -73,10 +70,10 @@ export const DataProvider = async ({
 };
 
 const findCustomPage = (
-  customPages: CustomPageDefinition[],
-  resourceParams: string[]
+  customPages?: CustomPageDefinition[],
+  resourceParams?: string[]
 ) => {
-  const path = resourceParams.join('/');
+  const path = resourceParams?.join('/');
   return customPages?.find(({ route }) => route === path);
 };
 
