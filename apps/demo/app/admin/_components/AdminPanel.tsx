@@ -4,7 +4,7 @@ import { DataProviderChildrenProps } from '@adminext/core';
 import { AdmiNext } from '@adminext/core/client';
 import { adminResources } from '../[[...resource]]/model';
 import { Box, HStack, Text } from '@chakra-ui/react';
-import { customPages } from './customPages';
+import { customPages } from './custom-pages';
 import { Dashboard } from './Dashboard';
 
 export const UserProfile = () => {
