@@ -3,7 +3,24 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AdmiNext } from './AdmiNext';
 import { resources, posts } from '../../data.mock';
 import { Provider } from '../ui';
-import { customPages } from './CustomPages';
+import { Box, Heading } from '@chakra-ui/react';
+import { CustomPageDefinition } from '../../types';
+
+const customPages: CustomPageDefinition[] = [
+  {
+    title: 'Custom Page Example',
+    route: 'custom-page-example',
+    render: () => <CustomPageExample />,
+  },
+];
+
+export const CustomPageExample = () => {
+  return (
+    <Box>
+      <Heading>Custom Page Example</Heading>
+    </Box>
+  );
+};
 
 const withProvider = (Story: any) => (
   <Provider>
@@ -22,7 +39,7 @@ const meta = {
     slots: {
       user: () => 'Current user',
     },
-    customPages: customPages,
+    customPages,
   },
   decorators: [withProvider],
 } satisfies Meta<typeof AdmiNext>;
