@@ -1,5 +1,5 @@
 import { resource } from '@adminext/core';
-import { createUser, deleteUser, findAllUsers } from './user.repository';
+import { createUser, deleteUser, findAllUsers, findUserByIdForEdit, updateUser } from './user.repository';
 import { z } from 'zod';
 
 export const adminResources = {
@@ -35,6 +35,24 @@ export const adminResources = {
           },
         },
       },
+      edit: {
+        schema: z.object({
+          name: z.string(),
+        }),
+        loader: findUserByIdForEdit,
+        actions: {
+          submit: async ({
+            id,
+            data,
+          }: {
+            id: string;
+            data: any;
+          }) => {
+            await updateUser(data, id);
+          },
+        },
+      },
     },
   }),
 }
+
