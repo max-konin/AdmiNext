@@ -1,0 +1,137 @@
+---
+sidebarTitle: Edit Resource View
+order: 1
+---
+'
+
+
+import { Steps } from 'nextra/components'
+
+# Edit Resource Views
+
+To allow users to edit an instance of the resource you need to provide a `edit` page to your resource `pages` property:
+
+```tsx
+{
+  pages: {
+    edit: {
+      loader: async (id) => {
+        const post = await fetchPost(id);
+        return { data: post };
+      },
+      schema: z.object({
+        title: z.string(),
+      }),
+      actions: {
+        submit: async (id, data) => {
+          await updatePost(id, data);
+        },
+      },
+    }
+  }
+}
+```
+
+`schema` property is a zod schema that defines the shape of the data that will be submitted to the server.
+You can find more information about zod in the [official documentation](https://zod.dev/)
+
+`actions` property is an object that contains a `submit` function that will be called when the user submits the form. The type of the `data` parameter is the same as the schema you provided.
+
+## Form customizations
+
+AdmiNext form builder is based on [autoform](https://github.com/vantezzen/autoform). You can find more information about allowed configurations in the [official documentation](https://autoform.vantezzen.io/docs/react/customization).
+
+## Working with associations
+
+Some of your resources might be associated with others. For example, a `Post` might be associated with a `User`.
+So when you create a new `Post`, you might want to select a `User` from a list of existing users.
+
+To add an select for an association to your form, pass following steps:
+
+<Steps>
+
+### Add a loader and fetch related data
+
+You can fetch all related data in the `loader` function and put it into the `related` property.
+
+```tsx {4-8} 
+{
+  pages: {
+    edit: {
+      loader: async (id) => {
+        const post = await fetchPost(id);
+        const users = await fetchUsers();
+        return { data: post, related: { users } };
+      },
+      schema: z.object({
+        title: z.string(),
+      }),
+      actions: {
+        submit: async (id, data) => {
+          await updatePost(id, data);
+        },
+      },
+    }
+  }
+}
+```
+
+
+### Modify your schema
+
+Convert `schema` property to Function and add a property for the association to your schema via using `belongsTo` helper
+
+
+```tsx {1, 12-15}
+import { belongsTo  } from '@adminext/core';
+
+{
+  pages: {
+    edit: {
+      loader: async (id) => {
+        const post = await fetchPost(id);
+        const users = await fetchUsers();
+        return { data: post, related: { users } };
+      },
+      schema: z.object({
+        title: z.string(),
+      }),
+      actions: {
+        submit: async (id, data) => {
+          await updatePost(id, data);
+        },
+      },
+    }
+  }
+}
+```
+
+```tsx {1, 12-15}
+import { belongsTo  } from '@adminext/core';
+
+{
+  pages: {
+    new: {
+      loader: async () => {
+        const users = await fetchUsers();
+        return { related: { users } };
+      },
+      schema: ({ related }) => z.object({
+        title: z.string(),
+        categoryId: z
+          .string()
+          .min(1)
+          .superRefine(belongsTo(related.users, 'email', 'id')),
+      }),
+      actions: {
+        submit: async (data) => {
+          await createPost(data);
+        },
+      },
+    }
+  }
+}
+```
+
+
+</Steps>

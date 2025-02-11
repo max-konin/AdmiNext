@@ -1,0 +1,145 @@
+---
+sidebarTitle: Get Started
+---
+
+import { Steps } from 'nextra/components'
+
+# Get Started
+
+
+<Steps>
+
+## Install dependencies
+
+
+```sh npm2yarn copy
+npm i @chakra-ui/react @emotion/react @adminext/core zod
+```
+
+
+## Setup Chakra UI provider
+
+AdmiNext utilizes Chakra UI as its design system. You need to set up the Chakra UI provider.
+
+> [!NOTE]
+>
+> Ship this step if you already have Chakra UI provider in your project.
+
+Set up Chakra UI provider in your project following [instructions](https://chakra-ui.com/docs/get-started/frameworks/next-app#setup-provider).
+
+
+## Setup Toaster component for notifications
+
+To display notifications, you need to set up the Toaster component from the @adminext/core package in your project. Add the following code to your layout.tsx file.
+
+```tsx {2,13} filename=app/layout.tsx
+import { Provider } from '@/components/ui/provider';
+import { Toaster } from '@adminext/core/client';
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Provider>
+          <Toaster />
+          {children}
+        </Provider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Declare resources
+
+Declare you resources in TS file
+
+```typescript filename=app/admin/resources.ts copy
+import z from 'zod';
+import { resource } from '@adminext/core';
+
+export const resources = {
+  posts: resource({
+    group: 'Content',
+    title: 'Posts',
+    identityBy: 'id',
+    pages: {
+      list: {
+        loader: async () => {
+          const posts = await fetchPosts(); // Put your fetch logic here
+          return { data: posts };
+        },
+        columns: [
+          { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
+          { accessorKey: 'title', header: 'Title', filterFn: 'includesString' },
+        ],
+      },
+      new: {
+        schema: z.object({
+          title: z.string(),
+        }),
+        actions: {
+          submit: async (data) => {
+            await createPost(data); // Put your create logic here
+          },
+        },
+      },
+      edit: {
+        schema: z.object({
+          title: z.string(),
+        }),
+        actions: {
+          submit: async (data) => {
+            await updatePost(data); // Put your update logic here
+          },
+        },
+      },
+    },
+  }),
+};
+```
+
+AdmiNext can works with any backends. You can just declare your fetch, create, update, delete server actions.
+
+See examples for:
+
+* Prisma ORM
+* Drizzle ORM
+* React Query
+
+## Create admin panesl pages
+
+Create admin panels pages in your project
+
+```tsx filename=app/admin/[[...resource]]/admin.page.tsx copy
+import { DataProvider } from '@adminext/core/server';
+import { RouteProps } from '@adminext/core';
+import { resources } from '../resources.ts';
+import { AdmiNext } from '@adminext/core/client';
+
+export default async function Home(props: RouteProps) {
+  return (
+    <DataProvider resources={resources} routeProps={props}>
+      {(data) => (
+        <AdmiNext
+          resourcesDefinition={resources}
+          routePrefix="admin"
+          {...data}
+        />
+      )}
+    </DataProvider>
+  );
+}
+```
+
+## Run your project
+
+```sh npm2yarn copy
+npm run dev
+```
+
+</Steps>
