@@ -2,7 +2,7 @@ import { Box, Heading } from '@chakra-ui/react';
 
 export const DefaultDashboard = () => {
   return (
-    <Box data-testid="dashboard-page">
+    <Box>
       <Heading>Dashboard</Heading>
     </Box>
   );

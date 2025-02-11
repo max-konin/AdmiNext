@@ -1,18 +1,17 @@
 import { DataProvider } from '@adminext/core/server';
-import { RouteProps } from '@adminext/core';
+import { DataProviderChildrenProps, RouteProps } from '@adminext/core';
 import { adminResources } from './model';
-import { AdmiNext } from '@adminext/core/client';
+import { AdminPanel } from '../_components/AdminPanel';
+import { customPages } from '../_components/custom-pages';
 
 export default async function Home(props: RouteProps) {
   return (
-    <DataProvider resources={adminResources} routeProps={props}>
-      {(data) => (
-        <AdmiNext
-          resourcesDefinition={adminResources}
-          routePrefix="admin"
-          {...data}
-        />
-      )}
+    <DataProvider
+      resources={adminResources}
+      routeProps={props}
+      customPages={customPages}
+    >
+      {(data: DataProviderChildrenProps) => <AdminPanel {...data} />}
     </DataProvider>
   );
 }
