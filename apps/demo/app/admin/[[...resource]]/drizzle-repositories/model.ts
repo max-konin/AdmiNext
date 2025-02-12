@@ -26,8 +26,10 @@ export const adminResources = {
         loader: undefined,
         schema: z.object({
           name: z.string().min(1).default(''),
-          age: z.string().min(1).default(''),
-          email: z.string().min(1).default('')
+          age: z.number({
+            coerce: true
+          }).min(10).max(100),
+          email: z.string().email(),
         }),
         actions: {
           submit: async ({ data }) => {
@@ -38,6 +40,10 @@ export const adminResources = {
       edit: {
         schema: z.object({
           name: z.string(),
+          age: z.number({
+            coerce: true
+          }).min(10).max(100),
+          email: z.string().email(),
         }),
         loader: findUserByIdForEdit,
         actions: {
