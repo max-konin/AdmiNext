@@ -1,0 +1,33 @@
+---
+sidebarTitle: List View
+sidebarOrder: 1
+---
+'
+
+# List Views
+
+Resources list views are the main entry point for your resources. They allow you to view, filter, and sort your data. You can also create, edit, and delete records.
+
+To declare a list view, you need to provide the `list` to your resource `page` property:
+
+```tsx
+{
+  pages: {
+    list: {
+      columns: [
+        { accessorKey: 'id', header: 'ID', enableColumnFilter: false },
+        { accessorKey: 'title', header: 'Title', filterFn: 'includesString' },
+      ],
+      loader: async () => {
+        const posts = await fetchPosts();
+        return { data: posts };
+      },
+    }
+  }
+}
+```
+
+`columns` property is a definition a data table. Data tables is based on [tanstack-table](https://react-table.tanstack.com/). You can find more information about allowed configurations in the [official documentation](https://react-table.tanstack.com/docs/overview).
+
+`loader` property is a function that fetches data from your backend. It should return an object with a `data` property that contains the data you want to display.
+The loader might be implemented as a NextJS server-side function and can fetch data from any sources, such as REST, GraphQL, Prisma, Drizzle, etc.

@@ -7,7 +7,8 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "test:e2e": "turbo test:e2e",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish-packages": "turbo run build --filter @adminext/* && changeset version && changeset publish"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -17,5 +18,8 @@
   "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.12"
   }
 }

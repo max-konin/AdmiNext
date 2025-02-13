@@ -2,6 +2,8 @@ import { Container } from '@chakra-ui/react';
 import {
   AdmiNextContextType,
   CRUDPages,
+  CustomPage,
+  CustomPageDefinition,
   DataProviderChildrenProps,
   ResourcePage,
   Resources,
@@ -14,30 +16,36 @@ import {
   ResourceListView,
   ResourceNewView,
 } from './resource-views';
-import { DefaultDashboard } from './DefaultDashboard';
 import { AdmiNextContextProvider } from '../../contexts';
+import { ReactNode } from 'react';
+import { DefaultDashboard } from './DefaultDashboard';
 
 export type AdmiNextProps = DataProviderChildrenProps &
   AdmiNextContextType &
-  SidebarSlots;
+  SidebarSlots & { dashboard?: ReactNode };
 
 export function AdmiNext({
   resourcesDefinition,
   routePrefix,
   slots,
+  dashboard,
+  customPages = [],
   ...pageData
 }: AdmiNextProps) {
   return (
     <AdmiNextContextProvider
       resourcesDefinition={resourcesDefinition}
       routePrefix={routePrefix}
+      customPages={customPages}
     >
       <MainLayout slots={slots}>
         <Container>
-          {renderResourcePageOrDashboard(
+          {renderPage(
             pageData,
             resourcesDefinition,
-            routePrefix
+            routePrefix,
+            customPages,
+            dashboard
           )}
         </Container>
       </MainLayout>
@@ -45,13 +53,22 @@ export function AdmiNext({
   );
 }
 
-const renderResourcePageOrDashboard = (
+const renderPage = (
   pageData: DataProviderChildrenProps,
   resourcesDef: Resources,
-  routePrefix: string
+  routePrefix: string,
+  customPages: CustomPageDefinition[],
+  dashboard?: ReactNode
 ) => {
-  if (pageData.resource === 'dashboard') {
+  if ((pageData as ResourcePage).resource === 'dashboard') {
+    if (dashboard) return dashboard;
     return <DefaultDashboard />;
+  }
+  if ((pageData as ResourcePage).resource === 'custom-page') {
+    const page = customPages.filter(
+      (el) => el.route === (pageData as CustomPage).route
+    );
+    return page[0]?.render?.();
   }
 
   return renderResourcePage(
@@ -98,7 +115,6 @@ const renderResourcePage = (
           resource={pageData.resource}
         />
       );
-
     default:
       throw new Error('Not implemented');
   }

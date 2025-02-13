@@ -1,0 +1,32 @@
+---
+sidebarTitle: New Resource View
+order: 2
+---
+'
+
+
+import { Steps } from 'nextra/components'
+
+# New Resource Views
+
+To allow users to create a new instances of the resource you need to provide a `new` page to your resource `pages` property.
+It is pretty similar to the `edit` page. But you don't need to define a loader
+
+```tsx
+{
+  pages: {
+    new: {
+      schema: z.object({
+        title: z.string(),
+      }),
+      actions: {
+        submit: async (data) => {
+          await createPost(data);
+        },
+      },
+    }
+  }
+}
+```
+
+The rest of functionality is the same as for the `edit` page.

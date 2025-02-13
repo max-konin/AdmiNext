@@ -1,6 +1,7 @@
 import {
   Bleed,
   For,
+  Separator,
   Stack,
   StackProps,
   StackSeparator,
@@ -10,16 +11,17 @@ import { Resources, SidebarSlots } from '../../../types';
 import { SidebarLink } from './SidebarLink';
 import { useAdmiNextContext } from '../../../hooks';
 import { ColorModeButton } from '../../ui';
+import { MdDashboard } from 'react-icons/md';
 
 const DEFAULT_GROUP_NAME = 'default';
 
 export type SidebarProps = StackProps & SidebarSlots;
 
 export const Sidebar = ({ slots, ...props }: SidebarProps) => {
-  const { routePrefix, resourcesDefinition } = useAdmiNextContext();
+  const { routePrefix, resourcesDefinition, customPages } =
+    useAdmiNextContext();
   const groupedResources = groupResource(resourcesDefinition);
   const buildHref = (key: string) => `/${routePrefix}/${key}`;
-
   return (
     <Stack
       flex="1"
@@ -32,6 +34,33 @@ export const Sidebar = ({ slots, ...props }: SidebarProps) => {
       {...props}
     >
       <Stack gap="6">
+        <Bleed inline="4">
+          <SidebarLink key="dashboard" href={`/${routePrefix}`}>
+            <MdDashboard />
+            Dashboard
+          </SidebarLink>
+        </Bleed>
+        {customPages && customPages.length > 0 && (
+          <Stack gap="2">
+            <Text fontWeight="medium" textStyle="sm">
+              Pages
+            </Text>
+            <Stack gap="1">
+              <For each={customPages}>
+                {(page, index) => (
+                  <Bleed key={index} inline="4">
+                    <SidebarLink
+                      key={index}
+                      href={`/${routePrefix}/${page.route}`}
+                    >
+                      {page.title}
+                    </SidebarLink>
+                  </Bleed>
+                )}
+              </For>
+            </Stack>
+          </Stack>
+        )}
         <Stack gap="6">
           <For each={groupedResources}>
             {([group, resources], index) => (
