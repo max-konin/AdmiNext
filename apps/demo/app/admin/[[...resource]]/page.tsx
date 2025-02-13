@@ -1,7 +1,7 @@
 import { DataProvider } from '@adminext/core/server';
 import { DataProviderChildrenProps, RouteProps } from '@adminext/core';
 import { AdminPanel } from './admin-panel';
-import { adminResources } from './drizzle-repositories/model';
+import { adminResources } from './model';
 
 export default async function Home(props: RouteProps) {
   return (
