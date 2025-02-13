@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1738935769684,
-      "tag": "0000_handy_fat_cobra",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1739440661264,
-      "tag": "0001_slippery_gargoyle",
+      "when": 1739486834423,
+      "tag": "0000_redundant_storm",
       "breakpoints": true
     }
   ]
