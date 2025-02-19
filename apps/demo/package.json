@@ -11,7 +11,10 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push --skip-generate",
     "prisma:deploy": "prisma migrate deploy",
-    "prisma:migrate:dev": "dotenv -e .env prisma migrate dev"
+    "prisma:migrate:dev": "dotenv -e .env prisma migrate dev",
+    "drizzle:generate": "dotenv -e .env drizzle-kit generate",
+    "drizzle:push": "dotenv -e .env drizzle-kit push",
+    "drizzle:migrate": "dotenv -e .env drizzle-kit migrate"
   },
   "dependencies": {
     "@adminext/core": "workspace:*",

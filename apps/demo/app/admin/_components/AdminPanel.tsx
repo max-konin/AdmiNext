@@ -2,7 +2,7 @@
 
 import { DataProviderChildrenProps } from '@adminext/core';
 import { AdmiNext } from '@adminext/core/client';
-import { adminResources } from '../[[...resource]]/model';
+import { adminResources } from '../[[...resource]]/_lib/model';
 import { Box, HStack, Text } from '@chakra-ui/react';
 import { customPages } from './custom-pages';
 import { Dashboard } from './Dashboard';

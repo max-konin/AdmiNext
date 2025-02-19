@@ -4,8 +4,8 @@ export class ResourceFormPage {
   constructor(
     public page: Page,
     public routePrefix: string,
-    public resource: string,
-  ) { }
+    public resource: string
+  ) {}
 
   // Locators
 
@@ -15,12 +15,24 @@ export class ResourceFormPage {
 
   // Acts
 
-  async clearInput() {
-    await this.page.getByRole('textbox').clear();
+  async clearInput(name: string) {
+    await this.page.getByRole('textbox', { name }).clear();
   }
 
-  async fillInput(text: string) {
-    await this.page.getByRole('textbox').fill(text);
+  async fillFormTextField(fieldName: string, value: string) {
+    await this.page.fill(`[name="${fieldName}"]`, value);
+  }
+
+  async fillFormSelectField(fieldName: string, value: string) {
+    await this.page
+      .getByRole('combobox', { name: fieldName })
+      .selectOption({ label: value });
+  }
+
+  async toggleFormCheckbox(fieldName: string) {
+    await this.page
+      .locator(`label.chakra-field__label[for="${fieldName}"]`)
+      .click();
   }
 
   async submitForm() {
