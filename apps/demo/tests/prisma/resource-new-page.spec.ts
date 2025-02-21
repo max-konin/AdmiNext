@@ -3,8 +3,9 @@ import {
   ResourceNewViewPage,
 } from '@adminext/playwright';
 import test from '@playwright/test';
-import { prisma } from '../../app/db';
+
 import { resetDB } from './test-helpers';
+import { prisma } from '../../db';
 
 test.beforeEach(async () => {
   await resetDB();

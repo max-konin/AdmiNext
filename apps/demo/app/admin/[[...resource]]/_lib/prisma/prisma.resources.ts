@@ -1,22 +1,23 @@
 import { belongsTo, FileData, resource, files } from '@adminext/core';
 import { z } from 'zod';
+
+import { Prisma } from '@prisma/client';
 import {
-  createCategory,
-  deleteCategory,
   findAllCategories,
+  deleteCategory,
+  createCategory,
   findCategoryByIdForEdit,
   updateCategory,
-} from './prisma-repositories/category.repository';
+} from './repos/category.repository';
 import {
-  createPost,
-  deletePost,
   findAllPosts,
+  deletePost,
   findRelatedData,
-} from './prisma-repositories/post.repository';
-import { Prisma } from '@prisma/client';
-import { uploadFile } from './prisma-repositories/upload-file';
+  createPost,
+} from './repos/post.repository';
+import { uploadFile } from './upload-file';
 
-export const adminResources = {
+export const prismaResources = {
   categories: resource({
     title: 'Categories',
     identityBy: 'id',

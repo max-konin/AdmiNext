@@ -1,7 +1,8 @@
 'use server';
 
 import { Prisma } from '@prisma/client';
-import { prisma } from '../../../db';
+import { prisma } from '../../../../../../db';
+import { wrapData } from '../../utils';
 
 export const findAllCategories = async () =>
   wrapData(prisma.category.findMany());
@@ -19,6 +20,3 @@ export const updateCategory = async (
 
 export const deleteCategory = async (id: string) =>
   prisma.category.delete({ where: { id: Number(id) } });
-
-const wrapData = <T>(dataPromise: Promise<T>) =>
-  dataPromise.then((data) => ({ data }));

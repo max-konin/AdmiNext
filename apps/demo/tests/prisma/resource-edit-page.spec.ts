@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import { prisma } from '../../app/db';
 import { ResourceEditViewPage } from '@adminext/playwright';
 import { resetDB } from './test-helpers';
+import { prisma } from '../../db';
 
 test.beforeEach(async () => {
   await resetDB();
@@ -27,12 +27,12 @@ test('Visit resource edit page', async ({ page }) => {
 
   await editPage.visit();
 
-  await editPage.clearInput();
-  await editPage.fillInput('Category 2');
+  await editPage.clearInput('name');
+  await editPage.fillFormTextField('name', 'Category 2');
   await editPage.submitForm();
   await editPage.shouldHaveNotificationWithMessage('Failed to update record');
-  await editPage.clearInput();
-  await editPage.fillInput('Category New');
+  await editPage.clearInput('name');
+  await editPage.fillFormTextField('name', 'Category New');
   await editPage.submitForm();
   await editPage.shouldHaveNotificationWithMessage('Done');
 });

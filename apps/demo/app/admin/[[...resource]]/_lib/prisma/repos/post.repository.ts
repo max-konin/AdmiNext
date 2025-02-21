@@ -1,7 +1,8 @@
 'use server';
 
 import { Prisma } from '@prisma/client';
-import { prisma } from '../../../db';
+import { prisma } from '../../../../../../db';
+import { wrapData } from '../../utils';
 
 export const findAllPosts = async () =>
   wrapData(prisma.post.findMany({ include: { category: true } }));
@@ -30,6 +31,3 @@ export const createPost = async (data: Prisma.PostCreateInput) =>
 
 export const deletePost = async (id: string) =>
   prisma.post.delete({ where: { id: Number(id) } });
-
-const wrapData = <T>(dataPromise: Promise<T>) =>
-  dataPromise.then((data) => ({ data }));

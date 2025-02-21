@@ -40,6 +40,9 @@ jobs:
       - name: Prisma generate
         working-directory: ./apps/demo
         run: pnpm run prisma:generate
+      - name: Drizzle migrate
+        working-directory: ./apps/demo
+        run: pnpm run drizzle:migrate
       - name: Build packages
         run: pnpm run build
       - name: Run Playwright tests
