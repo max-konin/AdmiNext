@@ -1,0 +1,75 @@
+---
+sidebarTitle: Custom Pages
+---
+
+import { Steps } from 'nextra/components';
+
+# Custom Pages in AdmiNext
+
+AdmiNext allows you to create and integrate custom pages seamlessly, giving you full control over your admin panel layout and functionality.
+This feature enables you to add unique views and any additional UI elements tailored to your needs.
+
+## Adding a Custom Page
+
+To add a custom page, follow these steps:
+
+<Steps>
+
+### Create a new page within the project structure and define your React component inside
+
+```tsx
+// pages/custom/Calendar.tsx
+
+import { Box, Heading, Text } from '@chakra-ui/react';
+
+export const Calendar = () => {
+  return (
+    <Box>
+      <Heading> Calendar </Heading>
+      <Text> Welcome to the custom Calendar! </Text>
+    </Box>
+  );
+};
+```
+
+### Define an array of your custom pages using the next structure
+
+```tsx
+export const customPages: CustomPageDefinition[] = [
+  {
+    title: 'Calendar',
+    route: 'calendar',
+    render: () => <Calendar />,
+  },
+];
+```
+
+> **CustomPageDefinition** defines the structure for custom pages in AdmiNext.
+> Each page has a `title` string, a `route` string, and a `render` function that returns a React component.
+
+### Integrate custom pages into AdmiNext
+
+```tsx {5, 14}
+import { DataProvider } from '@adminext/core/server';
+import { RouteProps } from '@adminext/core';
+import { resources } from '../resources.ts';
+import { AdmiNext } from '@adminext/core/client';
+import { customPages } from './custom-pages';
+
+export default async function Home(props: RouteProps) {
+  return (
+    <DataProvider resources={resources} routeProps={props}>
+      {(data) => (
+        <AdmiNext
+          resourcesDefinition={resources}
+          routePrefix="admin"
+          customPages={customPages}
+          {...data}
+        />
+      )}
+    </DataProvider>
+  );
+}
+```
+
+</Steps>
