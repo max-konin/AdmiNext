@@ -1,9 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import { Button, MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../../ui';
-import { LuMoreVertical, LuPenSquare } from 'react-icons/lu';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useRouter } from 'next/navigation';
 import { useServerActionWithToast } from '../../../hooks/use-server-action-with-toast.hook';
+import { EllipsisVerticalIcon } from '../../icons/EllipsisVerticalIcon';
+import { SquarePenIcon } from '../../icons/SquarePenIcon';
+import { Trash2Icon } from '../../icons/Trash2Icon';
 
 export type ActionsDropDownProps = {
   resource: string;
@@ -55,12 +56,12 @@ export const ActionsDropDown = ({
     <MenuRoot onSelect={(details) => handleMenuItemSelect(details.value)}>
       <MenuTrigger asChild>
         <Button variant="ghost" data-testid="actions-menu">
-          <LuMoreVertical />
+          <EllipsisVerticalIcon />
         </Button>
       </MenuTrigger>
       <MenuContent>
         <MenuItem value={DefaultActions.EDIT} cursor="pointer">
-          <LuPenSquare />
+          <SquarePenIcon />
           <Box flex={1}>Edit</Box>
         </MenuItem>
         {deleteItem && (
@@ -69,7 +70,7 @@ export const ActionsDropDown = ({
             cursor="pointer"
             data-testid="delete-item"
           >
-            <RiDeleteBin6Line />
+            <Trash2Icon />
             <Box flex={1}>Delete</Box>
           </MenuItem>
         )}

@@ -6,14 +6,12 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
-import {
-  LuBrush,
-  LuDatabase,
-  LuFlaskConical,
-  LuHammer,
-  LuZap,
-} from 'react-icons/lu';
-import { SiTypescript } from 'react-icons/si';
+import { ZapIcon } from './icons/ZapIcon';
+import { HummerIcon } from './icons/HummerIcon';
+import { DatabaseIcon } from './icons/DatabaseIcon';
+import { TypescriptIcon } from './icons/TypescriptIcon';
+import { BrushIcon } from './icons/BrushIcon';
+import { FlaskConicalIcon } from './icons/FlaskConicalIcon';
 
 export const Features = () => {
   return (
@@ -53,33 +51,33 @@ export const Features = () => {
 
 const features = [
   {
-    icon: <LuZap />,
+    icon: <ZapIcon />,
     title: 'App Router support.',
     description: 'Built-in support for Next.js App Router.',
   },
   {
-    icon: <LuHammer />,
+    icon: <HummerIcon />,
     title: 'Declarative CRUD creation.',
     description: 'Create CRUD pages in declarative way.',
   },
   {
-    icon: <LuDatabase />,
+    icon: <DatabaseIcon />,
     title: 'Supports any backend.',
     description:
       'Prisma, Drizzle, TypeORM, Sequelize, GraphQL, RestAPI and more.',
   },
   {
-    icon: <SiTypescript />,
+    icon: <TypescriptIcon />,
     title: 'TypeScript',
     description: 'Built with TypeScript',
   },
   {
-    icon: <LuBrush />,
+    icon: <BrushIcon />,
     title: 'Customizable',
     description: 'Customize the theme and pages.',
   },
   {
-    icon: <LuFlaskConical />,
+    icon: <FlaskConicalIcon />,
     title: 'Playwright test helpers',
     description: 'Built-in Playwright test helpers.',
   },

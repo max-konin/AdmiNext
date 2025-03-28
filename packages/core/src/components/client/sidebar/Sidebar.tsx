@@ -1,7 +1,6 @@
 import {
   Bleed,
   For,
-  Separator,
   Stack,
   StackProps,
   StackSeparator,
@@ -11,7 +10,7 @@ import { Resources, SidebarSlots } from '../../../types';
 import { SidebarLink } from './SidebarLink';
 import { useAdmiNextContext } from '../../../hooks';
 import { ColorModeButton } from '../../ui';
-import { MdDashboard } from 'react-icons/md';
+import { DashboardIcon } from '../../icons/DashboardIcon';
 
 const DEFAULT_GROUP_NAME = 'default';
 
@@ -33,10 +32,10 @@ export const Sidebar = ({ slots, ...props }: SidebarProps) => {
       minH="100vh"
       {...props}
     >
-      <Stack gap="6">
+      <Stack gap="6" paddingTop="5px">
         <Bleed inline="4">
           <SidebarLink key="dashboard" href={`/${routePrefix}`}>
-            <MdDashboard />
+            <DashboardIcon />
             Dashboard
           </SidebarLink>
         </Bleed>

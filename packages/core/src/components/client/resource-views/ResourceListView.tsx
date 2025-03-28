@@ -6,8 +6,8 @@ import {
   BreadcrumbRoot,
 } from '../../ui/breadcrumb';
 import Link from 'next/link';
-import { LuPlus } from 'react-icons/lu';
 import { ResourceTable } from '../table';
+import { PlusIcon } from '../../icons/PlusIcon';
 
 export type ResourceListViewProps<
   TPK,
@@ -42,7 +42,7 @@ export const ResourceListView = <
         <Box>
           <Button asChild>
             <Link href={`/${routePrefix}/${resource}/new`}>
-              <LuPlus />
+              <PlusIcon />
               New
             </Link>
           </Button>

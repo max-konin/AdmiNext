@@ -9,9 +9,10 @@ import {
   Table,
 } from '@chakra-ui/react';
 import { flexRender, Header } from '@tanstack/react-table';
-import { LuArrowBigDown, LuArrowBigUp } from 'react-icons/lu';
 import { Filter } from './Filter';
-import { MdOutlineFilterList } from 'react-icons/md';
+import { ArrowBigUpIcon } from '../../icons/ArrowBigUpIcon';
+import { ArrowBigDownIcon } from '../../icons/ArrowBigDownIcon';
+import { ListFilterIcon } from '../../icons/ListFilterIcon';
 
 type ColumnHeaderProps<TListData> = {
   header: Header<TListData, unknown>;
@@ -31,10 +32,10 @@ export const ColumnHeader = <TListData,>({
                   <MenuTrigger cursor="pointer" paddingRight="2px">
                     {header.column.getIsFiltered() ? (
                       <Badge colorPalette="accent">
-                        <MdOutlineFilterList />
+                        <ListFilterIcon />
                       </Badge>
                     ) : (
-                      <MdOutlineFilterList />
+                      <ListFilterIcon />
                     )}
                   </MenuTrigger>
                   <MenuContent position="absolute">
@@ -59,8 +60,8 @@ export const ColumnHeader = <TListData,>({
             <HStack gap={1}>
               {flexRender(header.column.columnDef.header, header.getContext())}
               {{
-                asc: <LuArrowBigUp />,
-                desc: <LuArrowBigDown />,
+                asc: <ArrowBigUpIcon />,
+                desc: <ArrowBigDownIcon />,
               }[header.column.getIsSorted() as string] ?? null}
             </HStack>
           </Box>

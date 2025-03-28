@@ -1,7 +1,8 @@
 import { Column } from '@tanstack/react-table';
 import { DebouncedInput } from '../DebouncedInput';
 import { InputGroup } from '../../ui/input-group';
-import { LuX } from 'react-icons/lu';
+import { CloseIcon } from '../../icons/CloseIcon';
+import { Box } from '@chakra-ui/react';
 
 type filterProps<TListData> = {
   column: Column<TListData, unknown>;
@@ -13,7 +14,9 @@ export function Filter<TListData>({ column }: filterProps<TListData>) {
   return (
     <InputGroup
       endElement={
-        <LuX cursor="pointer" onClick={() => column.setFilterValue('')} />
+        <Box cursor="pointer" onClick={() => column.setFilterValue('')}>
+          <CloseIcon />
+        </Box>
       }
     >
       <DebouncedInput
