@@ -6,7 +6,6 @@ import {
   HStack,
   IconButton,
 } from '@chakra-ui/react';
-import { LuAlignRight } from 'react-icons/lu';
 import {
   DrawerBackdrop,
   DrawerCloseTrigger,
@@ -16,6 +15,7 @@ import {
 } from '../../ui';
 import { Sidebar } from './Sidebar';
 import { SidebarSlots } from '../../../types';
+import { AlignRightIcon } from '../../icons/AlignRightIcon';
 
 export const Navbar = ({ slots, ...props }: ContainerProps & SidebarSlots) => {
   return (
@@ -33,12 +33,12 @@ export const Navbar = ({ slots, ...props }: ContainerProps & SidebarSlots) => {
               variant="ghost"
               colorPalette="gray"
             >
-              <LuAlignRight />
+              <AlignRightIcon />
             </IconButton>
           </DrawerTrigger>
           <DrawerBackdrop />
           <DrawerContent>
-            <DrawerCloseTrigger colorPalette="gray" />
+            <DrawerCloseTrigger colorPalette="gray" zIndex="10" />
             <Sidebar slots={slots} />
           </DrawerContent>
         </DrawerRoot>
