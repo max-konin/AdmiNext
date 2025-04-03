@@ -3,6 +3,7 @@ import { Container, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { LuArrowRight } from 'react-icons/lu';
 
 export const Hero = () => {
+  const docsUrl = process.env.DOCS_URL || 'http://localhost:3001';
   return (
     <Container maxW="7xl" py={{ base: '16', md: '24' }}>
       <Stack gap="12" align={{ sm: 'center' }} textAlign="center">
@@ -23,8 +24,10 @@ export const Hero = () => {
           gap="3"
           align={{ md: 'center' }}
         >
-          <Button size="lg" px="6">
-            Get started <LuArrowRight />
+          <Button asChild size="lg" px="6">
+            <a href={docsUrl} target="_blank">
+              Get started <LuArrowRight />
+            </a>
           </Button>
         </Flex>
       </Stack>
