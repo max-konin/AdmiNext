@@ -17,9 +17,7 @@ To add a custom page, follow these steps:
 
 ### Create a new page within the project structure and define your React component inside
 
-```tsx
-// pages/custom/Calendar.tsx
-
+```tsx filename="pages/custom/Calendar.tsx"
 import { Box, Heading, Text } from '@chakra-ui/react';
 
 export const Calendar = () => {
@@ -49,7 +47,7 @@ export const customPages: CustomPageDefinition[] = [
 
 ### Integrate custom pages into AdmiNext
 
-```tsx {5, 14}
+```tsx filename="app/admin/[[...resource]]/admin.page.tsx" copy {5, 14}
 import { DataProvider } from '@adminext/core/server';
 import { RouteProps } from '@adminext/core';
 import { resources } from '../resources.ts';

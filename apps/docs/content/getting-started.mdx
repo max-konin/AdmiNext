@@ -28,7 +28,7 @@ Set up Chakra UI provider in your project following [instructions](https://chakr
 
 To display notifications, you need to set up the Toaster component from the @adminext/core package in your project. Add the following code to your layout.tsx file.
 
-```tsx {2,13} filename=app/layout.tsx
+```tsx {2,13} filename="app/layout.tsx"
 import { Provider } from '@/components/ui/provider';
 import { Toaster } from '@adminext/core/client';
 
@@ -54,7 +54,7 @@ export default function RootLayout({
 
 Declare you resources in TS file
 
-```typescript filename=app/admin/resources.ts copy
+```typescript filename="app/admin/resources.ts" copy
 import z from 'zod';
 import { resource } from '@adminext/core';
 
@@ -101,17 +101,16 @@ export const resources = {
 
 AdmiNext can works with any backends. You can just declare your fetch, create, update, delete server actions.
 
-See examples for:
-
-- Prisma ORM
-- Drizzle ORM
-- React Query
+> [!TIP]
+>
+> To see a working example of how AdmiNext integrates with Prizma ORM or Drizzle ORM, check out demo code:
+> [AdmiNext Demo](https://github.com/max-konin/AdmiNext/tree/master/apps/demo)
 
 ## Create admin panels pages
 
 Create admin panels pages in your project
 
-```tsx filename=app/admin/[[...resource]]/admin.page.tsx copy
+```tsx filename="app/admin/[[...resource]]/admin.page.tsx" copy
 import { DataProvider } from '@adminext/core/server';
 import { RouteProps } from '@adminext/core';
 import { resources } from '../resources.ts';
