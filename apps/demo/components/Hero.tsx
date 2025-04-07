@@ -1,6 +1,6 @@
 import { Button } from './ui/button';
 import { Container, Flex, Heading, Stack, Text } from '@chakra-ui/react';
-import { LuArrowRight } from 'react-icons/lu';
+import { ArrowRightIcon } from './icons/ArrowRightIcon';
 
 export const Hero = () => {
   const docsUrl = process.env.DOCS_URL || 'http://localhost:3001';
@@ -26,7 +26,7 @@ export const Hero = () => {
         >
           <Button asChild size="lg" px="6">
             <a href={docsUrl} target="_blank">
-              Get started <LuArrowRight />
+              Get started <ArrowRightIcon />
             </a>
           </Button>
         </Flex>
