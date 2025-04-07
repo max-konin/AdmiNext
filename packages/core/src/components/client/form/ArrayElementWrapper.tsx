@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ArrayElementWrapperProps } from '@autoform/react';
 import { Box, HStack, IconButton } from '@chakra-ui/react';
-import { LuTrash } from 'react-icons/lu';
+import { TrashIcon } from '../../icons/TrashIcon';
 
 export const ArrayElementWrapper: FC<ArrayElementWrapperProps> = ({
   children,
@@ -17,7 +17,7 @@ export const ArrayElementWrapper: FC<ArrayElementWrapperProps> = ({
       <HStack gap="4">
         {children}
         <IconButton onClick={onRemove} size="sm" variant="ghost">
-          <LuTrash />
+          <TrashIcon />
         </IconButton>
       </HStack>
     </Box>
