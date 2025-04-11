@@ -1,17 +1,14 @@
 ---
 sidebarTitle: Edit Resource View
-order: 1
 ---
-'
 
-
-import { Steps } from 'nextra/components'
+import { Steps } from 'nextra/components';
 
 # Edit Resource Views
 
 To allow users to edit an instance of the resource you need to provide a `edit` page to your resource `pages` property:
 
-```tsx
+```tsx copy
 {
   pages: {
     edit: {
@@ -54,7 +51,7 @@ To add an select for an association to your form, pass following steps:
 
 You can fetch all related data in the `loader` function and put it into the `related` property.
 
-```tsx {4-8} 
+```tsx {4-8} copy
 {
   pages: {
     edit: {
@@ -76,13 +73,11 @@ You can fetch all related data in the `loader` function and put it into the `rel
 }
 ```
 
-
 ### Modify your schema
 
 Convert `schema` property to Function and add a property for the association to your schema via using `belongsTo` helper
 
-
-```tsx {1, 12-15}
+```tsx {1, 12-15} copy
 import { belongsTo  } from '@adminext/core';
 
 {
@@ -106,7 +101,7 @@ import { belongsTo  } from '@adminext/core';
 }
 ```
 
-```tsx {1, 12-15}
+```tsx {1, 12-15} copy
 import { belongsTo  } from '@adminext/core';
 
 {
@@ -132,6 +127,5 @@ import { belongsTo  } from '@adminext/core';
   }
 }
 ```
-
 
 </Steps>

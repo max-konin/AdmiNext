@@ -21,9 +21,9 @@ export const metadata: Metadata = {
 const navbar = (
   <Navbar
     logo={
-      <Link href="/" className="text-xl font-bold">
+      <span style={{ fontWeight: 'bold' }} className="text-xl font-bold">
         AdmiNext
-      </Link>
+      </span>
     }
     projectLink="https://github.com/max-konin/AdmiNext"
   />
